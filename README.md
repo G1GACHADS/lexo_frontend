@@ -1,5 +1,6 @@
 # Eureka-Assignment
 ```
+npm install
 Tab 1
 expo start
 Tab 2
