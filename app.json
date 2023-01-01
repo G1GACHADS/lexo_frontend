@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AwesomeProject",
-    "slug": "AwesomeProject",
+    "name": "Lexo",
+    "slug": "Lexo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +18,42 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Lexo needs access to your Camera.",
+        "NSMicrophoneUsageDescription": "Lexo needs access to your Microphone."
+      },
+      "bundleIdentifier": "com.gigachads.lexo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.gigachads.lexo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+
+       [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow Lexo to access your photos.",
+          "savePhotosPermission": "Allow Lexo to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fa2e0d13-7bee-4834-b761-05e47887e728"
+      }
     }
   }
 }
