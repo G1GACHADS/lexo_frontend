@@ -1,11 +1,11 @@
 import { Text, TouchableOpacity } from "react-native";
 import Speaker from "../../assets/global/speaker.svg";
 export default function Icon_Retake(props) {
-  const { name,ml } = props;
+  const { text,ml } = props;
   return (
-    <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
+    <TouchableOpacity style={{ flexDirection: "row", alignItems: "center",marginRight:20\\\\\\\\\\\\\\\\\\\\ }}>
       <Speaker />
-      {name && <Text style={{ marginLeft: ml }}>{name}</Text>}
+      {text && <Text style={{ marginLeft: ml }}>{text}</Text>}
     </TouchableOpacity>
   );
 }

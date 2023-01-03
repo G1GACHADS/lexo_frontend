@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, useMemo,useState } from "react";
-import {View, Text, Button } from "react-native";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import React, { useCallback, useRef, useMemo, useState } from "react";
+import { StyleSheet,View, Text, Button } from "react-native";
+import BottomSheet, { BottomSheetView,BottomSheetSectionList } from "@gorhom/bottom-sheet";
 
 export default function Button_Sheet() {
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
-  const snapPoints = useMemo(() => ["25%", "50%","100%"], []);
+  const snapPoints = useMemo(() => ["30%", "50%", "100%"], []);
   const sheetRef = useRef(null);
 
   const handleSheetChange = useCallback((index) => {
@@ -18,8 +18,37 @@ export default function Button_Sheet() {
     sheetRef.current?.close();
   }, []);
 
+  const sections = useMemo(
+    () =>
+      Array(10)
+        .fill(0)
+        .map((_, index) => ({
+          title: `Section ${index}`,
+          data: Array(10)
+            .fill(0)
+            .map((_, index) => `Item ${index}`),
+        })),
+    []
+  );
+  // render
+  const renderSectionHeader = useCallback(
+    ({ section }) => (
+      <View style={styles.sectionHeaderContainer}>
+        <Text>{section.title}</Text>
+      </View>
+    ),
+    []
+  );
+  const renderItem = useCallback(
+    ({ item }) => (
+      <View style={styles.itemContainer}>
+        <Text>{item}</Text>
+      </View>
+    ),
+    []
+  );
   return (
-    <View style={{ flex:1 }}>
+    <View style={{ flex: 1 }}>
       {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
       <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
       <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
@@ -30,7 +59,7 @@ export default function Button_Sheet() {
         initialSnapIndex={0}
         onChange={handleSheetChange}
       >
-        <BottomSheetView>
+        {/* <BottomSheetView>
           <Text>Awesome 🔥</Text>
         </BottomSheetView>
         <BottomSheetView>
@@ -38,8 +67,33 @@ export default function Button_Sheet() {
         </BottomSheetView>
         <BottomSheetView>
           <Text>Awesome 🔥</Text>
-        </BottomSheetView>
+        </BottomSheetView> */}
+        <BottomSheetSectionList
+          sections={sections}
+          keyExtractor={(i) => i}
+          renderSectionHeader={renderSectionHeader}
+          renderItem={renderItem}
+          contentContainerStyle={styles.contentContainer}
+        />
       </BottomSheet>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 200,
+  },
+  contentContainer: {
+    backgroundColor: "white",
+  },
+  sectionHeaderContainer: {
+    backgroundColor: "white",
+    padding: 6,
+  },
+  itemContainer: {
+    padding: 6,
+    margin: 6,
+    backgroundColor: "#eee",
+  },
+});

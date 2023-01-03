@@ -2,11 +2,14 @@ import React, { useRef, useEffect, useCallback, useState } from "react";
 import {
   Text,
   TouchableOpacity,
+  ScrollView,
   View,
   Image,
   SafeAreaView,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+
+import styled from "styled-components/native";
 
 import * as MediaLibrary from "expo-media-library";
 
@@ -17,11 +20,22 @@ import { captureRef } from "react-native-view-shot";
 import ResizableDraggableView from "../../components/camera-center";
 
 import { useWindowDimensions } from "react-native";
+
+import { WebView } from 'react-native-webview';
+
+
+import Api from "../../api";
+
 //svg components
-// import CustomButton from "../../components/icons/custom-icon-button";
+import Icon_Media from "../../components/icons/icon-media";
+import Icon_Snapshot from "../../components/icons/icon-snap";
+import Icon_Flash from "../../components/icons/icon-flash";
+import Icon_Retake from "../../components/icons/icon-retake";
+import Icon_Done from "../../components/icons/icon-done";
 
-import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
+import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
+import Loading from "../../components/loading";
 function LoadingView() {
   return (
     <View>
@@ -30,20 +44,19 @@ function LoadingView() {
   );
 }
 
-export default function Homepage() {
+export default function Homepage({ route, navigation }) {
   //expo camera
   const [image, setImage] = useState(null);
   const [type, setType] = useState(null);
   const [cameraPermission, setCameraPermission] = useState(null);
   const [mediaPermission, setMediaPermission] = useState(null);
+  const [content,setContent] = useState(null)
   const [flashMode, setFlashMode] = useState(null);
   const cameraRef = useRef(null);
   const cropRef = useRef(null);
   const album_name = "lexo";
+
   const { height, width } = useWindowDimensions();
-  // const {width,height} = useWindowDimensions();
-  // const width = Math.round((height*9)/16)
-  // const height = Math.round((width*16)/9)
   const toggleCameraType = () =>
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
@@ -66,43 +79,18 @@ export default function Homepage() {
     setFlashMode("off");
   };
 
-  //take image from camera
-  // const takePicture = async () => {
-  //   try {
-  //     const options = {
-  //       quality: 0.7,
-  //     };
-  //     let data = await cameraRef.current.takePictureAsync(options);
-  //     console.log(data);
-  //     setImage(data.uri);
-  //     //saving image
-  //     // if (mediaPermission) {
-  //     //   const asset = await MediaLibrary.createAssetAsync(image);
-  //     //   await MediaLibrary.createAlbumAsync(album_name, asset, false);
-  //     // }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
+  const onNavigatePress = (result) => {
+    navigation.navigate("Result",{result:result});
+  };
   //take image from screenshoot
   const takePicture = async () => {
     try {
-
       const result = await captureRef(cameraRef.current, {
         result: "tmpfile",
-        height: 420,
-        width: 420,
         quality: 1,
         format: "jpg",
       });
-      console.log(result);
       setImage(result);
-      //saving image
-      // if (mediaPermission) {
-      //   const asset = await MediaLibrary.createAssetAsync(image);
-      //   await MediaLibrary.createAlbumAsync(album_name, asset, false);
-      // }
     } catch (e) {
       console.log(e);
     }
@@ -122,48 +110,60 @@ export default function Homepage() {
   };
   const sendFetch = useCallback(async () => {
     const data = new FormData();
-    data.append("file", {
+    data.append("image", {
       uri: image,
       type: "image/jpeg",
       name: "image.jpg",
     });
-    const response = await fetch("https://jsonplaceholder.typicode.com/users/1")
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
+    data.append("fixation", 1);
+    data.append("saccade", 10);
+    await Api.post("bionic", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     })
-  },[image])
+      .then((response) => {
+        console.log(response.data["html"]);
+        return response.data["html"];
+      })
+      .catch(e=>{
+        console.log(err);
 
-  const cropImage = async () => {
-    // const targetPixelCount = 1080; // If you want full HD pictures
-    // const pixelRatio = PixelRatio.get(); // The pixel ratio of the device
-    // pixels * pixelratio = targetPixelCount, so pixels = targetPixelCount / pixelRatio
-    // const pixels = targetPixelCount / pixelRatio;
-    //pixel will be changed with the size of the element
+      });
+  }, [image]);
+
+  const sendData = useCallback(async () => {
     try {
-      // const result = await captureRef(cropRef.current, {
-      //   result: "tmpfile",
-      //   height: 420,
-      //   width: 420,
-      //   quality: 1,
-      //   format: "jpg",
-      // });
-      let originX, originY, width, height = cropRef.current.getData;
-      console.log(height, width, originX, originY)
-      // const result = manipulateAsync(image,{
-      //   height: height,
-      //   originX: originX,
-      //   originY: originY,
-      //   width: width
-      // })
-      // setImage(result);
+      let result_fetch = sendFetch();
+      setContent(result_fetch)
+      //! fix get data()
+      console.log(cropRef.current.getData());
+      // let originX, originY, width, height = cropRef.current.getData;
+      // let [originX, originY, width, height] = [250, 250, 200, 300];
+      // console.log(originX, originY, width, height);
+      // const manipulatedImage = await manipulateAsync(image, [
+      //   {
+      //     crop: {
+      //       height: height,
+      //       originX: originX,
+      //       originY: originY,
+      //       width: width,
+      //     },
+      //   },
+      // ]);
+      // console.log(manipulatedImage);
+      // setImage(manipulatedImage.uri);
+      // let result =  sendFetch(manipulatedImage)
+      // let result = sendFetch("content result test sending to result page");
+      // await onNavigatePress(result);
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [image]);
 
   useEffect(() => {
     (async function () {
+      //3x initial render karena ada 3 setup
       checkCameraPermission();
       checkMediaPermission();
       initialCameraSetup();
@@ -173,64 +173,58 @@ export default function Homepage() {
   if (cameraPermission === false) {
     return <LoadingView />;
   }
-  const getData = () => {
-    console.log(cropRef.current.getData());
-  }
   return (
     <SafeAreaView style={{ flex: 1 }} collapsable={false}>
-      {image ? (
-        <View>
-            <Image
-              source={{ uri: image }}
-              style={{ width: width/2, height: height/2 }}
-            />
-            <ResizableDraggableView ref={cropRef} image={image}>
-              <View>
-                <TouchableOpacity onPress={() => setImage(null)}>
-                  <Text>back</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => getData()}>
-                  <Text>crop</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => sendFetch()}>
-                  <Text>sendToApi</Text>
-                </TouchableOpacity>
-              </View>
-            </ResizableDraggableView>
-
-        </View>
+      {content?(
+        <ViewFullScreen>
+          <WebView
+              originWhitelist={['*']}
+              source={{ html: content }}
+          />
+        </ViewFullScreen>
+      ):image ? (
+        <ViewFullScreen>
+          <Image source={{ uri: image }} style={{ width:width,height:height}} />
+          <ResizableDraggableView
+            ref={cropRef}
+            image={image}
+          />
+          <View style={{ flexDirection:'row' }}>
+            {/* <Icon_Retake text={"Retake"} func={setImage(null)}/>
+            <Icon_Done  text={"Done"} func={sendData}/> */}
+            <Text onPress={() => setImage(null)}>retake</Text>
+            <Text onPress={() => sendData()}>done</Text>
+          </View>
+        </ViewFullScreen>
       ) : (
-        <View style={{ flex: 1 }}>
           <Camera
-            style={{ width: width, height: height, flex: 1 }}
+            style={{ flex: 1,width:width,height:height}}
             type={type}
             flashMode={flashMode}
             ref={cameraRef}
-            ratio="4:3"
+            ratio="16:9"
           >
-            <View
-              style={{
-                position: "absolute",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                bottom: 40,
-                width: "100%",
-                color: "white",
-              }}
-            >
-              <TouchableOpacity onPress={() => openMedia()}>
-                <Text>Media</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => takePicture()}>
-                <Text>Snap</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => toggleFlash()}>
-                <Text>Flash</Text>
-              </TouchableOpacity>
-            </View>
+            <AlignHorizontally>
+                {/* <Icon_Media func={openMedia}/>
+                <Icon_Snapshot func={takePicture} onPress={()=>takePicture()}/>
+                <Icon_Flash func={toggleFlash} on={flashMode==="torch"}/> */}
+              <Text style={{color:'white'}} onPress={() => openMedia()}>media</Text>
+              <Text style={{color:'white'}} onPress={() => takePicture()}>snapshot</Text>
+              <Text style={{color:'white'}} onPress={() => toggleFlash()}>flash</Text>
+            </AlignHorizontally>
           </Camera>
-        </View>
       )}
     </SafeAreaView>
   );
 }
+const ViewFullScreen = styled.View`
+  flex: 1;
+`;
+const AlignHorizontally = styled.View`
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+`;

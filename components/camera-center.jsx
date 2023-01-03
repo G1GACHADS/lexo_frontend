@@ -35,8 +35,9 @@ const ResizableDraggableView = React.forwardRef((props,ref)=>{
     }
     return crossingBoundary;
   };
+  //!fix this
   const getData = () => {
-    return x,y,w,h
+    return {x:position.x,y:position.y,w:dimensions.width,h:dimensions.height}
   }
   const euclidDistance = (x, y, x1, y1) => {
     return Math.sqrt((x - x1) ** 2 + (y - y1) ** 2);
@@ -154,7 +155,7 @@ const ResizableDraggableView = React.forwardRef((props,ref)=>{
 })
 
 const ViewStyles = styled.View`
-  transorm-origin: "center";
+  transform-origin: "center";
   border: 2px solid white;
   position: absolute;
 `;
