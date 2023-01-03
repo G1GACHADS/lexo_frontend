@@ -79,9 +79,11 @@ export default function Homepage({ route, navigation }) {
     setFlashMode("off");
   };
 
+  //! passing result data to result page thorugh navigation
   const onNavigatePress = (result) => {
     navigation.navigate("Result",{result:result});
   };
+
   //take image from screenshoot
   const takePicture = async () => {
     try {
@@ -197,6 +199,7 @@ export default function Homepage({ route, navigation }) {
           </View>
         </ViewFullScreen>
       ) : (
+          //! fix camera distorted when rotate
           <Camera
             style={{ flex: 1,width:width,height:height}}
             type={type}

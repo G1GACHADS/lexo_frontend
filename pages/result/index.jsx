@@ -3,14 +3,13 @@ import Header from "./header";
 import Main from "./main";
 import BottomSheet from "./bottom-sheet";
 import styled from "styled-components";
-export default function Result_Page({route,navigation,result}){
+export default function Result_Page({route,navigation}){
   const onBackPress = () => {
     navigation.navigate(previousScreen||'Home', {
       previousScreen: route.name
     });
     console.log(route,navigation)
   };
-  console.log(result)
   const result="lorem ipsum dolor sit amet, consectetur adipiscing lorem ipsum dolor. Cum sociis natoque penat"
   return(
     <SafeAreaView style={{ flex:1 }}>
