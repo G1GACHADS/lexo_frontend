@@ -44,7 +44,7 @@ export default function App() {
             />
             <Stack.Screen
               name="Result"
-              component={Result}
+              component={Result}  
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

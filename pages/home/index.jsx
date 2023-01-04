@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import {
   Text,
-  TouchableOpacity,
   ScrollView,
   View,
   Image,
@@ -50,13 +49,20 @@ export default function Homepage({ route, navigation }) {
   const [type, setType] = useState(null);
   const [cameraPermission, setCameraPermission] = useState(null);
   const [mediaPermission, setMediaPermission] = useState(null);
-  const [content,setContent] = useState(null)
+  const [content,setContent] = useState(`
+  <body style="display:flex; flex-direction: column;justify-content: center;
+    align-items:center; color:white;background-color:black; height: 100%;font-family:Jakarta-b;font-weight:bold">
+      <h2 style="font-size:50;
+      text-align: left;" id="h2_element">
+        <i>meh</i><bold>meh</bold>This text will be changed later!
+      </h2>
+   </body>`)
   const [flashMode, setFlashMode] = useState(null);
   const cameraRef = useRef(null);
   const cropRef = useRef(null);
   const album_name = "lexo";
-
   const { height, width } = useWindowDimensions();
+
   const toggleCameraType = () =>
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
@@ -79,9 +85,8 @@ export default function Homepage({ route, navigation }) {
     setFlashMode("off");
   };
 
-  //! passing result data to result page thorugh navigation
   const onNavigatePress = (result) => {
-    navigation.navigate("Result",{result:result});
+    navigation.navigate("Result",{result:result,previousScreen:route.name});
   };
 
   //take image from screenshoot
@@ -136,13 +141,22 @@ export default function Homepage({ route, navigation }) {
 
   const sendData = useCallback(async () => {
     try {
-      let result_fetch = sendFetch();
-      setContent(result_fetch)
-      //! fix get data()
-      console.log(cropRef.current.getData());
-      // let originX, originY, width, height = cropRef.current.getData;
-      // let [originX, originY, width, height] = [250, 250, 200, 300];
-      // console.log(originX, originY, width, height);
+      // let result_fetch = await sendFetch();
+      // console.log(result_fetch)
+      // setContent(result_fetch)
+      let {originX, originY, width, height} = cropRef.current.getData();
+      console.log(originX, originY, width, height)
+      let img_width, img_height;
+      await Image.getSize(image,(width,height)=>{
+        img_width = width;
+        img_height = height;
+      });
+      // scaling to match the image size
+      originX = originX * (img_width / width);
+      originY = originY * (img_height / height);
+      width = width * (img_width / width);
+      height = height * (img_height / height);
+      console.log(originX,originY,width,height);
       // const manipulatedImage = await manipulateAsync(image, [
       //   {
       //     crop: {
@@ -153,11 +167,9 @@ export default function Homepage({ route, navigation }) {
       //     },
       //   },
       // ]);
-      // console.log(manipulatedImage);
       // setImage(manipulatedImage.uri);
-      // let result =  sendFetch(manipulatedImage)
-      // let result = sendFetch("content result test sending to result page");
-      // await onNavigatePress(result);
+      const result = "hello"
+      await onNavigatePress(result);
     } catch (e) {
       console.log(e);
     }
@@ -165,6 +177,7 @@ export default function Homepage({ route, navigation }) {
 
   useEffect(() => {
     (async function () {
+      setImage(null)
       //3x initial render karena ada 3 setup
       checkCameraPermission();
       checkMediaPermission();
@@ -182,7 +195,11 @@ export default function Homepage({ route, navigation }) {
           <WebView
               originWhitelist={['*']}
               source={{ html: content }}
+              // source={{ html: "<body>"+(content)+"</body>" }}
           />
+          {/* <Text>
+            {content}
+          </Text> */}
         </ViewFullScreen>
       ):image ? (
         <ViewFullScreen>
@@ -192,10 +209,8 @@ export default function Homepage({ route, navigation }) {
             image={image}
           />
           <View style={{ flexDirection:'row' }}>
-            {/* <Icon_Retake text={"Retake"} func={setImage(null)}/>
-            <Icon_Done  text={"Done"} func={sendData}/> */}
-            <Text onPress={() => setImage(null)}>retake</Text>
-            <Text onPress={() => sendData()}>done</Text>
+            <Icon_Retake text={"Retake"} onPress={()=>setImage(null)}/>
+            <Icon_Done  text={"Done"} onPress={()=>sendData()}/>
           </View>
         </ViewFullScreen>
       ) : (
@@ -208,12 +223,9 @@ export default function Homepage({ route, navigation }) {
             ratio="16:9"
           >
             <AlignHorizontally>
-                {/* <Icon_Media func={openMedia}/>
-                <Icon_Snapshot func={takePicture} onPress={()=>takePicture()}/>
-                <Icon_Flash func={toggleFlash} on={flashMode==="torch"}/> */}
-              <Text style={{color:'white'}} onPress={() => openMedia()}>media</Text>
-              <Text style={{color:'white'}} onPress={() => takePicture()}>snapshot</Text>
-              <Text style={{color:'white'}} onPress={() => toggleFlash()}>flash</Text>
+              <Icon_Media style={{color:'white'}} onPress={() => openMedia()}/>
+              <Icon_Snapshot style={{color:'white'}} onPress={() => takePicture()}/>
+              <Icon_Flash style={{color:'white'}} onPress={() => toggleFlash()} on={flashMode==="torch"} />
             </AlignHorizontally>
           </Camera>
       )}

@@ -7,7 +7,7 @@ export default function Header({ onBackPress }) {
   return (
     <HeaderView>
       <HorizontalAlign>
-        <Icon_Back text="Back" ml={10} onPress={()=>onBackPress()}/>
+        <Icon_Back text="Back" ml={10} onPress={onBackPress}/>
       </HorizontalAlign>
       <HorizontalAlign style={{ flexDirection:"row" }}>
         <Icon_Sound text="Sound" ml={5}/>

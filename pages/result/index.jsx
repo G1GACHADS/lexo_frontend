@@ -5,16 +5,18 @@ import BottomSheet from "./bottom-sheet";
 import styled from "styled-components";
 export default function Result_Page({route,navigation}){
   const onBackPress = () => {
+    const {previousScreen} = route.params;
+    console.log(previousScreen)
     navigation.navigate(previousScreen||'Home', {
       previousScreen: route.name
     });
-    console.log(route,navigation)
   };
-  const result="lorem ipsum dolor sit amet, consectetur adipiscing lorem ipsum dolor. Cum sociis natoque penat"
+  const {result} = route.params;
+  console.log(result)
   return(
     <SafeAreaView style={{ flex:1 }}>
       <Container>
-        <Header onBackPress={onBackPress}/>
+        <Header onBackPress={()=>onBackPress()}/>
         <Main content={result}/>
       </Container>
       <BottomSheet/>
