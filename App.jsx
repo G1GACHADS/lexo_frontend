@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Home from "./pages/home";
 import Result from "./pages/result";
+import Access from "./pages/accessability";
 import theme from "./theme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -32,6 +33,7 @@ export default function App() {
     return null;
   }
   console.log("font loaded");
+  console.log(theme)
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer onLayout={onLayoutRootView}>
@@ -45,6 +47,11 @@ export default function App() {
             <Stack.Screen
               name="Result"
               component={Result}  
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Access"
+              component={Access}  
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

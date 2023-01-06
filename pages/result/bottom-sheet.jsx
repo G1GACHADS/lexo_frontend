@@ -59,22 +59,23 @@ export default function Button_Sheet() {
         initialSnapIndex={0}
         onChange={handleSheetChange}
       >
+        <BottomSheetView>
+          
+          {/* <Text>Awesome 🔥</Text> */}
+        </BottomSheetView>
         {/* <BottomSheetView>
           <Text>Awesome 🔥</Text>
         </BottomSheetView>
         <BottomSheetView>
           <Text>Awesome 🔥</Text>
-        </BottomSheetView>
-        <BottomSheetView>
-          <Text>Awesome 🔥</Text>
         </BottomSheetView> */}
-        <BottomSheetSectionList
+        {/* <BottomSheetSectionList
           sections={sections}
           keyExtractor={(i) => i}
           renderSectionHeader={renderSectionHeader}
           renderItem={renderItem}
           contentContainerStyle={styles.contentContainer}
-        />
+        /> */}
       </BottomSheet>
     </View>
   );

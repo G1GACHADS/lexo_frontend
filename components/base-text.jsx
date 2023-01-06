@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components/native'
 
 export const CoreBaseText = styled.Text`
   color: ${({ color }) => color};
-  font-family: ${({ weight }) => weight};
+  font-family: ${({ family }) => family};
   font-size: ${({ size }) => size};
 
   ${props =>
@@ -85,55 +85,42 @@ export const BaseText = props => {
     [props.color]
   )
 
-  const weight = useMemo(() => {
-    let _weight = theme.typography.weight.regular
+  const family = useMemo(() => {
+    let _family = theme.typography.family.medium
     if (props.bold) {
-      _weight = theme.typography.weight.bold
+      _family = theme.typography.family.bold
     } else if (props.semiBold) {
-      _weight = theme.typography.weight.semiBold
-    } else if (props.medium) {
-      _weight = theme.typography.weight.medium
-    }
+      _family = theme.typography.family.semiBold
+    } 
 
-    return _weight
+    return _family
   }, [props.bold, props.semiBold, props.medium])
 
   const size = useMemo(() => {
     let _size = theme.typography
-    if (props.tall) {
-      _size = _size.tall
-    } else if (props.grande) {
-      _size = _size.grande
-    } else if (props.venti) {
-      _size = _size.venti
+    if (props.heading) {
+      _size = _size.heading
+    } else if (props.subheading) {
+      _size = _size.subheading
+    } else if (props.body) {
+      _size = _size.body
+    } else if (props.label) {
+      _size = _size.label
+    } else if (props.mini) {
+      _size = _size.mini
     }
 
-    if (props.xs) {
-      _size = _size.xs
-    } else if (props.sm) {
-      _size = _size.sm
-    } else if (props.md) {
-      _size = _size.md
-    } else if (props.lg) {
-      _size = _size.lg
-    } else if (props.xl) {
-      _size = _size.xl
-    }
+    _size = _size.sz
 
     return _size
   }, [
     props.tall,
     props.grande,
     props.venti,
-    props.xs,
-    props.sm,
-    props.md,
-    props.lg,
-    props.xl,
   ])
 
   return (
-    <CoreBaseText {...{ ...props, weight, color, size }}>
+    <CoreBaseText {...{ ...props, family, color, size }}>
       {props.children}
     </CoreBaseText>
   )

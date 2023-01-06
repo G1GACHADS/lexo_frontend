@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components/native'
 
 export const Text = styled.Text`
   color: ${({ color }) => color};
-  font-family: ${({ weight }) => weight};
+  font-family: ${({ family }) => family};
   font-size: ${({ size }) => size};
 
   ${props => props.capitalize && `text-transform: capitalize`}
