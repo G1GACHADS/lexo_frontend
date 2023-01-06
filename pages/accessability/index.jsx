@@ -78,7 +78,7 @@ export default function Button_Sheet() {
     ),
     []
   );
-  console.log(theme.typography.family.bold)
+  // console.log(theme.typography.family.bold)
   return (
     <View style={{flex: 1}}>
       <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
@@ -110,7 +110,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 >
                 Bionic
-              </Text> 
+              </Text>
             </ButtonContainer>
             <ButtonContainer
               onPress={() => toggleCustomFilter(custom.TEXT)}
@@ -127,7 +127,7 @@ export default function Button_Sheet() {
                 size={theme.typography.heading.sz}
                 >
                 Text
-              </Text> 
+              </Text>
             </ButtonContainer>
             <ButtonContainer
               onPress={() => toggleCustomFilter(custom.THEME)}
@@ -144,7 +144,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 >
                 Theme
-              </Text> 
+              </Text>
             </ButtonContainer>
           </CustomContainer>
           {/* <Text>

@@ -4,6 +4,7 @@ import {
   ScrollView,
   View,
   Image,
+  ActivityIndicator,
   SafeAreaView,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
@@ -54,6 +55,7 @@ export default function Homepage({ route, navigation }) {
   const [flashMode, setFlashMode] = useState(null);
   const cameraRef = useRef(null);
   const [editorVisible, setEditorVisible] = useState(false);
+  const [loading,setLoading] = useState(false);
   const { height:screenHeight, width:screenWidth } = useWindowDimensions();
 
   const toggleCameraType = () =>
@@ -91,8 +93,10 @@ export default function Homepage({ route, navigation }) {
     cameraRatio();
   };
 
-  const onNavigatePress = (result) => {
-    navigation.navigate("Result",{result:result,previousScreen:route.name});
+  const onNavigatePress = async(result) => {
+    console.log(result)
+    setLoading(false)
+    await navigation.navigate("Result",{result:result,previousScreen:route.name});
   };
 
   //take image from screenshoot
@@ -122,10 +126,10 @@ export default function Homepage({ route, navigation }) {
       setImage(result.uri);
     }
   };
-  const sendFetch = useCallback(async () => {
+  const sendFetch = useCallback(async (imgURI) => {
     const data = new FormData();
     data.append("image", {
-      uri: image,
+      uri: imgURI,
       type: "image/jpeg",
       name: "image.jpg",
     });
@@ -137,26 +141,14 @@ export default function Homepage({ route, navigation }) {
       },
     })
       .then((response) => {
-        console.log(response.data["html"]);
-        setImage(null)
-        return response.data["html"];
+        onNavigatePress(response.data["html"]);
       })
-      .catch(e=>{
+      .catch(err=>{
         console.log(err);
 
       });
   }, [image]);
 
-  const sendData = useCallback(async (imgURI) => {
-    //!fix data not valid
-    try {
-      let result_fetch = "hello"||await sendFetch();
-      console.log(result_fetch)
-      await onNavigatePress(result_fetch);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [image]);
 
   useEffect(() => {
     (async function () {
@@ -169,8 +161,15 @@ export default function Homepage({ route, navigation }) {
 
   }, []);
 
-  if (cameraPermission === false) {
+  if (cameraPermission === false ) {
     return <LoadingView />;
+  }
+  if (loading){
+    return (
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    )
   }
   return (
     <SafeAreaView style={{ flex: 1 }} collapsable={false}>
@@ -180,8 +179,9 @@ export default function Homepage({ route, navigation }) {
             visible={editorVisible}
             imageUri={ image }
             style={{ width:screenWidth,height:screenHeight}}
-            onEditingComplete={(result) => {
-              sendData(result.uri);
+            onEditingComplete={async(result) => {
+              setLoading(true)
+              sendFetch(result.uri);
             }}
             onCloseEditor={() => {setImage(null);setEditorVisible(false);}}
             fixedCropAspectRatio={Number(ratio.split(":")[0])/Number(ratio.split(":")[1])}

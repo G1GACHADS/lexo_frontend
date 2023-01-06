@@ -46,12 +46,12 @@ export default function App() {
             />
             <Stack.Screen
               name="Result"
-              component={Result}  
+              component={Result}
               options={{ headerShown: false }}
             />
             <Stack.Screen
               name="Access"
-              component={Access}  
+              component={Access}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
