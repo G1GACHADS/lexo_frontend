@@ -35,7 +35,6 @@ const ResizableDraggableView = React.forwardRef((props,ref)=>{
     }
     return crossingBoundary;
   };
-  //!fix this
   ref.current = {
     getData: function(){return{originX:position.x,originY:position.y,width:dimensions.width,height:dimensions.height}}
   }

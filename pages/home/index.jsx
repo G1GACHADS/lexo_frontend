@@ -10,8 +10,6 @@ import { Camera, CameraType } from "expo-camera";
 
 import styled from "styled-components/native";
 
-import * as MediaLibrary from "expo-media-library";
-
 import * as ImagePicker from "expo-image-picker";
 
 import { captureRef } from "react-native-view-shot";
@@ -32,9 +30,12 @@ import Icon_Flash from "../../components/icons/icon-flash";
 import Icon_Retake from "../../components/icons/icon-retake";
 import Icon_Done from "../../components/icons/icon-done";
 
+import { optimal_ratio } from "./methods";
+
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
-import Loading from "../../components/loading";
+import { ImageEditor } from "expo-image-editor";
+
 function LoadingView() {
   return (
     <View>
@@ -49,24 +50,17 @@ export default function Homepage({ route, navigation }) {
   const [type, setType] = useState(null);
   const [cameraPermission, setCameraPermission] = useState(null);
   const [mediaPermission, setMediaPermission] = useState(null);
-  const [content,setContent] = useState(`
-  <body style="display:flex; flex-direction: column;justify-content: center;
-    align-items:center; color:white;background-color:black; height: 100%;font-family:Jakarta-b;font-weight:bold">
-      <h2 style="font-size:50;
-      text-align: left;" id="h2_element">
-        <i>meh</i><bold>meh</bold>This text will be changed later!
-      </h2>
-   </body>`)
+  const [ratio,setRatio] = useState(null);
   const [flashMode, setFlashMode] = useState(null);
   const cameraRef = useRef(null);
-  const cropRef = useRef(null);
-  const album_name = "lexo";
-  const { height, width } = useWindowDimensions();
+  const [editorVisible, setEditorVisible] = useState(false);
+  const { height:screenHeight, width:screenWidth } = useWindowDimensions();
 
   const toggleCameraType = () =>
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
+
   const toggleFlash = () =>
     setFlashMode((current) => (current === "torch" ? "off" : "torch"));
 
@@ -76,13 +70,25 @@ export default function Homepage({ route, navigation }) {
   }, [cameraPermission]);
 
   const checkMediaPermission = useCallback(async () => {
-    const permission = await Camera.requestCameraPermissionsAsync();
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     setMediaPermission(permission.status === "granted");
   }, [mediaPermission]);
+
+  const cameraRatio = useCallback(async () => {
+    try{
+      const ratios = await cameraRef.current.getSupportedRatiosAsync();
+      let choose_ratio = await optimal_ratio(ratios);
+      setRatio(choose_ratio);
+    }
+    catch(e){
+      console.log(e);
+    }
+  }, [ratio]);
 
   const initialCameraSetup = () => {
     setType(CameraType.back);
     setFlashMode("off");
+    cameraRatio();
   };
 
   const onNavigatePress = (result) => {
@@ -98,6 +104,7 @@ export default function Homepage({ route, navigation }) {
         format: "jpg",
       });
       setImage(result);
+      setEditorVisible(true);
     } catch (e) {
       console.log(e);
     }
@@ -131,6 +138,7 @@ export default function Homepage({ route, navigation }) {
     })
       .then((response) => {
         console.log(response.data["html"]);
+        setImage(null)
         return response.data["html"];
       })
       .catch(e=>{
@@ -139,37 +147,12 @@ export default function Homepage({ route, navigation }) {
       });
   }, [image]);
 
-  const sendData = useCallback(async () => {
+  const sendData = useCallback(async (imgURI) => {
+    //!fix data not valid
     try {
-      // let result_fetch = await sendFetch();
-      // console.log(result_fetch)
-      // setContent(result_fetch)
-      let {originX, originY, width, height} = cropRef.current.getData();
-      console.log(originX, originY, width, height)
-      let img_width, img_height;
-      await Image.getSize(image,(width,height)=>{
-        img_width = width;
-        img_height = height;
-      });
-      // scaling to match the image size
-      originX = originX * (img_width / width);
-      originY = originY * (img_height / height);
-      width = width * (img_width / width);
-      height = height * (img_height / height);
-      console.log(originX,originY,width,height);
-      // const manipulatedImage = await manipulateAsync(image, [
-      //   {
-      //     crop: {
-      //       height: height,
-      //       originX: originX,
-      //       originY: originY,
-      //       width: width,
-      //     },
-      //   },
-      // ]);
-      // setImage(manipulatedImage.uri);
-      const result = "hello"
-      await onNavigatePress(result);
+      let result_fetch = "hello"||await sendFetch();
+      console.log(result_fetch)
+      await onNavigatePress(result_fetch);
     } catch (e) {
       console.log(e);
     }
@@ -183,6 +166,7 @@ export default function Homepage({ route, navigation }) {
       checkMediaPermission();
       initialCameraSetup();
     })();
+
   }, []);
 
   if (cameraPermission === false) {
@@ -190,37 +174,36 @@ export default function Homepage({ route, navigation }) {
   }
   return (
     <SafeAreaView style={{ flex: 1 }} collapsable={false}>
-      {content?(
+      {image ? (
         <ViewFullScreen>
-          <WebView
-              originWhitelist={['*']}
-              source={{ html: content }}
-              // source={{ html: "<body>"+(content)+"</body>" }}
+          <ImageEditor
+            visible={editorVisible}
+            imageUri={ image }
+            style={{ width:screenWidth,height:screenHeight}}
+            onEditingComplete={(result) => {
+              sendData(result.uri);
+            }}
+            onCloseEditor={() => {setImage(null);setEditorVisible(false);}}
+            fixedCropAspectRatio={Number(ratio.split(":")[0])/Number(ratio.split(":")[1])}
+            minimumCropDimensions={{
+              width: 5,
+              height: 5,
+            }}
+            mode="crop-only"
           />
-          {/* <Text>
-            {content}
-          </Text> */}
-        </ViewFullScreen>
-      ):image ? (
-        <ViewFullScreen>
-          <Image source={{ uri: image }} style={{ width:width,height:height}} />
-          <ResizableDraggableView
-            ref={cropRef}
-            image={image}
-          />
-          <View style={{ flexDirection:'row' }}>
+          {/* <View style={{ flexDirection:'row' }}>
             <Icon_Retake text={"Retake"} onPress={()=>setImage(null)}/>
             <Icon_Done  text={"Done"} onPress={()=>sendData()}/>
-          </View>
+          </View> */}
         </ViewFullScreen>
       ) : (
-          //! fix camera distorted when rotate
           <Camera
-            style={{ flex: 1,width:width,height:height}}
+            style={{ flex: 1,width:screenWidth,height:screenHeight}}
             type={type}
             flashMode={flashMode}
             ref={cameraRef}
-            ratio="16:9"
+            ratio={ratio}
+            onCameraReady={()=>initialCameraSetup()}
           >
             <AlignHorizontally>
               <Icon_Media style={{color:'white'}} onPress={() => openMedia()}/>
