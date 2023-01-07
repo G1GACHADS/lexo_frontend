@@ -12,7 +12,11 @@ const custom = {
   TEXT: 'text',
   THEME: 'theme'
 }
-
+const customBg = {
+  DEFAULT: 'default',
+  CALM: 'calm',
+  FOCUS: 'focus' 
+}
 export default function Button_Sheet() {
   const theme = useTheme()
 
@@ -21,6 +25,7 @@ export default function Button_Sheet() {
   const snapPoints = useMemo(() => ["30%", "50%", "100%"], []);
   const sheetRef = useRef(null);
   const [selectedCustom, setSelectedCustom] = useState([])
+  // custom top select
   function customSelected(custom) {
     return selectedCustom.includes(custom)
   }
@@ -39,6 +44,25 @@ export default function Button_Sheet() {
     )
   }
 
+  // custom background select
+  const [selectedCustomBg, setSelectedCustomBg] = useState([])
+  function customBgSelected(customBg) {
+    return selectedCustomBg.includes(customBg)
+  }
+  function toggleCustomBgFilter(customBg) {
+    if (!customBgSelected(customBg)) {
+      setSelectedCustomBg(selectedCustomBg => [
+        ...selectedCustomBg,
+        customBg,
+      ])
+      return
+    }
+    setSelectedCustomBg(selectedCustomBg =>
+      selectedCustomBg.filter(
+        selectedCustomBg => selectedCustomBg !== customBg
+      )
+    )
+  }
   const handleSheetChange = useCallback((index) => {
     console.log("handleSheetChange", index);
   }, []);
@@ -93,21 +117,23 @@ export default function Button_Sheet() {
         onChange={handleSheetChange}
       >
         <BottomSheetView>
-          <CustomContainer
-            style={{ fontWeight:'bold' }}>
+        <Container>
+
+          <CustomContainer>
             <ButtonContainer
               onPress={() => toggleCustomFilter(custom.BIONIC)}
               isSelected={customSelected(custom.BIONIC)}
-            >
+              >
               <BionicIcon />
               <Text
                 color={
                   customSelected(custom.BIONIC)
-                    ? theme.colors.white
-                    : theme.colors.black
+                  ? theme.colors.white
+                  : theme.colors.black
                 }
                 family={theme.typography.family.bold}
                 size={theme.typography.label.sz}
+                pl={5}
                 >
                 Bionic
               </Text>
@@ -115,16 +141,17 @@ export default function Button_Sheet() {
             <ButtonContainer
               onPress={() => toggleCustomFilter(custom.TEXT)}
               isSelected={customSelected(custom.TEXT)}
-            >
+              >
               <TextIcon />
               <Text
                 color={
                   customSelected(custom.TEXT)
-                    ? theme.colors.white
-                    : theme.colors.black
+                  ? theme.colors.white
+                  : theme.colors.black
                 }
                 family={theme.typography.family.bold}
-                size={theme.typography.heading.sz}
+                size={theme.typography.label.sz}
+                pl={5}
                 >
                 Text
               </Text>
@@ -132,50 +159,119 @@ export default function Button_Sheet() {
             <ButtonContainer
               onPress={() => toggleCustomFilter(custom.THEME)}
               isSelected={customSelected(custom.THEME)}
-            >
+              >
               <ThemeIcon />
               <Text
                 color={
                   customSelected(custom.THEME)
-                    ? theme.colors.white
-                    : theme.colors.black
+                  ? theme.colors.white
+                  : theme.colors.black
                 }
                 family={theme.typography.family.bold}
                 size={theme.typography.label.sz}
+                pl={5}
                 >
                 Theme
               </Text>
             </ButtonContainer>
           </CustomContainer>
-          {/* <Text>
+          <Text
+            color={theme.colors.black}
+            family={theme.typography.family.bold}
+            size={theme.typography.label.sz}
+            mb={15}
+            >
             Fixation
           </Text>
-          <Text>
+          <Text
+            color={theme.colors.black}
+            family={theme.typography.family.bold}
+            size={theme.typography.label.sz}
+            mb={15}
+            >
+            Saccade
+          </Text>
+          <Text
+            color={theme.colors.black}
+            family={theme.typography.family.bold}
+            size={theme.typography.label.sz}
+            mb={15}
+            >
             Text Style
-          </Text> */}
-          <CustomContainer>
-
-          </CustomContainer>
-          {/* <Text>
+          </Text>
+          <Text
+            color={theme.colors.black}
+            family={theme.typography.family.bold}
+            size={theme.typography.label.sz}
+            mb={15}
+            >
+            Font Family
+          </Text>
+          <Text
+            color={theme.colors.black}
+            family={theme.typography.family.bold}
+            size={theme.typography.label.sz}
+            mb={15}
+          >
             Color Theme
-          </Text> */}
+          </Text>
           <CustomContainer>
-            {/* <Text>
-              Default
-            </Text>
-            <Text>
-              Calm
-            </Text>
-            <Text>
-              Focus
-            </Text> */}
+            <CustomBgContainer
+            onPress={() => toggleCustomBgFilter(customBg.DEFAULT)}
+            isSelected={customBgSelected(customBg.DEFAULT)}
+            >
+            <Text
+                color={
+                  customBgSelected(customBg.DEFAULT)
+                  ? theme.colors.white
+                  : theme.colors.black
+                }
+                family={theme.typography.family.bold}
+                size={theme.typography.label.sz}
+                >
+                Default
+              </Text>
+              </CustomBgContainer>
+            <CustomBgContainer
+            onPress={() => toggleCustomBgFilter(customBg.CALM)}
+            isSelected={customBgSelected(customBg.CALM)}
+            >
+              <Text
+                color={
+                  customBgSelected(customBg.CALM)
+                  ? theme.colors.white
+                  : theme.colors.black
+                }
+                family={theme.typography.family.bold}
+                size={theme.typography.label.sz}
+                >
+                Calm
+              </Text>
+            </CustomBgContainer>
+            <CustomBgContainer
+            onPress={() => toggleCustomBgFilter(customBg.FOCUS)}
+            isSelected={customBgSelected(customBg.FOCUS)}
+            >
+              <Text
+                color={
+                  customBgSelected(customBg.FOCUS)
+                  ? theme.colors.white
+                  : theme.colors.black
+                }
+                family={theme.typography.family.bold}
+                size={theme.typography.label.sz}
+                >
+                Focus
+              </Text>
+            </CustomBgContainer>
           </CustomContainer>
           {/* <Text>Awesome 🔥</Text> */}
+        </Container>
         </BottomSheetView>
         {/* <BottomSheetView>
           <Text>Awesome 🔥</Text>
-        </BottomSheetView>
-        <BottomSheetView>
+          </BottomSheetView>
+          <BottomSheetView>
           <Text>Awesome 🔥</Text>
         </BottomSheetView> */}
         {/* <BottomSheetSectionList
@@ -189,26 +285,30 @@ export default function Button_Sheet() {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 200,
-  },
-  contentContainer: {
-    backgroundColor: "white",
-  },
-  sectionHeaderContainer: {
-    backgroundColor: "white",
-    padding: 6,
-  },
-  itemContainer: {
-    padding: 6,
-    margin: 6,
-    backgroundColor: "#eee",
-  },
-});
+// const styles = StyleSheet.create({
+  //   container: {
+    //     flex: 1,
+    //     paddingTop: 200,
+    //   },
+    //   contentContainer: {
+      //     backgroundColor: "white",
+      //   },
+//   sectionHeaderContainer: {
+//     backgroundColor: "white",
+//     padding: 6,
+//   },
+//   itemContainer: {
+//     padding: 6,
+//     margin: 6,
+//     backgroundColor: "#eee",
+//   },
+// });
+const Container = styled.View`
+  margin: 20px;
+`
 const CustomContainer = styled.View`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
@@ -218,10 +318,24 @@ const ButtonContainer = styled.Pressable`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 20px;
-  color: ${({ theme, isSelected }) =>
-  isSelected ? theme.colors.white : theme.colors.black};
+  align-items: center;
   padding: 8px 10px;
+  border: 2px solid #E0E0E0;
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.black : theme.colors.white};
+  border-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.black : theme.colors.grey1};
+  border-radius: 5px;
+`
+const CustomBgContainer = styled.Pressable`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 96.67px;
+  height: 50px;
+  padding-top: 10px;
   border: 2px solid #E0E0E0;
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.black : theme.colors.white};
