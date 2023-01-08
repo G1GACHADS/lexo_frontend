@@ -109,13 +109,16 @@ export default function Homepage({ route, navigation }) {
   };
 
   const openMedia = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync(ImagePickerOption);
-    console.log(result)
-    if (!result.canceled) {
-      setImage(result.uri);
-      setEditorVisible(true);
-    }
-    else setImage(null);
+    await ImagePicker.launchImageLibraryAsync(ImagePickerOption)
+      .then((image) => {
+        if (!image.cancelled) {
+          setImage(image.uri);
+          setEditorVisible(true);
+        }
+      })
+      .catch(e=>{
+        console.log(e);
+      });
   };
   const sendFetch = useCallback(async (imgURI) => {
     onNavigatePress("hello");
