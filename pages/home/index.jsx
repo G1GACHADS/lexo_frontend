@@ -5,8 +5,11 @@ import {
   View,
   Image,
   ActivityIndicator,
-  SafeAreaView,
+  SafeAreaView
 } from "react-native";
+
+import { useIsFocused } from '@react-navigation/native';
+
 import { Camera, CameraType } from "expo-camera";
 
 import styled from "styled-components/native";
@@ -56,8 +59,9 @@ export default function Homepage({ route, navigation }) {
   const [editorVisible, setEditorVisible] = useState(false);
   const [loading,setLoading] = useState(false);
   const { height:screenHeight, width:screenWidth } = useWindowDimensions();
+  const isFocused = useIsFocused()
+
   //navigation
-  // let previousScreen   = route.params.previousScreen||null;
   const toggleFlash = () => setFlashMode((current) => (current === "torch" ? "off" : "torch"));
 
   const checkCameraPermission = useCallback(async () => {
@@ -85,13 +89,11 @@ export default function Homepage({ route, navigation }) {
     setType(CameraType.back);
     setFlashMode("off");
     cameraRatio();
-    // cameraRef.current.resumePreview();
   };
 
   const onNavigatePress = async(result) => {
     console.log(result)
     setLoading(false)
-    cameraRef.current = null;
     await navigation.navigate("Result",{result:result,previousScreen:route.name});
   };
 
@@ -113,7 +115,7 @@ export default function Homepage({ route, navigation }) {
       setImage(result.uri);
       setEditorVisible(true);
     }
-    setImage(null)
+    else setImage(null);
   };
   const sendFetch = useCallback(async (imgURI) => {
     onNavigatePress("hello");
@@ -142,8 +144,7 @@ export default function Homepage({ route, navigation }) {
       checkMediaPermission();
       initialCameraSetup();
     })();
-  }, [cameraRef.current]);
-
+  }, []);
 
   if (cameraPermission === false ) {
     return <LoadingView />;
@@ -157,14 +158,15 @@ export default function Homepage({ route, navigation }) {
   }
   return (
     <SafeAreaView style={{ flex: 1 }} collapsable={false}>
-        <ViewFullScreen>
+        { isFocused &&
+          <ViewFullScreen>
           <Camera
             style={{ flex: 1,width:screenWidth,height:screenHeight}}
             type={type}
             flashMode={flashMode}
             ref={cameraRef}
             ratio={ratio}
-            // onCameraReady={()=>initialCameraSetup()}
+            onCameraReady={()=>initialCameraSetup()}
           >
             <AlignHorizontally>
               <Icon_Media style={{color:'white'}} onPress={() => openMedia()}/>
@@ -179,6 +181,7 @@ export default function Homepage({ route, navigation }) {
             onEditingComplete={async(result) => {
               setLoading(true)
               sendFetch(result.uri);
+              setEditorVisible(false);
             }}
             onCloseEditor={() => {setImage(null);setEditorVisible(false);}}
             // fixedCropAspectRatio={Number(ratio.split(":")[0])/Number(ratio.split(":")[1])}
@@ -187,8 +190,9 @@ export default function Homepage({ route, navigation }) {
               height: 5,
             }}
             mode="crop-only"
-          />
-        </ViewFullScreen>
+            />
+            </ViewFullScreen>
+          }
     </SafeAreaView>
   );
 }
