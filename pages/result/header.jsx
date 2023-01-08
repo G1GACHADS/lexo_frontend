@@ -7,23 +7,29 @@ export default function Header({ onBackPress }) {
   return (
     <HeaderView>
       <HorizontalAlign>
-        <Icon_Back text="Back" ml={10} onPress={onBackPress}/>
+        <Icon_Back text="Back" ml={7} onPress={onBackPress}/>
       </HorizontalAlign>
       <HorizontalAlign style={{ flexDirection:"row" }}>
-        <Icon_Sound text="Sound" ml={5}/>
-        <Icon_Settings text="Settings" ml={5}/>
+        <Icon_Sound text="Sound" ml={7}/>
+        <Margin px={10}/>
+        <Icon_Settings text="Settings" ml={7}/>
       </HorizontalAlign>
     </HeaderView>
   );
 }
 const HeaderView = styled.View`
   flex-direction: row;
+  margin: 10px 10px 2px 10px;
   justify-content: space-between;
-  margin: 5px 0px;
+  // background-color: green;
 `
 const HorizontalAlign = styled.View`
   flex-direction: row;
   background-color: #fff;
   border-radius: 10px;
   padding: 5px 10px;
+`
+
+const Margin = styled.View`
+  width: ${props => props.px}px;
 `

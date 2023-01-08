@@ -2,20 +2,18 @@ import React, { useCallback, useRef, useMemo, useState } from "react";
 import styled, { useTheme } from 'styled-components/native'
 import { StyleSheet,View, Button } from "react-native";
 import Text from "../../components/text";
-import BottomSheet, { BottomSheetView,BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView,BottomSheetSectionList,BottomSheetScrollView  } from "@gorhom/bottom-sheet";
 
 import ThemeSection from "./theme";
 import BionicSection from "./bionic";
 import TextSection from "./text";
-
-
 
 export default function Button_Sheet() {
   const theme = useTheme()
 
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
-  const snapPoints = useMemo(() => ["30%", "50%", "100%"], []);
+  const snapPoints = useMemo(() => ["13%","50%"], []);
   const sheetRef = useRef(null);
 
   const handleSheetChange = useCallback((index) => {
@@ -57,13 +55,7 @@ export default function Button_Sheet() {
     ),
     []
   );
-  // console.log(theme.typography.family.bold)
   return (
-    <View style={{flex: 1}}>
-      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-      <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-      <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} />
       <BottomSheet
         // style={{ position: 'absolute' }}
         ref={sheetRef}
@@ -71,17 +63,13 @@ export default function Button_Sheet() {
         initialSnapIndex={0}
         onChange={handleSheetChange}
       >
-        <BottomSheetView>
+        <BottomSheetScrollView>
         <Container>
-
           < BionicSection />
           < TextSection />
           < ThemeSection />
-
-          {/* <Text>Awesome 🔥</Text> */}
-
         </Container>
-        </BottomSheetView>
+        </BottomSheetScrollView>
         {/* <BottomSheetView>
           <Text>Awesome 🔥</Text>
           </BottomSheetView>
@@ -96,7 +84,6 @@ export default function Button_Sheet() {
           contentContainerStyle={styles.contentContainer}
         /> */}
       </BottomSheet>
-    </View>
   );
 }
 // const styles = StyleSheet.create({

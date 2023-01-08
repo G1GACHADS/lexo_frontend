@@ -12,8 +12,8 @@ export default function Result_Page({route,navigation}){
       previousScreen: route.name
     });
   };
-  // const {result} = route.params;
-  const {result} = "blablabla";
+  const {result} = route.params;
+  // const {result} = "blablabla";
   console.log(result)
   return(
     <SafeAreaView style={{ flex:1 }}>
@@ -22,11 +22,12 @@ export default function Result_Page({route,navigation}){
         <Main content={result}/>
       </Container>
       <Access/>
-      {/* <BottomSheet/> */}
     </SafeAreaView>
   )
 }
 const Container = styled.View`
   flex: 1;
-  margin: 0 20px;
+  height: 100%;
+  width: 100%;
+  text-align: left;
 `

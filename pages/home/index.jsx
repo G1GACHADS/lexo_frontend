@@ -19,8 +19,6 @@ import ResizableDraggableView from "../../components/camera-center";
 
 import { useWindowDimensions } from "react-native";
 
-import { WebView } from 'react-native-webview';
-
 
 import Api from "../../api";
 
@@ -31,7 +29,8 @@ import Icon_Flash from "../../components/icons/icon-flash";
 import Icon_Retake from "../../components/icons/icon-retake";
 import Icon_Done from "../../components/icons/icon-done";
 
-import { optimal_ratio } from "./methods";
+import { optimal_ratio,build_form_data } from "./methods";
+import { ImagePickerOption,snapshotOption } from "./constants"
 
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
@@ -57,14 +56,9 @@ export default function Homepage({ route, navigation }) {
   const [editorVisible, setEditorVisible] = useState(false);
   const [loading,setLoading] = useState(false);
   const { height:screenHeight, width:screenWidth } = useWindowDimensions();
-
-  const toggleCameraType = () =>
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-
-  const toggleFlash = () =>
-    setFlashMode((current) => (current === "torch" ? "off" : "torch"));
+  //navigation
+  // let previousScreen   = route.params.previousScreen||null;
+  const toggleFlash = () => setFlashMode((current) => (current === "torch" ? "off" : "torch"));
 
   const checkCameraPermission = useCallback(async () => {
     const permission = await Camera.requestCameraPermissionsAsync();
@@ -91,22 +85,20 @@ export default function Homepage({ route, navigation }) {
     setType(CameraType.back);
     setFlashMode("off");
     cameraRatio();
+    // cameraRef.current.resumePreview();
   };
 
   const onNavigatePress = async(result) => {
     console.log(result)
     setLoading(false)
+    cameraRef.current = null;
     await navigation.navigate("Result",{result:result,previousScreen:route.name});
   };
 
   //take image from screenshoot
   const takePicture = async () => {
     try {
-      const result = await captureRef(cameraRef.current, {
-        result: "tmpfile",
-        quality: 1,
-        format: "jpg",
-      });
+      const result = await captureRef(cameraRef.current,snapshotOption);
       setImage(result);
       setEditorVisible(true);
     } catch (e) {
@@ -115,51 +107,43 @@ export default function Homepage({ route, navigation }) {
   };
 
   const openMedia = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [16, 9],
-      quality: 1,
-    });
-
+    let result = await ImagePicker.launchImageLibraryAsync(ImagePickerOption);
+    console.log(result)
     if (!result.canceled) {
       setImage(result.uri);
+      setEditorVisible(true);
     }
+    setImage(null)
   };
   const sendFetch = useCallback(async (imgURI) => {
-    const data = new FormData();
-    data.append("image", {
-      uri: imgURI,
-      type: "image/jpeg",
-      name: "image.jpg",
-    });
-    data.append("fixation", 1);
-    data.append("saccade", 10);
-    await Api.post("bionic", data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((response) => {
-        onNavigatePress(response.data["html"]);
-      })
-      .catch(err=>{
-        console.log(err);
+    onNavigatePress("hello");
+    // const data = build_form_data(imgURI,1,10)
+    // await Api.post("bionic", data, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(response.data["html"])
+    //     onNavigatePress(response.data["html"]);
+    //   })
+    //   .catch(err=>{
+    //     console.log(err);
 
-      });
+    //   });
   }, [image]);
 
 
   useEffect(() => {
     (async function () {
-      setImage(null)
       //3x initial render karena ada 3 setup
+      setImage(null)
       checkCameraPermission();
       checkMediaPermission();
       initialCameraSetup();
     })();
+  }, [cameraRef.current]);
 
-  }, []);
 
   if (cameraPermission === false ) {
     return <LoadingView />;
@@ -173,37 +157,14 @@ export default function Homepage({ route, navigation }) {
   }
   return (
     <SafeAreaView style={{ flex: 1 }} collapsable={false}>
-      {image ? (
         <ViewFullScreen>
-          <ImageEditor
-            visible={editorVisible}
-            imageUri={ image }
-            style={{ width:screenWidth,height:screenHeight}}
-            onEditingComplete={async(result) => {
-              setLoading(true)
-              sendFetch(result.uri);
-            }}
-            onCloseEditor={() => {setImage(null);setEditorVisible(false);}}
-            fixedCropAspectRatio={Number(ratio.split(":")[0])/Number(ratio.split(":")[1])}
-            minimumCropDimensions={{
-              width: 5,
-              height: 5,
-            }}
-            mode="crop-only"
-          />
-          {/* <View style={{ flexDirection:'row' }}>
-            <Icon_Retake text={"Retake"} onPress={()=>setImage(null)}/>
-            <Icon_Done  text={"Done"} onPress={()=>sendData()}/>
-          </View> */}
-        </ViewFullScreen>
-      ) : (
           <Camera
             style={{ flex: 1,width:screenWidth,height:screenHeight}}
             type={type}
             flashMode={flashMode}
             ref={cameraRef}
             ratio={ratio}
-            onCameraReady={()=>initialCameraSetup()}
+            // onCameraReady={()=>initialCameraSetup()}
           >
             <AlignHorizontally>
               <Icon_Media style={{color:'white'}} onPress={() => openMedia()}/>
@@ -211,7 +172,23 @@ export default function Homepage({ route, navigation }) {
               <Icon_Flash style={{color:'white'}} onPress={() => toggleFlash()} on={flashMode==="torch"} />
             </AlignHorizontally>
           </Camera>
-      )}
+          <ImageEditor
+            visible={ editorVisible }
+            imageUri={ image }
+            style={{ width:screenWidth,height:screenHeight,opacity:0}}
+            onEditingComplete={async(result) => {
+              setLoading(true)
+              sendFetch(result.uri);
+            }}
+            onCloseEditor={() => {setImage(null);setEditorVisible(false);}}
+            // fixedCropAspectRatio={Number(ratio.split(":")[0])/Number(ratio.split(":")[1])}
+            minimumCropDimensions={{
+              width: 5,
+              height: 5,
+            }}
+            mode="crop-only"
+          />
+        </ViewFullScreen>
     </SafeAreaView>
   );
 }
