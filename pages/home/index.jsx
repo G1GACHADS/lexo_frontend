@@ -31,11 +31,14 @@ import Icon_Snapshot from "../../components/icons/icon-snap";
 import Icon_Flash from "../../components/icons/icon-flash";
 import Icon_Retake from "../../components/icons/icon-retake";
 import Icon_Done from "../../components/icons/icon-done";
+import SomethingWentWrong from "../../components/something-went-wrong";
+import CameraOutline from '../../components/camera-outline';
+
 
 import { optimal_ratio,build_form_data } from "./methods";
 import { ImagePickerOption,snapshotOption } from "./constants"
 
-import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+// import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
 import { ImageEditor } from "expo-image-editor";
 
@@ -171,6 +174,7 @@ export default function Homepage({ route, navigation }) {
             ratio={ratio}
             onCameraReady={()=>initialCameraSetup()}
           >
+            <CameraOutline/>
             <AlignHorizontally>
               <Icon_Media style={{color:'white'}} onPress={() => openMedia()}/>
               <Icon_Snapshot style={{color:'white'}} onPress={() => takePicture()}/>
@@ -187,7 +191,6 @@ export default function Homepage({ route, navigation }) {
               setEditorVisible(false);
             }}
             onCloseEditor={() => {setImage(null);setEditorVisible(false);}}
-            // fixedCropAspectRatio={Number(ratio.split(":")[0])/Number(ratio.split(":")[1])}
             minimumCropDimensions={{
               width: 5,
               height: 5,
