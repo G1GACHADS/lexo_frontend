@@ -112,11 +112,16 @@ export default function Button_Sheet() {
         <Container>
         <CustomContainer>
             <ButtonContainer
-              onPress={() => toggleCustomFilter(custom.BIONIC) && setShouldShow(!shouldShow)}
+              onPress={() => toggleCustomFilter(custom.BIONIC)
+                 && setShouldShow(!shouldShow)
+                }
               isSelected={customSelected(custom.BIONIC)}
               >
-               { <BionicIcon /> /*Here we will return the view when state is true 
-        and will return false if state is false*/}
+               { 
+               <BionicIcon /> 
+        //        Here we will return the view when state is true 
+        // and will return false if state is false
+          }
               {shouldShow ?
               (
                 <BionicIconActive />
@@ -135,11 +140,16 @@ export default function Button_Sheet() {
               </Text>
             </ButtonContainer>
             <ButtonContainer
-              onPress={() => toggleCustomFilter(custom.TEXT)  && setShouldShow(!shouldShow)}
+              onPress={() => toggleCustomFilter(custom.TEXT)  
+                && setShouldShow(!shouldShow)
+              }
               isSelected={customSelected(custom.TEXT)}
               >
-              { <TextIcon /> /*Here we will return the view when state is true 
-        and will return false if state is false*/}
+              { 
+              <TextIcon /> 
+              //Here we will return the view when state is true 
+        //and will return false if state is false
+            }
               {shouldShow ?
               (
                 <TextIconActive />
@@ -162,8 +172,11 @@ export default function Button_Sheet() {
               onPress={() => toggleCustomFilter(custom.THEME)  && setShouldShow(!shouldShow)}
               isSelected={customSelected(custom.THEME)}
               >
-              { <ThemeIcon /> /*Here we will return the view when state is true 
-        and will return false if state is false*/}
+              { 
+              <ThemeIcon /> 
+        //       Here we will return the view when state is true 
+        // and will return false if state is false
+        }
               {shouldShow ?
               (
                 <ThemeIconActive />

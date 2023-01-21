@@ -12,8 +12,8 @@ export default function Result_Page({route,navigation}){
       previousScreen: route.name
     });
   };
-  const {result} = route.params;
-  // const {result} = "blablabla";
+  // const {result} = route.params;
+  const {result} = "blablabla";
   console.log(result)
   return(
     <SafeAreaView style={{ flex:1 }}>

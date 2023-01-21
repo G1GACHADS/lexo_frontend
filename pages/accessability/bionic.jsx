@@ -19,7 +19,7 @@ export default function BionicSection() {
             >
             Fixation
           </Text>
-          <HelpIcon />5
+          <HelpIcon />
         </Container>
         <Container>
           <Text
