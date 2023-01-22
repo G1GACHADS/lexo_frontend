@@ -1,19 +1,18 @@
-import React, { useCallback, useRef, useMemo, useState } from "react";
-import styled, { useTheme } from "styled-components/native";
-import { View } from "react-native";
-import Text from "../../components/text";
+import React, { useState } from 'react'
+import { View } from 'react-native'
+import styled, { useTheme } from 'styled-components/native'
+import Text from '../../components/text'
 
-import SizeIcon from "../../components/icons/size-icon";
-import HeightIcon from "../../components/icons/height-icon";
-import SpaceIcon from "../../components/icons/space-icon";
-import ParagraphIcon from "../../components/icons/paragraph-icon";
+import HeightIcon from '../../components/icons/height-icon'
+import ParagraphIcon from '../../components/icons/paragraph-icon'
+import SizeIcon from '../../components/icons/size-icon'
+import SpaceIcon from '../../components/icons/space-icon'
 
-import SizeIconActive from "../../components/icons/size-icon-active";
-import HeightIconActive from "../../components/icons/height-icon-active";
-import SpaceIconActive from "../../components/icons/space-icon-active";
-import ParagraphIconActive from "../../components/icons/paragraph-icon-active";
+import HeightIconActive from '../../components/icons/height-icon-active'
+import ParagraphIconActive from '../../components/icons/paragraph-icon-active'
+import SizeIconActive from '../../components/icons/size-icon-active'
+import SpaceIconActive from '../../components/icons/space-icon-active'
 
-import Slider from "@react-native-community/slider";
 // import SizeMini from "../../components/icons/size-mini";
 // import HeightMini from "../../components/icons/height-mini";
 // import SpaceMini from "../../components/icons/space-mini";
@@ -24,38 +23,38 @@ import Slider from "@react-native-community/slider";
 // import ParagraphNormal from "../../components/icons/paragraph-normal";
 
 export default function TextSection() {
-  const theme = useTheme();
-  const [isSizeActive, setSizeActive] = useState(false);
-  const [isHeightActive, setHeightActive] = useState(false);
-  const [isLetterSpaceActive, setLetterSpaceActive] = useState(false);
-  const [isParagraphSpaceActive, setParagraphSpaceActive] = useState(false);
+  const theme = useTheme()
+  const [isSizeActive, setSizeActive] = useState(false)
+  const [isHeightActive, setHeightActive] = useState(false)
+  const [isLetterSpaceActive, setLetterSpaceActive] = useState(false)
+  const [isParagraphSpaceActive, setParagraphSpaceActive] = useState(false)
   const handleSizePress = () => {
-    setSizeActive(true);
-    setHeightActive(false);
-    setLetterSpaceActive(false);
-    setParagraphSpaceActive(false);
-  };
+    setSizeActive(true)
+    setHeightActive(false)
+    setLetterSpaceActive(false)
+    setParagraphSpaceActive(false)
+  }
 
   const handleHeightPress = () => {
-    setSizeActive(false);
-    setHeightActive(true);
-    setLetterSpaceActive(false);
-    setParagraphSpaceActive(false);
-  };
+    setSizeActive(false)
+    setHeightActive(true)
+    setLetterSpaceActive(false)
+    setParagraphSpaceActive(false)
+  }
 
   const handleLetterSpacePress = () => {
-    setSizeActive(false);
-    setHeightActive(false);
-    setLetterSpaceActive(true);
-    setParagraphSpaceActive(false);
-  };
+    setSizeActive(false)
+    setHeightActive(false)
+    setLetterSpaceActive(true)
+    setParagraphSpaceActive(false)
+  }
 
   const handleParagraphSpacePress = () => {
-    setSizeActive(false);
-    setHeightActive(false);
-    setLetterSpaceActive(false);
-    setParagraphSpaceActive(true);
-  };
+    setSizeActive(false)
+    setHeightActive(false)
+    setLetterSpaceActive(false)
+    setParagraphSpaceActive(true)
+  }
 
   // const heightSlider = () => {
   // return(
@@ -90,26 +89,26 @@ export default function TextSection() {
       </Text>
       <CustomContainer>
         <ButtonContainer
-          style={{ 
-            width: 68.75, height: 44, 
-            justifyContent: "center",
+          style={{
+            width: 68.75,
+            height: 44,
+            justifyContent: 'center',
             backgroundColor: isSizeActive
               ? theme.colors.black
               : theme.colors.white,
-            borderColor: isSizeActive
-              ? theme.colors.black
-              : theme.colors.grey1,
+            borderColor: isSizeActive ? theme.colors.black : theme.colors.grey1,
           }}
           onPress={() => {
-            handleSizePress();
+            handleSizePress()
           }}
         >
           {isSizeActive ? <SizeIconActive /> : <SizeIcon />}
         </ButtonContainer>
         <ButtonContainer
-          style={{ 
-            width: 68.75, height: 44, 
-            justifyContent: "center",
+          style={{
+            width: 68.75,
+            height: 44,
+            justifyContent: 'center',
             backgroundColor: isHeightActive
               ? theme.colors.black
               : theme.colors.white,
@@ -118,15 +117,16 @@ export default function TextSection() {
               : theme.colors.grey1,
           }}
           onPress={() => {
-            handleHeightPress();
+            handleHeightPress()
           }}
         >
           {isHeightActive ? <HeightIconActive /> : <HeightIcon />}
         </ButtonContainer>
         <ButtonContainer
-          style={{ 
-            width: 68.75, height: 44, 
-            justifyContent: "center",
+          style={{
+            width: 68.75,
+            height: 44,
+            justifyContent: 'center',
             backgroundColor: isLetterSpaceActive
               ? theme.colors.black
               : theme.colors.white,
@@ -135,24 +135,25 @@ export default function TextSection() {
               : theme.colors.grey1,
           }}
           onPress={() => {
-            handleLetterSpacePress();
+            handleLetterSpacePress()
           }}
         >
           {isLetterSpaceActive ? <SpaceIconActive /> : <SpaceIcon />}
         </ButtonContainer>
         <ButtonContainer
-          style={{ 
-            width: 68.75, height: 44, 
-            justifyContent: "center",
+          style={{
+            width: 68.75,
+            height: 44,
+            justifyContent: 'center',
             backgroundColor: isParagraphSpaceActive
               ? theme.colors.black
               : theme.colors.white,
             borderColor: isParagraphSpaceActive
               ? theme.colors.black
               : theme.colors.grey1,
-           }}
+          }}
           onPress={() => {
-            handleParagraphSpacePress();
+            handleParagraphSpacePress()
           }}
         >
           {isParagraphSpaceActive ? <ParagraphIconActive /> : <ParagraphIcon />}
@@ -181,7 +182,7 @@ export default function TextSection() {
         Font Family
       </Text>
     </View>
-  );
+  )
 }
 
 const Container = styled.View`
@@ -189,7 +190,7 @@ const Container = styled.View`
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-`;
+`
 const CustomContainer = styled.View`
   display: flex;
   justify-content: space-between;
@@ -197,7 +198,7 @@ const CustomContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 20px;
-`;
+`
 const ButtonContainer = styled.Pressable`
   display: flex;
   flex-direction: row;
@@ -206,4 +207,4 @@ const ButtonContainer = styled.Pressable`
   padding: 8px 10px;
   border: 2px solid #e0e0e0;
   border-radius: 5px;
-`;
+`

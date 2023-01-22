@@ -5,48 +5,48 @@ export const Text = styled.Text`
   font-family: ${({ family }) => family};
   font-size: ${({ size }) => size};
 
-  ${props => props.capitalize && `text-transform: capitalize`}
-  ${props => props.padding && `padding: ${props.padding}`}
-  ${props => props.margin && `margin: ${props.margin}`}
-  ${props => props.textAlign && `text-align: ${props.textAlign}`}
+  ${(props) => props.capitalize && `text-transform: capitalize`}
+  ${(props) => props.padding && `padding: ${props.padding}`}
+  ${(props) => props.margin && `margin: ${props.margin}`}
+  ${(props) => props.textAlign && `text-align: ${props.textAlign}`}
 
-  ${props =>
+  ${(props) =>
     props.mb &&
     css`
       margin-bottom: ${props.mb}px;
     `};
-  ${props =>
+  ${(props) =>
     props.mt &&
     css`
       margin-top: ${props.mt}px;
     `};
-  ${props =>
+  ${(props) =>
     props.ml &&
     css`
       margin-left: ${props.ml}px;
     `};
-  ${props =>
+  ${(props) =>
     props.mr &&
     css`
       margin-right: ${props.mr}px;
     `};
 
-  ${props =>
+  ${(props) =>
     props.pb &&
     css`
       padding-bottom: ${props.pb}px;
     `};
-  ${props =>
+  ${(props) =>
     props.pt &&
     css`
       padding-top: ${props.pt}px;
     `};
-  ${props =>
+  ${(props) =>
     props.pl &&
     css`
       padding-left: ${props.pl}px;
     `};
-  ${props =>
+  ${(props) =>
     props.pr &&
     css`
       padding-right: ${props.pr}px;
