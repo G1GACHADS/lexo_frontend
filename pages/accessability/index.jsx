@@ -70,10 +70,10 @@ export default function Button_Sheet() {
   // console.log(theme.typography.family.bold)
   return (
     <View style={{flex: 1}}>
-      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+      {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
       <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
       <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} />
+      <Button title="Close" onPress={() => handleClosePress()} /> */}
       <BottomSheet
         // style={{ position: 'absolute' }}
         ref={sheetRef}

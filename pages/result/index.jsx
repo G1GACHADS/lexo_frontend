@@ -12,8 +12,7 @@ export default function Result_Page({route,navigation}){
       previousScreen: route.name
     });
   };
-  // const {result} = route.params;
-  const {result} = "blablabla";
+  const {result} = route.params;
   console.log(result)
   return(
     <SafeAreaView style={{ flex:1 }}>
@@ -21,7 +20,7 @@ export default function Result_Page({route,navigation}){
         <Header onBackPress={()=>onBackPress()}/>
         <Main content={result}/>
       </Container>
-      <Access/>
+      <Access style={{ position:'absolute' }}/>
     </SafeAreaView>
   )
 }
