@@ -16,7 +16,9 @@ import BionicIconActive from "../../components/icons/bionic-icon-active"
 import TextIconActive from "../../components/icons/text-icon-active"
 import ThemeIconActive from "../../components/icons/theme-icon-active"
 
-import slider from "./slider";
+// import slider from "./slider";
+import Slider from "@react-native-community/slider";
+
 
 const custom = {
   BIONIC: 'bionic',
@@ -49,7 +51,7 @@ export default function Button_Sheet() {
       )
     )
   }
-  
+
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const snapPoints = useMemo(() => ["30%", "50%", "100%"], []);
@@ -65,35 +67,6 @@ export default function Button_Sheet() {
     sheetRef.current?.close();
   }, []);
 
-  const sections = useMemo(
-    () =>
-      Array(10)
-        .fill(0)
-        .map((_, index) => ({
-          title: `Section ${index}`,
-          data: Array(10)
-            .fill(0)
-            .map((_, index) => `Item ${index}`),
-        })),
-    []
-  );
-  // render
-  const renderSectionHeader = useCallback(
-    ({ section }) => (
-      <View style={styles.sectionHeaderContainer}>
-        <Text>{section.title}</Text>
-      </View>
-    ),
-    []
-  );
-  const renderItem = useCallback(
-    ({ item }) => (
-      <View style={styles.itemContainer}>
-        <Text>{item}</Text>
-      </View>
-    ),
-    []
-  );
   // console.log(theme.typography.family.bold)
   return (
     <View style={{flex: 1}}>
@@ -107,6 +80,8 @@ export default function Button_Sheet() {
         snapPoints={snapPoints}
         initialSnapIndex={0}
         onChange={handleSheetChange}
+        activeOffsetY={[-1, 1]}
+        failOffsetX={[-5, 5]}
       >
         <BottomSheetView>
         <Container>
@@ -117,15 +92,15 @@ export default function Button_Sheet() {
                 }
               isSelected={customSelected(custom.BIONIC)}
               >
-               { 
-               <BionicIcon /> 
-        //        Here we will return the view when state is true 
+               {
+               <BionicIcon />
+        //        Here we will return the view when state is true
         // and will return false if state is false
           }
               {shouldShow ?
               (
                 <BionicIconActive />
-              ) : null} 
+              ) : null}
               <Text
                 color={
                   customSelected(custom.BIONIC)
@@ -140,21 +115,21 @@ export default function Button_Sheet() {
               </Text>
             </ButtonContainer>
             <ButtonContainer
-              onPress={() => toggleCustomFilter(custom.TEXT)  
+              onPress={() => toggleCustomFilter(custom.TEXT)
                 && setShouldShow(!shouldShow)
               }
               isSelected={customSelected(custom.TEXT)}
               >
-              { 
-              <TextIcon /> 
-              //Here we will return the view when state is true 
+              {
+              <TextIcon />
+              //Here we will return the view when state is true
         //and will return false if state is false
             }
               {shouldShow ?
               (
                 <TextIconActive />
-              ) : null} 
-              
+              ) : null}
+
               <Text
                 color={
                   customSelected(custom.TEXT)
@@ -172,16 +147,16 @@ export default function Button_Sheet() {
               onPress={() => toggleCustomFilter(custom.THEME)  && setShouldShow(!shouldShow)}
               isSelected={customSelected(custom.THEME)}
               >
-              { 
-              <ThemeIcon /> 
-        //       Here we will return the view when state is true 
+              {
+              <ThemeIcon />
+        //       Here we will return the view when state is true
         // and will return false if state is false
         }
               {shouldShow ?
               (
                 <ThemeIconActive />
-              ) : null} 
-              
+              ) : null}
+
               <Text
                 color={
                   customSelected(custom.THEME)

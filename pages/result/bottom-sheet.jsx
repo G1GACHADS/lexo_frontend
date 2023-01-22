@@ -49,10 +49,6 @@ export default function Button_Sheet() {
   );
   return (
     <View style={{ flex: 1 }}>
-      {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-      <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-      <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} /> */}
       <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
@@ -60,22 +56,7 @@ export default function Button_Sheet() {
         onChange={handleSheetChange}
       >
         <BottomSheetView>
-          
-          {/* <Text>Awesome 🔥</Text> */}
         </BottomSheetView>
-        {/* <BottomSheetView>
-          <Text>Awesome 🔥</Text>
-        </BottomSheetView>
-        <BottomSheetView>
-          <Text>Awesome 🔥</Text>
-        </BottomSheetView> */}
-        {/* <BottomSheetSectionList
-          sections={sections}
-          keyExtractor={(i) => i}
-          renderSectionHeader={renderSectionHeader}
-          renderItem={renderItem}
-          contentContainerStyle={styles.contentContainer}
-        /> */}
       </BottomSheet>
     </View>
   );
