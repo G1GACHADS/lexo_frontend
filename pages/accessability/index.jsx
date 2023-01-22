@@ -32,13 +32,11 @@ export default function Button_Sheet() {
 
   const [selectedCustom, setSelectedCustom] = useState([]);
 
-  const [shouldShow, setShouldShow] = useState(true);
+  // State of Top Button Functions
 
-  // State of
-  
-  const [ isBionicActive, setBionicActive] = useState(false);
+  const [isBionicActive, setBionicActive] = useState(false);
   const [isTextActive, setTextActive] = useState(false);
-  const [ isThemeActive, setThemeActive] = useState(false);
+  const [isThemeActive, setThemeActive] = useState(false);
 
   const handleBionicPress = () => {
     setBionicActive(true);
@@ -58,9 +56,6 @@ export default function Button_Sheet() {
     setThemeActive(true);
   };
 
-  
-  
-  
   // custom top select
   function customSelected(custom) {
     return selectedCustom.includes(custom);
@@ -90,12 +85,11 @@ export default function Button_Sheet() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+      {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
       <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
       <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} />
+      <Button title="Close" onPress={() => handleClosePress()} /> */}
       <BottomSheet
-        // style={{ position: 'absolute' }}
         ref={sheetRef}
         snapPoints={snapPoints}
         initialSnapIndex={0}
@@ -107,24 +101,23 @@ export default function Button_Sheet() {
               <ButtonContainer
                 onPress={() => {
                   toggleCustomFilter(custom.BIONIC);
-                  // setShouldShow(!shouldShow);
                   handleBionicPress();
+                  handleSnapPress(2);
                 }}
                 isSelected={customSelected(custom.BIONIC)}
-                style={{backgroundColor: 
-                isBionicActive ? theme.colors.black : theme.colors.white,
-                borderColor: 
-                isBionicActive ? theme.colors.black : theme.colors.grey1}}
+                style={{
+                  backgroundColor: isBionicActive
+                    ? theme.colors.black
+                    : theme.colors.white,
+                  borderColor: isBionicActive
+                    ? theme.colors.black
+                    : theme.colors.grey1,
+                }}
               >
-                { 
-                  isBionicActive ? <BionicIconActive /> : <BionicIcon /> 
-                }
-                {/* { !isBionicActive && <BionicIcon /> } */}
+                {isBionicActive ? <BionicIconActive /> : <BionicIcon />}
                 <Text
                   color={
-                    isBionicActive
-                      ? theme.colors.white
-                      : theme.colors.black
+                    isBionicActive ? theme.colors.white : theme.colors.black
                   }
                   family={theme.typography.family.bold}
                   size={theme.typography.label.sz}
@@ -136,28 +129,22 @@ export default function Button_Sheet() {
               <ButtonContainer
                 onPress={() => {
                   toggleCustomFilter(custom.TEXT);
-                  // setShouldShow(!shouldShow);
                   handleTextPress();
+                  handleSnapPress(2);
                 }}
                 isSelected={customSelected(custom.TEXT)}
-                style={{backgroundColor: 
-                isTextActive ? theme.colors.black : theme.colors.white,
-                borderColor: 
-                isTextActive ? theme.colors.black : theme.colors.grey1}}
+                style={{
+                  backgroundColor: isTextActive
+                    ? theme.colors.black
+                    : theme.colors.white,
+                  borderColor: isTextActive
+                    ? theme.colors.black
+                    : theme.colors.grey1,
+                }}
               >
-                { isTextActive ?  
-                  <TextIconActive /> : <TextIcon />
-                  //Here we will return the view when state is true
-                  //and will return false if state is false
-                }
-                {/* {!isTextActive ? <TextIcon /> : null} */}
-
+                {isTextActive ? <TextIconActive /> : <TextIcon />}
                 <Text
-                  color={
-                    isTextActive
-                      ? theme.colors.white
-                      : theme.colors.black
-                  }
+                  color={isTextActive ? theme.colors.white : theme.colors.black}
                   family={theme.typography.family.bold}
                   size={theme.typography.label.sz}
                   pl={5}
@@ -168,27 +155,23 @@ export default function Button_Sheet() {
               <ButtonContainer
                 onPress={() => {
                   toggleCustomFilter(custom.THEME);
-                  // setShouldShow(!shouldShow);
                   handleThemePress();
+                  handleSnapPress(2);
                 }}
                 isSelected={customSelected(custom.THEME)}
-                style={{backgroundColor: 
-                isThemeActive ? theme.colors.black : theme.colors.white,
-                borderColor: 
-                isThemeActive ? theme.colors.black : theme.colors.grey1}}
+                style={{
+                  backgroundColor: isThemeActive
+                    ? theme.colors.black
+                    : theme.colors.white,
+                  borderColor: isThemeActive
+                    ? theme.colors.black
+                    : theme.colors.grey1,
+                }}
               >
-                { isThemeActive ?  
-                  <ThemeIconActive /> : <ThemeIcon />
-                  //       Here we will return the view when state is true
-                  // and will return false if state is false
-                }
-                {/* {!isThemeActive ? <ThemeIcon /> : null} */}
-
+                {isThemeActive ? <ThemeIconActive /> : <ThemeIcon />}
                 <Text
                   color={
-                    isThemeActive
-                      ? theme.colors.white
-                      : theme.colors.black
+                    isThemeActive ? theme.colors.white : theme.colors.black
                   }
                   family={theme.typography.family.bold}
                   size={theme.typography.label.sz}
@@ -198,15 +181,9 @@ export default function Button_Sheet() {
                 </Text>
               </ButtonContainer>
             </CustomContainer>
-            { 
-              isBionicActive && <BionicSection />
-            }
-            { 
-              isTextActive && <TextSection />
-            }
-            { 
-              isThemeActive && <ThemeSection />
-            }
+            {isBionicActive && <BionicSection />}
+            {isTextActive && <TextSection />}
+            {isThemeActive && <ThemeSection />}
           </Container>
         </BottomSheetView>
       </BottomSheet>

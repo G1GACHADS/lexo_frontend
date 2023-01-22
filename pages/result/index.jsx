@@ -20,6 +20,7 @@ export default function Result_Page({route,navigation}){
         <Header onBackPress={()=>onBackPress()}/>
         <Main content={result}/>
       </Container>
+      {/* <BottomSheet/> */}
       <Access style={{ position:'absolute' }}/>
     </SafeAreaView>
   )
