@@ -1,59 +1,82 @@
 import React, { useCallback, useRef, useMemo, useState } from "react";
-import styled, { useTheme } from 'styled-components/native'
-import { StyleSheet,View, Button } from "react-native";
+import styled, { useTheme } from "styled-components/native";
+import { StyleSheet, View, Button } from "react-native";
 import Text from "../../components/text";
-import BottomSheet, { BottomSheetView,BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetView,
+  BottomSheetSectionList,
+} from "@gorhom/bottom-sheet";
+
+import ThreeButtonToggle from "./try";
 
 import ThemeSection from "./theme";
 import BionicSection from "./bionic";
 import TextSection from "./text";
 
-import BionicIcon from "../../components/icons/bionic-icon"
-import TextIcon from "../../components/icons/text-icon"
-import ThemeIcon from "../../components/icons/theme-icon"
+import BionicIcon from "../../components/icons/bionic-icon";
+import TextIcon from "../../components/icons/text-icon";
+import ThemeIcon from "../../components/icons/theme-icon";
 
-import BionicIconActive from "../../components/icons/bionic-icon-active"
-import TextIconActive from "../../components/icons/text-icon-active"
-import ThemeIconActive from "../../components/icons/theme-icon-active"
+import BionicIconActive from "../../components/icons/bionic-icon-active";
+import TextIconActive from "../../components/icons/text-icon-active";
+import ThemeIconActive from "../../components/icons/theme-icon-active";
 
-// import slider from "./slider";
-import Slider from "@react-native-community/slider";
-
+// import Slider from "./slider";
 
 const custom = {
-  BIONIC: 'bionic',
-  TEXT: 'text',
-  THEME: 'theme'
-}
+  BIONIC: "bionic",
+  TEXT: "text",
+  THEME: "theme",
+};
 
 export default function Button_Sheet() {
-  const theme = useTheme()
+  const theme = useTheme();
 
-  const [selectedCustom, setSelectedCustom] = useState([])
+  const [selectedCustom, setSelectedCustom] = useState([]);
 
   const [shouldShow, setShouldShow] = useState(true);
 
+  // State of
+  
+  const [ isBionicActive, setBionicActive] = useState(false);
+  const [isTextActive, setTextActive] = useState(false);
+  const [ isThemeActive, setThemeActive] = useState(false);
+
+  const handleBionicPress = () => {
+    setBionicActive(true);
+    setTextActive(false);
+    setThemeActive(false);
+  };
+
+  const handleTextPress = () => {
+    setBionicActive(false);
+    setTextActive(true);
+    setThemeActive(false);
+  };
+
+  const handleThemePress = () => {
+    setBionicActive(false);
+    setTextActive(false);
+    setThemeActive(true);
+  };
+
+  
+  
+  
   // custom top select
   function customSelected(custom) {
-    return selectedCustom.includes(custom)
+    return selectedCustom.includes(custom);
   }
   function toggleCustomFilter(custom) {
     if (!customSelected(custom)) {
-      setSelectedCustom(selectedCustom => [
-        ...selectedCustom,
-        custom,
-      ])
-      return
+      setSelectedCustom((selectedCustom) => [...selectedCustom, custom]);
+      return;
     }
-    setSelectedCustom(selectedCustom =>
-      selectedCustom.filter(
-        selectedCustom => selectedCustom !== custom
-      )
-    )
+    setSelectedCustom((selectedCustom) =>
+      selectedCustom.filter((selectedCustom) => selectedCustom !== custom)
+    );
   }
 
-  const [index, setIndex] = useState(0);
-  const [open, setOpen] = useState(false);
   const snapPoints = useMemo(() => ["30%", "50%", "100%"], []);
   const sheetRef = useRef(null);
 
@@ -67,156 +90,124 @@ export default function Button_Sheet() {
     sheetRef.current?.close();
   }, []);
 
-  // console.log(theme.typography.family.bold)
   return (
-    <View style={{flex: 1}}>
-      {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+    <View style={{ flex: 1 }}>
+      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
       <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
       <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} /> */}
+      <Button title="Close" onPress={() => handleClosePress()} />
       <BottomSheet
         // style={{ position: 'absolute' }}
         ref={sheetRef}
         snapPoints={snapPoints}
         initialSnapIndex={0}
         onChange={handleSheetChange}
-        activeOffsetY={[-1, 1]}
-        failOffsetX={[-5, 5]}
       >
         <BottomSheetView>
-        <Container>
-        <CustomContainer>
-            <ButtonContainer
-              onPress={() => toggleCustomFilter(custom.BIONIC)
-                 && setShouldShow(!shouldShow)
-                }
-              isSelected={customSelected(custom.BIONIC)}
+          <Container>
+            <ThreeButtonToggle/>
+            <CustomContainer>
+              <ButtonContainer
+                onPress={() => {
+                  toggleCustomFilter(custom.BIONIC);
+                  // setShouldShow(!shouldShow);
+                  handleBionicPress();
+                }}
+                isSelected={customSelected(custom.BIONIC)}
               >
-               {
-               <BionicIcon />
-        //        Here we will return the view when state is true
-        // and will return false if state is false
-          }
-              {shouldShow ?
-              (
-                <BionicIconActive />
-              ) : null}
-              <Text
-                color={
-                  customSelected(custom.BIONIC)
-                  ? theme.colors.white
-                  : theme.colors.black
+                { 
+                  isBionicActive ? <BionicIconActive /> : <BionicIcon /> 
                 }
-                family={theme.typography.family.bold}
-                size={theme.typography.label.sz}
-                pl={5}
+                {/* { !isBionicActive && <BionicIcon /> } */}
+                <Text
+                  color={
+                    isBionicActive
+                      ? theme.colors.white
+                      : theme.colors.black
+                  }
+                  family={theme.typography.family.bold}
+                  size={theme.typography.label.sz}
+                  pl={5}
                 >
-                Bionic
-              </Text>
-            </ButtonContainer>
-            <ButtonContainer
-              onPress={() => toggleCustomFilter(custom.TEXT)
-                && setShouldShow(!shouldShow)
-              }
-              isSelected={customSelected(custom.TEXT)}
+                  Bionic
+                </Text>
+              </ButtonContainer>
+              <ButtonContainer
+                onPress={() => {
+                  toggleCustomFilter(custom.TEXT);
+                  // setShouldShow(!shouldShow);
+                  handleTextPress();
+                }}
+                isSelected={customSelected(custom.TEXT)}
               >
-              {
-              <TextIcon />
-              //Here we will return the view when state is true
-        //and will return false if state is false
+                { isTextActive ?  
+                  <TextIconActive /> : <TextIcon />
+                  //Here we will return the view when state is true
+                  //and will return false if state is false
+                }
+                {/* {!isTextActive ? <TextIcon /> : null} */}
+
+                <Text
+                  color={
+                    isTextActive
+                      ? theme.colors.white
+                      : theme.colors.black
+                  }
+                  family={theme.typography.family.bold}
+                  size={theme.typography.label.sz}
+                  pl={5}
+                >
+                  Text
+                </Text>
+              </ButtonContainer>
+              <ButtonContainer
+                onPress={() => {
+                  toggleCustomFilter(custom.THEME);
+                  // setShouldShow(!shouldShow);
+                  handleThemePress();
+                }}
+                isSelected={customSelected(custom.THEME)}
+              >
+                { isThemeActive ?  
+                  <ThemeIconActive /> : <ThemeIcon />
+                  //       Here we will return the view when state is true
+                  // and will return false if state is false
+                }
+                {/* {!isThemeActive ? <ThemeIcon /> : null} */}
+
+                <Text
+                  color={
+                    isThemeActive
+                      ? theme.colors.white
+                      : theme.colors.black
+                  }
+                  family={theme.typography.family.bold}
+                  size={theme.typography.label.sz}
+                  pl={5}
+                >
+                  Theme
+                </Text>
+              </ButtonContainer>
+            </CustomContainer>
+            { 
+              isBionicActive && <BionicSection />
             }
-              {shouldShow ?
-              (
-                <TextIconActive />
-              ) : null}
-
-              <Text
-                color={
-                  customSelected(custom.TEXT)
-                  ? theme.colors.white
-                  : theme.colors.black
-                }
-                family={theme.typography.family.bold}
-                size={theme.typography.label.sz}
-                pl={5}
-                >
-                Text
-              </Text>
-            </ButtonContainer>
-            <ButtonContainer
-              onPress={() => toggleCustomFilter(custom.THEME)  && setShouldShow(!shouldShow)}
-              isSelected={customSelected(custom.THEME)}
-              >
-              {
-              <ThemeIcon />
-        //       Here we will return the view when state is true
-        // and will return false if state is false
-        }
-              {shouldShow ?
-              (
-                <ThemeIconActive />
-              ) : null}
-
-              <Text
-                color={
-                  customSelected(custom.THEME)
-                  ? theme.colors.white
-                  : theme.colors.black
-                }
-                family={theme.typography.family.bold}
-                size={theme.typography.label.sz}
-                pl={5}
-                >
-                Theme
-              </Text>
-            </ButtonContainer>
-          </CustomContainer>
-          < BionicSection />
-          < TextSection />
-          < ThemeSection />
-
-          {/* <Text>Awesome 🔥</Text> */}
-
-        </Container>
+            { 
+              isTextActive && <TextSection />
+            }
+            { 
+              isThemeActive && <ThemeSection />
+            }
+          </Container>
         </BottomSheetView>
-        {/* <BottomSheetView>
-          <Text>Awesome 🔥</Text>
-          </BottomSheetView>
-          <BottomSheetView>
-          <Text>Awesome 🔥</Text>
-        </BottomSheetView> */}
-        {/* <BottomSheetSectionList
-          sections={sections}
-          keyExtractor={(i) => i}
-          renderSectionHeader={renderSectionHeader}
-          renderItem={renderItem}
-          contentContainerStyle={styles.contentContainer}
-        /> */}
       </BottomSheet>
     </View>
   );
 }
-// const styles = StyleSheet.create({
-  //   container: {
-    //     flex: 1,
-    //     paddingTop: 200,
-    //   },
-    //   contentContainer: {
-      //     backgroundColor: "white",
-      //   },
-//   sectionHeaderContainer: {
-//     backgroundColor: "white",
-//     padding: 6,
-//   },
-//   itemContainer: {
-//     padding: 6,
-//     margin: 6,
-//     backgroundColor: "#eee",
-//   },
-// });
+
 const Container = styled.View`
   margin: 20px;
-`
+`;
 const CustomContainer = styled.View`
   display: flex;
   justify-content: space-between;
@@ -224,19 +215,17 @@ const CustomContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 20px;
-`
+`;
 const ButtonContainer = styled.Pressable`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   padding: 8px 10px;
-  border: 2px solid #E0E0E0;
+  border: 2px solid #e0e0e0;
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.black : theme.colors.white};
   border-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.black : theme.colors.grey1};
   border-radius: 5px;
-`
-
-
+`;
