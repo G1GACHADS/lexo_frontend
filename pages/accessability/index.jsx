@@ -7,8 +7,6 @@ import BottomSheet, {
   BottomSheetSectionList,
 } from "@gorhom/bottom-sheet";
 
-import ThreeButtonToggle from "./try";
-
 import ThemeSection from "./theme";
 import BionicSection from "./bionic";
 import TextSection from "./text";
@@ -105,7 +103,6 @@ export default function Button_Sheet() {
       >
         <BottomSheetView>
           <Container>
-            <ThreeButtonToggle/>
             <CustomContainer>
               <ButtonContainer
                 onPress={() => {
@@ -114,6 +111,10 @@ export default function Button_Sheet() {
                   handleBionicPress();
                 }}
                 isSelected={customSelected(custom.BIONIC)}
+                style={{backgroundColor: 
+                isBionicActive ? theme.colors.black : theme.colors.white,
+                borderColor: 
+                isBionicActive ? theme.colors.black : theme.colors.grey1}}
               >
                 { 
                   isBionicActive ? <BionicIconActive /> : <BionicIcon /> 
@@ -139,6 +140,10 @@ export default function Button_Sheet() {
                   handleTextPress();
                 }}
                 isSelected={customSelected(custom.TEXT)}
+                style={{backgroundColor: 
+                isTextActive ? theme.colors.black : theme.colors.white,
+                borderColor: 
+                isTextActive ? theme.colors.black : theme.colors.grey1}}
               >
                 { isTextActive ?  
                   <TextIconActive /> : <TextIcon />
@@ -167,6 +172,10 @@ export default function Button_Sheet() {
                   handleThemePress();
                 }}
                 isSelected={customSelected(custom.THEME)}
+                style={{backgroundColor: 
+                isThemeActive ? theme.colors.black : theme.colors.white,
+                borderColor: 
+                isThemeActive ? theme.colors.black : theme.colors.grey1}}
               >
                 { isThemeActive ?  
                   <ThemeIconActive /> : <ThemeIcon />
@@ -223,9 +232,5 @@ const ButtonContainer = styled.Pressable`
   align-items: center;
   padding: 8px 10px;
   border: 2px solid #e0e0e0;
-  background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.black : theme.colors.white};
-  border-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.black : theme.colors.grey1};
   border-radius: 5px;
 `;
