@@ -1,21 +1,21 @@
-import { View, Text } from "react-native";
-import Icon_Back from "../../components/icons/icon-back";
-import Icon_Sound from "../../components/icons/icon-sound";
-import Icon_Settings from "../../components/icons/icon-settings";
-import styled from "styled-components/native";
+import styled from 'styled-components/native'
+import Icon_Back from '../../components/icons/icon-back'
+import Icon_Settings from '../../components/icons/icon-settings'
+import Icon_Sound from '../../components/icons/icon-sound'
+
 export default function Header({ onBackPress }) {
   return (
     <HeaderView>
       <HorizontalAlign>
-        <Icon_Back text="Back" ml={7} onPress={onBackPress}/>
+        <Icon_Back text="Back" ml={7} onPress={onBackPress} />
       </HorizontalAlign>
-      <HorizontalAlign style={{ flexDirection:"row" }}>
-        <Icon_Sound text="Sound" ml={7}/>
-        <Margin px={10}/>
-        <Icon_Settings text="Settings" ml={7}/>
+      <HorizontalAlign style={{ flexDirection: 'row' }}>
+        <Icon_Sound text="Sound" ml={7} />
+        <Margin px={10} />
+        <Icon_Settings text="Settings" ml={7} />
       </HorizontalAlign>
     </HeaderView>
-  );
+  )
 }
 const HeaderView = styled.View`
   flex-direction: row;
@@ -31,5 +31,5 @@ const HorizontalAlign = styled.View`
 `
 
 const Margin = styled.View`
-  width: ${props => props.px}px;
+  width: ${(props) => props.px}px;
 `

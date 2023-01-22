@@ -1,26 +1,26 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "./header";
-import Main from "./main";
-import BottomSheet from "./bottom-sheet";
-import Access from "../accessability/index";
-import styled from "styled-components";
-export default function Result_Page({route,navigation}){
+import { SafeAreaView } from 'react-native-safe-area-context'
+import styled from 'styled-components'
+import Access from '../accessability/index'
+import Header from './header'
+import Main from './main'
+
+export default function Result_Page({ route, navigation }) {
   const onBackPress = () => {
-    const {previousScreen} = route.params;
+    const { previousScreen } = route.params
     console.log(previousScreen)
-    navigation.navigate(previousScreen||'Home', {
-      previousScreen: route.name
-    });
-  };
-  const {result} = route.params;
+    navigation.navigate(previousScreen || 'Home', {
+      previousScreen: route.name,
+    })
+  }
+  const { result } = route.params
   console.log(result)
-  return(
-    <SafeAreaView style={{ flex:1 }}>
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
       <Container>
-        <Header onBackPress={()=>onBackPress()}/>
-        <Main content={result}/>
+        <Header onBackPress={() => onBackPress()} />
+        <Main content={result} />
       </Container>
-      <Access style={{ position:'absolute' }}/>
+      <Access style={{ position: 'absolute' }} />
     </SafeAreaView>
   )
 }

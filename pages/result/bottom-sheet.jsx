@@ -1,22 +1,24 @@
-import React, { useCallback, useRef, useMemo, useState } from "react";
-import { StyleSheet,View, Text, Button } from "react-native";
-import BottomSheet, { BottomSheetView,BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 export default function Button_Sheet() {
-  const [index, setIndex] = useState(0);
-  const [open, setOpen] = useState(false);
-  const snapPoints = useMemo(() => ["30%", "50%", "100%"], []);
-  const sheetRef = useRef(null);
+  const [index, setIndex] = useState(0)
+  const [open, setOpen] = useState(false)
+  const snapPoints = useMemo(() => ['30%', '50%', '100%'], [])
+  const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
-    console.log("handleSheetChange", index);
-  }, []);
+    console.log('handleSheetChange', index)
+  }, [])
+
   const handleSnapPress = useCallback((index) => {
-    sheetRef.current?.snapToIndex(index);
-  }, []);
+    sheetRef.current?.snapToIndex(index)
+  }, [])
+
   const handleClosePress = useCallback(() => {
-    sheetRef.current?.close();
-  }, []);
+    sheetRef.current?.close()
+  }, [])
 
   const sections = useMemo(
     () =>
@@ -29,7 +31,7 @@ export default function Button_Sheet() {
             .map((_, index) => `Item ${index}`),
         })),
     []
-  );
+  )
   // render
   const renderSectionHeader = useCallback(
     ({ section }) => (
@@ -38,7 +40,7 @@ export default function Button_Sheet() {
       </View>
     ),
     []
-  );
+  )
   const renderItem = useCallback(
     ({ item }) => (
       <View style={styles.itemContainer}>
@@ -46,7 +48,7 @@ export default function Button_Sheet() {
       </View>
     ),
     []
-  );
+  )
   return (
     <View style={{ flex: 1 }}>
       <BottomSheet
@@ -55,11 +57,10 @@ export default function Button_Sheet() {
         initialSnapIndex={0}
         onChange={handleSheetChange}
       >
-        <BottomSheetView>
-        </BottomSheetView>
+        <BottomSheetView></BottomSheetView>
       </BottomSheet>
     </View>
-  );
+  )
 }
 const styles = StyleSheet.create({
   container: {
@@ -67,15 +68,15 @@ const styles = StyleSheet.create({
     paddingTop: 200,
   },
   contentContainer: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   sectionHeaderContainer: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 6,
   },
   itemContainer: {
     padding: 6,
     margin: 6,
-    backgroundColor: "#eee",
+    backgroundColor: '#eee',
   },
-});
+})

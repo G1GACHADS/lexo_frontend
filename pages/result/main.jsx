@@ -1,19 +1,20 @@
-import { Text, ScrollView,Linking } from "react-native"
-import styled from "styled-components/native"
-import Markdown from 'react-native-markdown-package';
+import { Text } from 'react-native'
+import Markdown from 'react-native-markdown-package'
+import styled from 'styled-components/native'
 
-export default function Main({content}){
-  return(
-    <ScrollViewContainer contentInsetAdjustmentBehavior="automatic" style={{ flex:1 }}>
-      {content?
-      <Markdown
-        styles={markdownStyle.collectiveMd}
-      >
-        {content}
-      </Markdown>
-      :<Text style={{ textAlign:'center',padding:50 }}>
-        There is no result
-      </Text>}
+export default function Main({ content }) {
+  return (
+    <ScrollViewContainer
+      contentInsetAdjustmentBehavior="automatic"
+      style={{ flex: 1 }}
+    >
+      {content ? (
+        <Markdown styles={markdownStyle.collectiveMd}>{content}</Markdown>
+      ) : (
+        <Text style={{ textAlign: 'center', padding: 50 }}>
+          There is no result
+        </Text>
+      )}
     </ScrollViewContainer>
   )
 }
@@ -23,14 +24,14 @@ const ScrollViewContainer = styled.ScrollView`
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  padding: 0 10px
+  padding: 0 10px;
 `
 const markdownStyle = {
   collectiveMd: {
-    body:{
+    body: {
       textAlign: 'left',
       color: 'black',
       fontSize: 16,
-    }
-  }
+    },
+  },
 }
