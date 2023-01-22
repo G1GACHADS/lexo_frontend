@@ -20,7 +20,7 @@ import Icon_Media from '../../components/icons/icon-media'
 import Icon_Snapshot from '../../components/icons/icon-snap'
 
 import { ImagePickerOption, snapshotOption } from './constants'
-import { optimal_ratio } from './methods'
+import { getOptimalRatio } from './methods'
 
 // import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
@@ -65,7 +65,7 @@ export default function Homepage({ route, navigation }) {
   const cameraRatio = useCallback(async () => {
     try {
       const ratios = await cameraRef.current.getSupportedRatiosAsync()
-      let choose_ratio = await optimal_ratio(ratios)
+      let choose_ratio = await getOptimalRatio(ratios)
       setRatio(choose_ratio)
     } catch (e) {
       console.log(e)
@@ -99,17 +99,20 @@ export default function Homepage({ route, navigation }) {
   }
 
   const openMedia = async () => {
-    await ImagePicker.launchImageLibraryAsync(ImagePickerOption)
-      .then((image) => {
-        if (!image.cancelled) {
-          setImage(image.uri)
-          setEditorVisible(true)
-        }
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+    const image = await ImagePicker.launchImageLibraryAsync(
+      ImagePickerOption
+    ).catch((e) => {
+      console.log(e)
+    })
+
+    if (image.cancelled) {
+      return
+    }
+
+    setImage(image.uri)
+    setEditorVisible(true)
   }
+
   const sendFetch = useCallback(
     async (imgURI) => {
       onNavigatePress(`
@@ -155,6 +158,7 @@ export default function Homepage({ route, navigation }) {
   if (cameraPermission === false) {
     return <LoadingView />
   }
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -162,6 +166,7 @@ export default function Homepage({ route, navigation }) {
       </View>
     )
   }
+
   return (
     <SafeAreaView style={{ flex: 1 }} collapsable={false}>
       {isFocused && (
@@ -215,9 +220,11 @@ export default function Homepage({ route, navigation }) {
     </SafeAreaView>
   )
 }
+
 const ViewFullScreen = styled.View`
   flex: 1;
 `
+
 const AlignHorizontally = styled.View`
   flex-direction: row;
   justify-content: space-evenly;

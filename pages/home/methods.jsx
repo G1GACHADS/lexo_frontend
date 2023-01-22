@@ -1,10 +1,10 @@
-export const optimal_ratio = (ratios) => {
+export const getOptimalRatio = (ratios) => {
   const ratio =
     ratios.find((ratio) => ratio === '20:9') || ratios[ratios.length - 1]
   return ratio
 }
 
-export const build_form_data = (image, fixation, saccade) => {
+export const createFormData = (image, fixation, saccade) => {
   const data = new FormData()
   data.append('image', {
     uri: image,

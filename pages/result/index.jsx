@@ -4,7 +4,7 @@ import Access from '../accessability/index'
 import Header from './header'
 import Main from './main'
 
-export default function Result_Page({ route, navigation }) {
+export default function ResultPage({ route, navigation }) {
   const onBackPress = () => {
     const { previousScreen } = route.params
     console.log(previousScreen)
@@ -12,6 +12,7 @@ export default function Result_Page({ route, navigation }) {
       previousScreen: route.name,
     })
   }
+
   const { result } = route.params
   console.log(result)
   return (
@@ -24,6 +25,7 @@ export default function Result_Page({ route, navigation }) {
     </SafeAreaView>
   )
 }
+
 const Container = styled.View`
   flex: 1;
   height: 100%;

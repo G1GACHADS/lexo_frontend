@@ -61,6 +61,7 @@ export default function Button_Sheet() {
   function customSelected(custom) {
     return selectedCustom.includes(custom)
   }
+
   function toggleCustomFilter(custom) {
     if (!customSelected(custom)) {
       setSelectedCustom((selectedCustom) => [...selectedCustom, custom])
@@ -194,6 +195,7 @@ const CustomContainer = styled.View`
   flex-wrap: wrap;
   margin-bottom: 20px;
 `
+
 const ButtonContainer = styled.Pressable`
   display: flex;
   flex-direction: row;

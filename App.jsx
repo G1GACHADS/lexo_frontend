@@ -1,38 +1,38 @@
-import React, { useCallback } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ThemeProvider } from "styled-components/native";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import Home from "./pages/home";
-import Result from "./pages/result";
-import Access from "./pages/accessability";
-import theme from "./theme";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen'
+import React, { useCallback } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { ThemeProvider } from 'styled-components/native'
+import Access from './pages/accessability'
+import Home from './pages/home'
+import Result from './pages/result'
+import theme from './theme'
 
-import { LogBox } from 'react-native';
+import { LogBox } from 'react-native'
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
-]);
+])
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator()
   const [fontsLoaded] = useFonts({
-    "Jakarta-m": require("./assets/fonts/PlusJakartaSans-Medium.ttf"),
-    "Jakarta-sb": require("./assets/fonts/PlusJakartaSans-SemiBold.ttf"),
-    "Jakarta-b": require("./assets/fonts/PlusJakartaSans-Bold.ttf"),
-  });
+    'Jakarta-m': require('./assets/fonts/PlusJakartaSans-Medium.ttf'),
+    'Jakarta-sb': require('./assets/fonts/PlusJakartaSans-SemiBold.ttf'),
+    'Jakarta-b': require('./assets/fonts/PlusJakartaSans-Bold.ttf'),
+  })
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      await SplashScreen.hideAsync()
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded])
 
   if (!fontsLoaded) {
-    return null;
+    return null
   }
-  console.log("font loaded");
+  console.log('font loaded')
   console.log(theme)
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -58,5 +58,5 @@ export default function App() {
         </ThemeProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
-  );
+  )
 }

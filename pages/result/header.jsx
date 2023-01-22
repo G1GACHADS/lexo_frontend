@@ -17,12 +17,14 @@ export default function Header({ onBackPress }) {
     </HeaderView>
   )
 }
+
 const HeaderView = styled.View`
   flex-direction: row;
   margin: 10px 10px 2px 10px;
   justify-content: space-between;
   // background-color: green;
 `
+
 const HorizontalAlign = styled.View`
   flex-direction: row;
   background-color: #fff;

@@ -26,6 +26,7 @@ const ScrollViewContainer = styled.ScrollView`
   height: 100%;
   padding: 0 10px;
 `
+
 const markdownStyle = {
   collectiveMd: {
     body: {

@@ -2,7 +2,7 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export default function Button_Sheet() {
+export default function BottomSheet() {
   const [index, setIndex] = useState(0)
   const [open, setOpen] = useState(false)
   const snapPoints = useMemo(() => ['30%', '50%', '100%'], [])
@@ -32,6 +32,7 @@ export default function Button_Sheet() {
         })),
     []
   )
+
   // render
   const renderSectionHeader = useCallback(
     ({ section }) => (
@@ -41,6 +42,7 @@ export default function Button_Sheet() {
     ),
     []
   )
+
   const renderItem = useCallback(
     ({ item }) => (
       <View style={styles.itemContainer}>
@@ -49,6 +51,7 @@ export default function Button_Sheet() {
     ),
     []
   )
+
   return (
     <View style={{ flex: 1 }}>
       <BottomSheet
@@ -62,6 +65,7 @@ export default function Button_Sheet() {
     </View>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

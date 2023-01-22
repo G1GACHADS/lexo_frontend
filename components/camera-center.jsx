@@ -13,13 +13,14 @@ const ResizableDraggableView = React.forwardRef((props, ref) => {
   })
   // Set up PanResponder to handle touch gestures
   const distanceToScale = Math.min(25, 10000)
-  const error_margin = 10
+  const errorMargin = 10
+
   const crossingBoundary = (x, y, w, h) => {
     let crossingBoundary =
-      x + error_margin < startWidth ||
-      y + error_margin < endWidth ||
-      x + w > maxWidth + error_margin ||
-      y + h > maxHeight + error_margin
+      x + errorMargin < startWidth ||
+      y + errorMargin < endWidth ||
+      x + w > maxWidth + errorMargin ||
+      y + h > maxHeight + errorMargin
     //update the position if it is crossing the boundary
     if (crossingBoundary) {
       let newX = x
@@ -69,8 +70,8 @@ const ResizableDraggableView = React.forwardRef((props, ref) => {
         { x: position.x + dimensions.width, y: position.y + dimensions.height }, //bottomRight
       ]
 
-      let min_distance = Number.MAX_SAFE_INTEGER
-      let min_distance_index = -1
+      let minDistance = Number.MAX_SAFE_INTEGER
+      let minDistanceIndex = -1
 
       //find the closest distance
       for (const [index, anchor] of possibility_distance.entries()) {
@@ -80,13 +81,14 @@ const ResizableDraggableView = React.forwardRef((props, ref) => {
           anchor.x,
           anchor.y
         )
-        if (distance < min_distance) {
-          min_distance = distance
-          min_distance_index = index
+        if (distance < minDistance) {
+          minDistance = distance
+          minDistanceIndex = index
         }
       }
-      // console.log(min_distance_index != -1 && min_distance < distanceToScale)
-      if (min_distance_index != -1 && min_distance < distanceToScale) {
+
+      // console.log(minDistanceIndex != -1 && minDistance < distanceToScale)
+      if (minDistanceIndex != -1 && minDistance < distanceToScale) {
         if (
           !crossingBoundary(
             position.x,
@@ -95,7 +97,7 @@ const ResizableDraggableView = React.forwardRef((props, ref) => {
             dimensions.height
           )
         ) {
-          switch (min_distance_index) {
+          switch (minDistanceIndex) {
             case 0: //topLeft bener
               setDimensions({
                 width: dimensions.width - gestureState.dx,

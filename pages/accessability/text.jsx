@@ -63,6 +63,7 @@ const CustomContainer = styled.View`
   flex-wrap: wrap;
   margin-bottom: 20px;
 `
+
 const ButtonContainer = styled.Pressable`
   display: flex;
   flex-direction: row;

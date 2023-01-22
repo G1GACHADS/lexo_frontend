@@ -8,13 +8,16 @@ const customBg = {
   CALM: 'calm',
   FOCUS: 'focus',
 }
+
 export default function ThemeSection() {
   const theme = useTheme()
 
   const [selectedCustomBg, setSelectedCustomBg] = useState([])
+
   function customBgSelected(customBg) {
     return selectedCustomBg.includes(customBg)
   }
+
   function toggleCustomBgFilter(customBg) {
     if (!customBgSelected(customBg)) {
       setSelectedCustomBg((selectedCustomBg) => [...selectedCustomBg, customBg])
