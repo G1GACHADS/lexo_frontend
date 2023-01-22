@@ -1,4 +1,4 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetView,BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
@@ -70,7 +70,7 @@ export default function Button_Sheet() {
     )
   }
 
-  const snapPoints = useMemo(() => ['30%', '50%', '100%'], [])
+  const snapPoints = useMemo(() => ['13%','30%', '50%'], [])
   const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
@@ -83,21 +83,21 @@ export default function Button_Sheet() {
     sheetRef.current?.close()
   }, [])
 
+  {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+  <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
+  <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
+  <Button title="Close" onPress={() => handleClosePress()} /> */}
   return (
-    <View style={{ flex: 1 }}>
-      {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-      <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-      <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-      <Button title="Close" onPress={() => handleClosePress()} /> */}
       <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
         initialSnapIndex={0}
-        onChange={handleSheetChange}
       >
-        <BottomSheetView>
+        <BottomSheetScrollView
+                  onChange={handleSheetChange}
+        >
           <Container>
-            <ThreeButtonToggle />
+            {/* <ThreeButtonToggle /> */}
             <CustomContainer>
               <ButtonContainer
                 onPress={() => {
@@ -186,9 +186,8 @@ export default function Button_Sheet() {
             {isTextActive && <TextSection />}
             {isThemeActive && <ThemeSection />}
           </Container>
-        </BottomSheetView>
+        </BottomSheetScrollView>
       </BottomSheet>
-    </View>
   )
 }
 

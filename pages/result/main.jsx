@@ -21,7 +21,7 @@ export default function Main({ content }) {
 
 const ScrollViewContainer = styled.ScrollView`
   flex: 1;
-  margin: 0 auto;
+  margin: 10px auto;
   width: 100%;
   height: 100%;
   padding: 0 10px;

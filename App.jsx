@@ -38,7 +38,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer onLayout={onLayoutRootView}>
         <ThemeProvider theme={theme}>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="Result">
             <Stack.Screen
               name="Home"
               component={Home}
