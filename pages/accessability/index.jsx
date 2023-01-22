@@ -1,6 +1,6 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { Button, View } from 'react-native'
+import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 import Text from '../../components/text'
 
@@ -33,9 +33,9 @@ export default function Button_Sheet() {
 
   // State of Top Button Functions
 
-  const [isBionicActive, setBionicActive] = useState(false);
-  const [isTextActive, setTextActive] = useState(false);
-  const [isThemeActive, setThemeActive] = useState(false);
+  const [isBionicActive, setBionicActive] = useState(false)
+  const [isTextActive, setTextActive] = useState(false)
+  const [isThemeActive, setThemeActive] = useState(false)
 
   const handleBionicPress = () => {
     setBionicActive(true)
@@ -101,9 +101,9 @@ export default function Button_Sheet() {
             <CustomContainer>
               <ButtonContainer
                 onPress={() => {
-                  toggleCustomFilter(custom.BIONIC);
-                  handleBionicPress();
-                  handleSnapPress(2);
+                  toggleCustomFilter(custom.BIONIC)
+                  handleBionicPress()
+                  handleSnapPress(2)
                 }}
                 isSelected={customSelected(custom.BIONIC)}
                 style={{
@@ -129,9 +129,9 @@ export default function Button_Sheet() {
               </ButtonContainer>
               <ButtonContainer
                 onPress={() => {
-                  toggleCustomFilter(custom.TEXT);
-                  handleTextPress();
-                  handleSnapPress(2);
+                  toggleCustomFilter(custom.TEXT)
+                  handleTextPress()
+                  handleSnapPress(2)
                 }}
                 isSelected={customSelected(custom.TEXT)}
                 style={{
@@ -155,9 +155,9 @@ export default function Button_Sheet() {
               </ButtonContainer>
               <ButtonContainer
                 onPress={() => {
-                  toggleCustomFilter(custom.THEME);
-                  handleThemePress();
-                  handleSnapPress(2);
+                  toggleCustomFilter(custom.THEME)
+                  handleThemePress()
+                  handleSnapPress(2)
                 }}
                 isSelected={customSelected(custom.THEME)}
                 style={{

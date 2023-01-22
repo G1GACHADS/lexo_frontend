@@ -22,7 +22,7 @@ export default function ResultPage({ route, navigation }) {
         <Main content={result} />
       </Container>
       {/* <BottomSheet/> */}
-      <Access style={{ position:'absolute' }}/>
+      <Access style={{ position: 'absolute' }} />
     </SafeAreaView>
   )
 }
