@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 import { useTextStyleStore } from '../../store/text-styling-store'
 
 export default function Main({ content }) {
+  const textFontFamily = useTextStyleStore((state) => state.fontFamily)
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
@@ -13,19 +14,20 @@ export default function Main({ content }) {
     text: {
       textAlign: 'right',
       color: 'black',
+      fontFamily: textFontFamily,
       fontSize: textSize,
       lineHeight: textLineHeight,
       letterSpacing: textLetterSpacing,
     },
   }
 
-  // updateCount state is used to force re-rendering of Markdown component
+  // forceUpdate state is used to force re-rendering of Markdown component
   // when configStore is updated
-  const [updateCount, setUpdateCount] = useState(0)
+  const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
-    setUpdateCount(updateCount + 1)
-  }, [textSize, textLineHeight, textLetterSpacing])
+    setForceUpdate(!forceUpdate)
+  }, [textFontFamily, textSize, textLineHeight, textLetterSpacing])
 
   console.log(textSize)
 
@@ -35,7 +37,7 @@ export default function Main({ content }) {
       style={{ flex: 1 }}
     >
       {content ? (
-        <Markdown styles={markdownStyle} key={updateCount}>
+        <Markdown styles={markdownStyle} key={forceUpdate}>
           {content}
         </Markdown>
       ) : (

@@ -31,6 +31,146 @@ const textStyleOption = {
   ALIGNMENT: 'ALIGNMENT',
 }
 
+const FontFamilySection = ({ typography }) => {
+  const textFontFamily = useTextStyleStore((state) => state.fontFamily)
+  const changeFontFamily = useTextStyleStore((state) => state.changeFontFamily)
+
+  const fontFamilyOptions = [
+    {
+      name: typography.family.medium,
+      key: 'medium',
+      label: 'Plus Jakarta Sans',
+    },
+    {
+      name: typography.family.robotoSerifMedium,
+      key: 'robotoSerifMedium',
+      label: 'Roboto Serif',
+    },
+    {
+      name: typography.family.ptSerifRegular,
+      key: 'ptSerifRegular',
+      label: 'PT Serif',
+    },
+    { name: typography.family.interMedium, key: 'interMedium', label: 'Inter' },
+    {
+      name: typography.family.openDyslexicMedium,
+      key: 'openDyslexicMedium',
+      label: 'Open Dyslexic',
+    },
+    {
+      name: typography.family.dyslexieMedium,
+      key: 'dyslexieMedium',
+      label: 'Dyslexie',
+    },
+  ]
+
+  const getFontFamilyLabelColor = (fontFamilyName) =>
+    fontFamilyName === textFontFamily ? 'black' : 'grey2'
+
+  return (
+    <>
+      <BaseText bold label mb={15}>
+        Font Family
+      </BaseText>
+      <FontFamilyRow>
+        {fontFamilyOptions
+          .slice(0, fontFamilyOptions.length / 2)
+          .map((fontFamily, idx) => {
+            return (
+              <FontFamilyOptionButton
+                key={idx}
+                onPress={() => changeFontFamily(fontFamily.name)}
+              >
+                <BaseText
+                  semiBold={fontFamily.name === typography.family.semiBold}
+                  robotoSerifMedium={
+                    fontFamily.name === typography.family.robotoSerifMedium
+                  }
+                  ptSerifRegular={
+                    fontFamily.name === typography.family.ptSerifRegular
+                  }
+                  interMedium={
+                    fontFamily.name === typography.family.interMedium
+                  }
+                  color={getFontFamilyLabelColor(fontFamily.name)}
+                  heading
+                  mb={15}
+                >
+                  Aa
+                </BaseText>
+                <BaseText
+                  semiBold={fontFamily.name === typography.family.semiBold}
+                  robotoSerifMedium={
+                    fontFamily.name === typography.family.robotoSerifMedium
+                  }
+                  ptSerifRegular={
+                    fontFamily.name === typography.family.ptSerifRegular
+                  }
+                  interMedium={
+                    fontFamily.name === typography.family.interMedium
+                  }
+                  color={getFontFamilyLabelColor(fontFamily.name)}
+                  subheading
+                  mb={15}
+                >
+                  {fontFamily.label}
+                </BaseText>
+              </FontFamilyOptionButton>
+            )
+          })}
+      </FontFamilyRow>
+      <FontFamilyRow>
+        {fontFamilyOptions
+          .slice(fontFamilyOptions.length / 2, fontFamilyOptions.length)
+          .map((fontFamily, idx) => {
+            return (
+              <FontFamilyOptionButton
+                key={idx}
+                onPress={() => changeFontFamily(fontFamily.name)}
+              >
+                <BaseText
+                  semiBold={fontFamily.name === typography.family.semiBold}
+                  robotoSerifMedium={
+                    fontFamily.name === typography.family.robotoSerifMedium
+                  }
+                  ptSerifRegular={
+                    fontFamily.name === typography.family.ptSerifRegular
+                  }
+                  interMedium={
+                    fontFamily.name === typography.family.interMedium
+                  }
+                  color={getFontFamilyLabelColor(fontFamily.name)}
+                  bold
+                  heading
+                  mb={15}
+                >
+                  Aa
+                </BaseText>
+                <BaseText
+                  semiBold={fontFamily.name === typography.family.semiBold}
+                  robotoSerifMedium={
+                    fontFamily.name === typography.family.robotoSerifMedium
+                  }
+                  ptSerifRegular={
+                    fontFamily.name === typography.family.ptSerifRegular
+                  }
+                  interMedium={
+                    fontFamily.name === typography.family.interMedium
+                  }
+                  color={getFontFamilyLabelColor(fontFamily.name)}
+                  subheading
+                  mb={15}
+                >
+                  {fontFamily.label}
+                </BaseText>
+              </FontFamilyOptionButton>
+            )
+          })}
+      </FontFamilyRow>
+    </>
+  )
+}
+
 export default function SettingsText() {
   const theme = useTheme()
 
@@ -78,9 +218,9 @@ export default function SettingsText() {
       <BaseText bold label mb={15}>
         Text Style
       </BaseText>
-      <CustomContainer>
+      <TextOptionsContainer>
         {textOptions.map((opt) => (
-          <ButtonContainer
+          <TextOptionButton
             key={opt.name}
             style={{
               width: 68.75,
@@ -96,10 +236,10 @@ export default function SettingsText() {
             onPress={() => setSelectedConfig(opt.name)}
           >
             {isConfigSelected(opt.name) ? opt.active : opt.idle}
-          </ButtonContainer>
+          </TextOptionButton>
         ))}
-      </CustomContainer>
-      <Container>
+      </TextOptionsContainer>
+      <TextOptionContentContainer>
         {isConfigSelected(textStyleOption.SIZE) && (
           <>
             <SizeMini />
@@ -167,22 +307,20 @@ export default function SettingsText() {
             <ParagraphIcon />
           </>
         )}
-      </Container>
-      <BaseText bold label mb={15}>
-        Font Family
-      </BaseText>
+      </TextOptionContentContainer>
+      <FontFamilySection typography={theme.typography} />
     </View>
   )
 }
 
-const Container = styled.View`
+const TextOptionContentContainer = styled.View`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
 `
 
-const CustomContainer = styled.View`
+const TextOptionsContainer = styled.View`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -191,7 +329,7 @@ const CustomContainer = styled.View`
   margin-bottom: 20px;
 `
 
-const ButtonContainer = styled.Pressable`
+const TextOptionButton = styled.Pressable`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -199,4 +337,18 @@ const ButtonContainer = styled.Pressable`
   padding: 8px 10px;
   border: 2px solid #e0e0e0;
   border-radius: 5px;
+`
+
+const FontFamilyRow = styled.View`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+`
+
+const FontFamilyOptionButton = styled.Pressable`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50px;
 `
