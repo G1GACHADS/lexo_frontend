@@ -1,19 +1,19 @@
 import { create } from 'zustand'
 
 export const useTextStyleStore = create((set) => ({
-  textStyleSize: 14,
-  textStyleLineHeight: 25,
-  textStyleLetterSpacing: 0.05,
+  size: 14,
+  lineHeight: 25,
+  letterSpacing: 0.05,
   changeTextSize: (size) =>
     set((state) => ({
-      textStyleSize: size,
+      size: size,
     })),
   changeTextLineHeight: (lineHeight) =>
     set((state) => ({
-      textStyleLineHeight: lineHeight,
+      lineHeight: lineHeight,
     })),
   changeTextLetterSpacing: (letterSpacing) =>
     set((state) => ({
-      textStyleLetterSpacing: letterSpacing,
+      letterSpacing: letterSpacing,
     })),
 }))

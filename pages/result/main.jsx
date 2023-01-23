@@ -5,11 +5,9 @@ import styled from 'styled-components/native'
 import { useTextStyleStore } from '../../store/text-styling-store'
 
 export default function Main({ content }) {
-  const textSize = useTextStyleStore((state) => state.textStyleSize)
-  const textLineHeight = useTextStyleStore((state) => state.textStyleLineHeight)
-  const textLetterSpacing = useTextStyleStore(
-    (state) => state.textStyleLetterSpacing
-  )
+  const textSize = useTextStyleStore((state) => state.size)
+  const textLineHeight = useTextStyleStore((state) => state.lineHeight)
+  const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
 
   const markdownStyle = {
     text: {
