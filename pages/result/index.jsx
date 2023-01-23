@@ -45,7 +45,7 @@ export default function ResultPage({ route, navigation }) {
         <Main content={result} />
       </Container>
       {settingsOn && <Access />}
-\    </SafeAreaView>
+    </SafeAreaView>
   )
 }
 
