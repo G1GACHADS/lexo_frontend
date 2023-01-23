@@ -1,135 +1,74 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
-import Text from '../../components/text'
+import BaseText from '../../components/base-text'
 
-const customBg = {
-  DEFAULT: 'default',
-  CALM: 'calm',
-  FOCUS: 'focus',
+const themeOption = {
+  DEFAULT: 'DEFAULT',
+  CALM: 'CALM',
+  FOCUS: 'FOCUS',
 }
 
 export default function SettingsTheme() {
   const theme = useTheme()
 
-  const [selectedCustomBg, setSelectedCustomBg] = useState([])
-
-  function customBgSelected(customBg) {
-    return selectedCustomBg.includes(customBg)
-  }
-
-  function toggleCustomBgFilter(customBg) {
-    if (!customBgSelected(customBg)) {
-      setSelectedCustomBg((selectedCustomBg) => [...selectedCustomBg, customBg])
-      return
-    }
-    setSelectedCustomBg((selectedCustomBg) =>
-      selectedCustomBg.filter(
-        (selectedCustomBg) => selectedCustomBg !== customBg
-      )
-    )
-  }
-
-  const [isDefaultActive, setDefaultActive] = useState(false)
-  const [isCalmActive, setCalmActive] = useState(false)
-  const [isFocusActive, setFocusActive] = useState(false)
-
-  const handleDefaultPress = () => {
-    setDefaultActive(true)
-    setCalmActive(false)
-    setFocusActive(false)
-  }
-
-  const handleCalmPress = () => {
-    setDefaultActive(false)
-    setCalmActive(true)
-    setFocusActive(false)
-  }
-
-  const handleFocusPress = () => {
-    setDefaultActive(false)
-    setCalmActive(false)
-    setFocusActive(true)
-  }
+  const [selectedTheme, setSelectedTheme] = useState(themeOption.DEFAULT)
+  const isThemeSelected = (theme) => theme === selectedTheme
 
   return (
     <View>
-      <Text
-        color={theme.colors.black}
-        family={theme.typography.family.bold}
-        size={theme.typography.label.sz}
-        mb={15}
-      >
+      <BaseText bold label mb={15}>
         Color Theme
-      </Text>
-      <CustomContainer>
-        <CustomBgContainer
-          onPress={() => {
-            toggleCustomBgFilter(customBg.DEFAULT)
-            handleDefaultPress()
-          }}
-          isSelected={customBgSelected(customBg.DEFAULT)}
+      </BaseText>
+      <ThemeContainer>
+        <ThemeOptionButton
+          onPress={() => setSelectedTheme(themeOption.DEFAULT)}
+          isSelected={isThemeSelected(themeOption.DEFAULT)}
           style={{
             backgroundColor: theme.colors.white,
-            borderColor: isDefaultActive
+            borderColor: isThemeSelected(themeOption.DEFAULT)
               ? theme.colors.black
               : theme.colors.grey1,
           }}
         >
-          <Text
-            color={theme.colors.black}
-            family={theme.typography.family.bold}
-            size={theme.typography.label.sz}
-          >
+          <BaseText bold label>
             Default
-          </Text>
-        </CustomBgContainer>
-        <CustomBgContainer
-          onPress={() => {
-            toggleCustomBgFilter(customBg.CALM)
-            handleCalmPress()
-          }}
-          isSelected={customBgSelected(customBg.CALM)}
+          </BaseText>
+        </ThemeOptionButton>
+        <ThemeOptionButton
+          onPress={() => setSelectedTheme(themeOption.CALM)}
+          isSelected={isThemeSelected(themeOption.CALM)}
           style={{
             backgroundColor: theme.colors.calmBg,
-            borderColor: isCalmActive ? theme.colors.black : theme.colors.grey1,
-          }}
-        >
-          <Text
-            color={theme.colors.calmTxt}
-            family={theme.typography.family.bold}
-            size={theme.typography.label.sz}
-          >
-            Calm
-          </Text>
-        </CustomBgContainer>
-        <CustomBgContainer
-          onPress={() => {
-            toggleCustomBgFilter(customBg.FOCUS)
-            handleFocusPress()
-          }}
-          isSelected={customBgSelected(customBg.FOCUS)}
-          style={{
-            backgroundColor: theme.colors.focusBg,
-            borderColor: isFocusActive
+            borderColor: isThemeSelected(themeOption.CALM)
               ? theme.colors.black
               : theme.colors.grey1,
           }}
         >
-          <Text
-            color={theme.colors.focusTxt}
-            family={theme.typography.family.bold}
-            size={theme.typography.label.sz}
-          >
+          <BaseText color="calmTxt" bold label>
+            Calm
+          </BaseText>
+        </ThemeOptionButton>
+        <ThemeOptionButton
+          onPress={() => setSelectedTheme(themeOption.FOCUS)}
+          isSelected={isThemeSelected(themeOption.FOCUS)}
+          style={{
+            backgroundColor: theme.colors.focusBg,
+            borderColor: isThemeSelected(themeOption.FOCUS)
+              ? theme.colors.black
+              : theme.colors.grey1,
+          }}
+        >
+          <BaseText color="focusTxt" bold label>
             Focus
-          </Text>
-        </CustomBgContainer>
-      </CustomContainer>
+          </BaseText>
+        </ThemeOptionButton>
+      </ThemeContainer>
     </View>
   )
 }
 
-const CustomContainer = styled.View`
+const ThemeContainer = styled.View`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -137,7 +76,8 @@ const CustomContainer = styled.View`
   flex-wrap: wrap;
   margin-bottom: 20px;
 `
-const CustomBgContainer = styled.Pressable`
+
+const ThemeOptionButton = styled.Pressable`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
