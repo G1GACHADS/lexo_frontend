@@ -1,186 +1,178 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
-import Text from '../../components/text'
 
 import HeightIcon from '../../components/icons/height-icon'
 import ParagraphIcon from '../../components/icons/paragraph-icon'
 import SizeIcon from '../../components/icons/size-icon'
 import SpaceIcon from '../../components/icons/space-icon'
 
+import Slider from '@react-native-community/slider'
+import BaseText from '../../components/base-text'
 import HeightIconActive from '../../components/icons/height-icon-active'
 import ParagraphIconActive from '../../components/icons/paragraph-icon-active'
 import SizeIconActive from '../../components/icons/size-icon-active'
 import SpaceIconActive from '../../components/icons/space-icon-active'
 
-// import SizeMini from "../../components/icons/size-mini";
-// import HeightMini from "../../components/icons/height-mini";
-// import SpaceMini from "../../components/icons/space-mini";
-// import ParagraphMini from "../../components/icons/paragraph-mini";
+import HeightMini from '../../components/icons/height-mini'
+import ParagraphMini from '../../components/icons/paragraph-mini'
+import SizeMini from '../../components/icons/size-mini'
+import SpaceMini from '../../components/icons/space-mini'
+import { useTextStyleStore } from '../../store/text-styling-store'
 // import SizeNormal from "../../components/icons/size-normal";
 // import HeightNormal from "../../components/icons/height-normal";
 // import SpaceNormal from "../../components/icons/space-normal";
 // import ParagraphNormal from "../../components/icons/paragraph-normal";
 
+const textStyleOption = {
+  SIZE: 0,
+  LINE_HEIGHT: 1,
+  LETTER_SPACING: 2,
+  ALIGNMENT: 3,
+}
+
 export default function TextSection() {
   const theme = useTheme()
-  const [isSizeActive, setSizeActive] = useState(false)
-  const [isHeightActive, setHeightActive] = useState(false)
-  const [isLetterSpaceActive, setLetterSpaceActive] = useState(false)
-  const [isParagraphSpaceActive, setParagraphSpaceActive] = useState(false)
-  const handleSizePress = () => {
-    setSizeActive(true)
-    setHeightActive(false)
-    setLetterSpaceActive(false)
-    setParagraphSpaceActive(false)
-  }
 
-  const handleHeightPress = () => {
-    setSizeActive(false)
-    setHeightActive(true)
-    setLetterSpaceActive(false)
-    setParagraphSpaceActive(false)
-  }
+  const textSize = useTextStyleStore((state) => state.textStyleSize)
+  const textLineHeight = useTextStyleStore((state) => state.textStyleLineHeight)
+  const textLetterSpacing = useTextStyleStore(
+    (state) => state.textStyleLetterSpacing
+  )
 
-  const handleLetterSpacePress = () => {
-    setSizeActive(false)
-    setHeightActive(false)
-    setLetterSpaceActive(true)
-    setParagraphSpaceActive(false)
-  }
+  const changeTextSize = useTextStyleStore((state) => state.changeTextSize)
+  const changeTextLineHeight = useTextStyleStore(
+    (state) => state.changeTextLineHeight
+  )
+  const changeTextLetterSpacing = useTextStyleStore(
+    (state) => state.changeTextLetterSpacing
+  )
 
-  const handleParagraphSpacePress = () => {
-    setSizeActive(false)
-    setHeightActive(false)
-    setLetterSpaceActive(false)
-    setParagraphSpaceActive(true)
-  }
+  const [selectedConfig, setSelectedConfig] = useState(textStyleOption.SIZE)
 
-  // const heightSlider = () => {
-  // return(
-  //   <>
-  //     <HeightMini />
-  //     <Slider
-  //       style={{ width: "80%", height: 40 }}
-  //       minimumValue={10}
-  //       maximumValue={50}
-  //       step={10}
-  //       minimumTrackTintColor="#000000"
-  //       maximumTrackTintColor="#000000"
-  //       thumbTintColor="#000000"
-  //       onValueChange={(value) => setSaccade(value)}
-  //       onSlidingComplete={() =>
-  //         console.log("sliding complete") & sendFetch()
-  //       }
-  //     />
-  //     <HeightNormal />
-  //   </>
-  //   )
-  // };
+  const isConfigSelected = (option) => selectedConfig === option
+
+  const textOptions = [
+    {
+      name: textStyleOption.SIZE,
+      active: <SizeIconActive />,
+      idle: <SizeIcon />,
+    },
+    {
+      name: textStyleOption.LINE_HEIGHT,
+      active: <HeightIconActive />,
+      idle: <HeightIcon />,
+    },
+    {
+      name: textStyleOption.LETTER_SPACING,
+      active: <SpaceIconActive />,
+      idle: <SpaceIcon />,
+    },
+    {
+      name: textStyleOption.ALIGNMENT,
+      active: <ParagraphIconActive />,
+      idle: <ParagraphIcon />,
+    },
+  ]
+
   return (
     <View>
-      <Text
-        color={theme.colors.black}
-        family={theme.typography.family.bold}
-        size={theme.typography.label.sz}
-        mb={15}
-      >
+      <BaseText bold label mb={15}>
         Text Style
-      </Text>
+      </BaseText>
       <CustomContainer>
-        <ButtonContainer
-          style={{
-            width: 68.75,
-            height: 44,
-            justifyContent: 'center',
-            backgroundColor: isSizeActive
-              ? theme.colors.black
-              : theme.colors.white,
-            borderColor: isSizeActive ? theme.colors.black : theme.colors.grey1,
-          }}
-          onPress={() => {
-            handleSizePress()
-          }}
-        >
-          {isSizeActive ? <SizeIconActive /> : <SizeIcon />}
-        </ButtonContainer>
-        <ButtonContainer
-          style={{
-            width: 68.75,
-            height: 44,
-            justifyContent: 'center',
-            backgroundColor: isHeightActive
-              ? theme.colors.black
-              : theme.colors.white,
-            borderColor: isHeightActive
-              ? theme.colors.black
-              : theme.colors.grey1,
-          }}
-          onPress={() => {
-            handleHeightPress()
-          }}
-        >
-          {isHeightActive ? <HeightIconActive /> : <HeightIcon />}
-        </ButtonContainer>
-        <ButtonContainer
-          style={{
-            width: 68.75,
-            height: 44,
-            justifyContent: 'center',
-            backgroundColor: isLetterSpaceActive
-              ? theme.colors.black
-              : theme.colors.white,
-            borderColor: isLetterSpaceActive
-              ? theme.colors.black
-              : theme.colors.grey1,
-          }}
-          onPress={() => {
-            handleLetterSpacePress()
-          }}
-        >
-          {isLetterSpaceActive ? <SpaceIconActive /> : <SpaceIcon />}
-        </ButtonContainer>
-        <ButtonContainer
-          style={{
-            width: 68.75,
-            height: 44,
-            justifyContent: 'center',
-            backgroundColor: isParagraphSpaceActive
-              ? theme.colors.black
-              : theme.colors.white,
-            borderColor: isParagraphSpaceActive
-              ? theme.colors.black
-              : theme.colors.grey1,
-          }}
-          onPress={() => {
-            handleParagraphSpacePress()
-          }}
-        >
-          {isParagraphSpaceActive ? <ParagraphIconActive /> : <ParagraphIcon />}
-        </ButtonContainer>
+        {textOptions.map((opt) => (
+          <ButtonContainer
+            key={opt.name}
+            style={{
+              width: 68.75,
+              height: 44,
+              justifyContent: 'center',
+              backgroundColor: isConfigSelected(opt.name)
+                ? theme.colors.black
+                : theme.colors.white,
+              borderColor: isConfigSelected(opt.name)
+                ? theme.colors.black
+                : theme.colors.grey1,
+            }}
+            onPress={() => setSelectedConfig(opt.name)}
+          >
+            {isConfigSelected(opt.name) ? opt.active : opt.idle}
+          </ButtonContainer>
+        ))}
       </CustomContainer>
       <Container>
-        {
-          isSizeActive //&& sizeSlider
-        }
-        {
-          isHeightActive //&& heightSlider
-        }
-        {
-          isLetterSpaceActive //&& letterSpaceSlider
-        }
-        {
-          isParagraphSpaceActive //&& paragraphSpaceSlider
-        }
+        {isConfigSelected(textStyleOption.SIZE) && (
+          <>
+            <SizeMini />
+            <Slider
+              style={{ width: '80%', height: 50 }}
+              minimumValue={12}
+              maximumValue={24}
+              step={1}
+              minimumTrackTintColor={theme.colors.black}
+              maximumTrackTintColor={theme.colors.black}
+              thumbTintColor={theme.colors.black}
+              value={textSize}
+              onSlidingComplete={(value) => changeTextSize(value)}
+            />
+            <SizeIcon />
+          </>
+        )}
+        {isConfigSelected(textStyleOption.LINE_HEIGHT) && (
+          <>
+            <HeightMini />
+            <Slider
+              style={{ width: '80%', height: 50 }}
+              minimumValue={18}
+              maximumValue={40}
+              step={1}
+              minimumTrackTintColor={theme.colors.black}
+              maximumTrackTintColor={theme.colors.black}
+              thumbTintColor={theme.colors.black}
+              value={textLineHeight}
+              onSlidingComplete={(value) => changeTextLineHeight(value)}
+            />
+            <HeightIcon />
+          </>
+        )}
+        {isConfigSelected(textStyleOption.LETTER_SPACING) && (
+          <>
+            <SpaceMini />
+            <Slider
+              style={{ width: '80%', height: 50 }}
+              minimumValue={0}
+              maximumValue={0.3}
+              step={0.01}
+              minimumTrackTintColor={theme.colors.black}
+              maximumTrackTintColor={theme.colors.black}
+              thumbTintColor={theme.colors.black}
+              value={textLetterSpacing}
+              onSlidingComplete={(value) => changeTextLetterSpacing(value)}
+            />
+            <SpaceIcon />
+          </>
+        )}
+        {isConfigSelected(textStyleOption.ALIGNMENT) && (
+          <>
+            <ParagraphMini />
+            <Slider
+              style={{ width: '80%', height: 50 }}
+              minimumValue={1}
+              maximumValue={5}
+              step={1}
+              minimumTrackTintColor={theme.colors.black}
+              maximumTrackTintColor={theme.colors.black}
+              thumbTintColor={theme.colors.black}
+              onSlidingComplete={(value) => console.log(value)}
+            />
+            <ParagraphIcon />
+          </>
+        )}
       </Container>
-      <Text
-        color={theme.colors.black}
-        family={theme.typography.family.bold}
-        size={theme.typography.label.sz}
-        mb={15}
-      >
+      <BaseText bold label mb={15}>
         Font Family
-      </Text>
+      </BaseText>
     </View>
   )
 }
@@ -191,6 +183,7 @@ const Container = styled.View`
   flex-direction: row;
   align-items: center;
 `
+
 const CustomContainer = styled.View`
   display: flex;
   justify-content: space-between;
@@ -199,6 +192,7 @@ const CustomContainer = styled.View`
   flex-wrap: wrap;
   margin-bottom: 20px;
 `
+
 const ButtonContainer = styled.Pressable`
   display: flex;
   flex-direction: row;

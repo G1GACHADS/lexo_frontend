@@ -42,7 +42,8 @@
     "react-native-webview": "^11.18.1",
     "recoil": "^0.7.6",
     "save": "^2.9.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -1,83 +1,82 @@
 import { useMemo } from 'react'
-import styled, { css } from 'styled-components/native'
-import { useTheme } from 'styled-components/native'
+import styled, { css, useTheme } from 'styled-components/native'
 
 export const CoreBaseText = styled.Text`
   color: ${({ color }) => color};
   font-family: ${({ family }) => family};
   font-size: ${({ size }) => size};
 
-  ${props =>
+  ${(props) =>
     props.maxWidth &&
     css`
       max-width: ${props.maxWidth};
     `}
 
-  ${props =>
+  ${(props) =>
     props.capitalize &&
     css`
       text-transform: capitalize;
     `}
-  ${props =>
+  ${(props) =>
     props.padding &&
     css`
       padding: ${props.padding.join(' ')};
     `}
-  ${props =>
+  ${(props) =>
     props.margin &&
     css`
       margin: ${props.margin.join(' ')};
     `}
-  ${props =>
+  ${(props) =>
     props.textAlign &&
     css`
       text-align: ${props.textAlign};
     `}
 
-  ${props =>
+  ${(props) =>
     props.mb &&
     css`
       margin-bottom: ${props.mb}px;
     `};
-  ${props =>
+  ${(props) =>
     props.mt &&
     css`
       margin-top: ${props.mt}px;
     `};
-  ${props =>
+  ${(props) =>
     props.ml &&
     css`
       margin-left: ${props.ml}px;
     `};
-  ${props =>
+  ${(props) =>
     props.mr &&
     css`
       margin-right: ${props.mr}px;
     `};
 
-  ${props =>
+  ${(props) =>
     props.pb &&
     css`
       padding-bottom: ${props.pb}px;
     `};
-  ${props =>
+  ${(props) =>
     props.pt &&
     css`
       padding-top: ${props.pt}px;
     `};
-  ${props =>
+  ${(props) =>
     props.pl &&
     css`
       padding-left: ${props.pl}px;
     `};
-  ${props =>
+  ${(props) =>
     props.pr &&
     css`
       padding-right: ${props.pr}px;
     `};
 `
 
-export const BaseText = props => {
+export const BaseText = (props) => {
   const theme = useTheme()
 
   const color = useMemo(
@@ -91,7 +90,7 @@ export const BaseText = props => {
       _family = theme.typography.family.bold
     } else if (props.semiBold) {
       _family = theme.typography.family.semiBold
-    } 
+    }
 
     return _family
   }, [props.bold, props.semiBold, props.medium])
@@ -113,11 +112,7 @@ export const BaseText = props => {
     _size = _size.sz
 
     return _size
-  }, [
-    props.tall,
-    props.grande,
-    props.venti,
-  ])
+  }, [props.tall, props.grande, props.venti])
 
   return (
     <CoreBaseText {...{ ...props, family, color, size }}>
