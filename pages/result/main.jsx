@@ -29,8 +29,6 @@ export default function Main({ content }) {
     setForceUpdate(!forceUpdate)
   }, [textFontFamily, textSize, textLineHeight, textLetterSpacing])
 
-  console.log(textSize)
-
   return (
     <ScrollViewContainer
       contentInsetAdjustmentBehavior="automatic"
