@@ -25,13 +25,13 @@ import { useTextStyleStore } from '../../store/text-styling-store'
 // import ParagraphNormal from "../../components/icons/paragraph-normal";
 
 const textStyleOption = {
-  SIZE: 0,
-  LINE_HEIGHT: 1,
-  LETTER_SPACING: 2,
-  ALIGNMENT: 3,
+  SIZE: 'SIZE',
+  LINE_HEIGHT: 'LINE_HEIGHT',
+  LETTER_SPACING: 'LETTER_SPACING',
+  ALIGNMENT: 'ALIGNMENT',
 }
 
-export default function TextSection() {
+export default function SettingsText() {
   const theme = useTheme()
 
   const textSize = useTextStyleStore((state) => state.size)

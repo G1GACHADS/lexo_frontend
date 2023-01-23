@@ -1,14 +1,11 @@
-import BottomSheet, { BottomSheetView,BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 import Text from '../../components/text'
 
-import ThreeButtonToggle from './try'
-
 import BionicSection from './bionic'
-import TextSection from './text'
-import ThemeSection from './theme'
+import SettingsText from './settings-text'
+import SettingsTheme from './settings-theme'
 
 import BionicIcon from '../../components/icons/bionic-icon'
 import TextIcon from '../../components/icons/text-icon'
@@ -70,7 +67,7 @@ export default function Button_Sheet() {
     )
   }
 
-  const snapPoints = useMemo(() => ['13%','30%', '50%'], [])
+  const snapPoints = useMemo(() => ['13%', '30%', '50%'], [])
   const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
@@ -83,111 +80,103 @@ export default function Button_Sheet() {
     sheetRef.current?.close()
   }, [])
 
-  {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+  {
+    /* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
   <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
   <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-  <Button title="Close" onPress={() => handleClosePress()} /> */}
+  <Button title="Close" onPress={() => handleClosePress()} /> */
+  }
   return (
-      <BottomSheet
-        ref={sheetRef}
-        snapPoints={snapPoints}
-        initialSnapIndex={0}
-      >
-        <BottomSheetScrollView
-                  onChange={handleSheetChange}
-        >
-          <Container>
-            {/* <ThreeButtonToggle /> */}
-            <CustomContainer>
-              <ButtonContainer
-                onPress={() => {
-                  toggleCustomFilter(custom.BIONIC)
-                  handleBionicPress()
-                  handleSnapPress(2)
-                }}
-                isSelected={customSelected(custom.BIONIC)}
-                style={{
-                  backgroundColor: isBionicActive
-                    ? theme.colors.black
-                    : theme.colors.white,
-                  borderColor: isBionicActive
-                    ? theme.colors.black
-                    : theme.colors.grey1,
-                }}
+    <BottomSheet ref={sheetRef} snapPoints={snapPoints} initialSnapIndex={0}>
+      <BottomSheetScrollView onChange={handleSheetChange}>
+        <Container>
+          {/* <ThreeButtonToggle /> */}
+          <CustomContainer>
+            <ButtonContainer
+              onPress={() => {
+                toggleCustomFilter(custom.BIONIC)
+                handleBionicPress()
+                handleSnapPress(2)
+              }}
+              isSelected={customSelected(custom.BIONIC)}
+              style={{
+                backgroundColor: isBionicActive
+                  ? theme.colors.black
+                  : theme.colors.white,
+                borderColor: isBionicActive
+                  ? theme.colors.black
+                  : theme.colors.grey1,
+              }}
+            >
+              {isBionicActive ? <BionicIconActive /> : <BionicIcon />}
+              <Text
+                color={isBionicActive ? theme.colors.white : theme.colors.black}
+                family={theme.typography.family.bold}
+                size={theme.typography.label.sz}
+                pl={5}
               >
-                {isBionicActive ? <BionicIconActive /> : <BionicIcon />}
-                <Text
-                  color={
-                    isBionicActive ? theme.colors.white : theme.colors.black
-                  }
-                  family={theme.typography.family.bold}
-                  size={theme.typography.label.sz}
-                  pl={5}
-                >
-                  Bionic
-                </Text>
-              </ButtonContainer>
-              <ButtonContainer
-                onPress={() => {
-                  toggleCustomFilter(custom.TEXT)
-                  handleTextPress()
-                  handleSnapPress(2)
-                }}
-                isSelected={customSelected(custom.TEXT)}
-                style={{
-                  backgroundColor: isTextActive
-                    ? theme.colors.black
-                    : theme.colors.white,
-                  borderColor: isTextActive
-                    ? theme.colors.black
-                    : theme.colors.grey1,
-                }}
+                Bionic
+              </Text>
+            </ButtonContainer>
+            <ButtonContainer
+              onPress={() => {
+                toggleCustomFilter(custom.TEXT)
+                handleTextPress()
+                handleSnapPress(2)
+              }}
+              isSelected={customSelected(custom.TEXT)}
+              style={{
+                backgroundColor: isTextActive
+                  ? theme.colors.black
+                  : theme.colors.white,
+                borderColor: isTextActive
+                  ? theme.colors.black
+                  : theme.colors.grey1,
+              }}
+            >
+              {isTextActive ? <TextIconActive /> : <TextIcon />}
+              <Text
+                color={isTextActive ? theme.colors.white : theme.colors.black}
+                family={theme.typography.family.bold}
+                size={theme.typography.label.sz}
+                pl={5}
               >
-                {isTextActive ? <TextIconActive /> : <TextIcon />}
-                <Text
-                  color={isTextActive ? theme.colors.white : theme.colors.black}
-                  family={theme.typography.family.bold}
-                  size={theme.typography.label.sz}
-                  pl={5}
-                >
-                  Text
-                </Text>
-              </ButtonContainer>
-              <ButtonContainer
-                onPress={() => {
-                  toggleCustomFilter(custom.THEME)
-                  handleThemePress()
-                  handleSnapPress(2)
-                }}
-                isSelected={customSelected(custom.THEME)}
-                style={{
-                  backgroundColor: isThemeActive
-                    ? theme.colors.black
-                    : theme.colors.white,
-                  borderColor: isThemeActive
-                    ? theme.colors.black
-                    : theme.colors.grey1,
-                }}
+                Text
+              </Text>
+            </ButtonContainer>
+            <ButtonContainer
+              onPress={() => {
+                toggleCustomFilter(custom.THEME)
+                handleThemePress()
+                handleSnapPress(2)
+              }}
+              isSelected={customSelected(custom.THEME)}
+              style={{
+                backgroundColor: isThemeActive
+                  ? theme.colors.black
+                  : theme.colors.white,
+                borderColor: isThemeActive
+                  ? theme.colors.black
+                  : theme.colors.grey1,
+              }}
+            >
+              {isThemeActive ? <ThemeIconActive /> : <ThemeIcon />}
+              <Text
+                color={isThemeActive ? theme.colors.white : theme.colors.black}
+                family={theme.typography.family.bold}
+                size={theme.typography.label.sz}
+                pl={5}
               >
-                {isThemeActive ? <ThemeIconActive /> : <ThemeIcon />}
-                <Text
-                  color={
-                    isThemeActive ? theme.colors.white : theme.colors.black
-                  }
-                  family={theme.typography.family.bold}
-                  size={theme.typography.label.sz}
-                  pl={5}
-                >
-                  Theme
-                </Text>
-              </ButtonContainer>
-            </CustomContainer>
-            {isBionicActive && <BionicSection />}
-            {isTextActive && <TextSection />}
-            {isThemeActive && <ThemeSection />}
-          </Container>
-        </BottomSheetScrollView>
-      </BottomSheet>
+                Theme
+              </Text>
+            </ButtonContainer>
+          </CustomContainer>
+          {isBionicActive && <BionicSection />}
+          {isTextActive && <SettingsText />}
+          {isThemeActive && <SettingsTheme />}
+        </Container>
+      </BottomSheetScrollView>
+    </BottomSheet>
   )
 }
 

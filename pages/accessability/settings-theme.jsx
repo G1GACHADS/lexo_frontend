@@ -9,7 +9,7 @@ const customBg = {
   FOCUS: 'focus',
 }
 
-export default function ThemeSection() {
+export default function SettingsTheme() {
   const theme = useTheme()
 
   const [selectedCustomBg, setSelectedCustomBg] = useState([])
