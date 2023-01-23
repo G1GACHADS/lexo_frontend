@@ -20,37 +20,6 @@ export default function BottomSheet() {
     sheetRef.current?.close()
   }, [])
 
-  const sections = useMemo(
-    () =>
-      Array(10)
-        .fill(0)
-        .map((_, index) => ({
-          title: `Section ${index}`,
-          data: Array(10)
-            .fill(0)
-            .map((_, index) => `Item ${index}`),
-        })),
-    []
-  )
-
-  // render
-  const renderSectionHeader = useCallback(
-    ({ section }) => (
-      <View style={styles.sectionHeaderContainer}>
-        <Text>{section.title}</Text>
-      </View>
-    ),
-    []
-  )
-
-  const renderItem = useCallback(
-    ({ item }) => (
-      <View style={styles.itemContainer}>
-        <Text>{item}</Text>
-      </View>
-    ),
-    []
-  )
 
   return (
     <View style={{ flex: 1 }}>
@@ -60,7 +29,7 @@ export default function BottomSheet() {
         initialSnapIndex={0}
         onChange={handleSheetChange}
       >
-        <BottomSheetView></BottomSheetView>
+        {/* <BottomSheetView></BottomSheetView> */}
       </BottomSheet>
     </View>
   )
