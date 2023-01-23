@@ -30,6 +30,28 @@ export default function ThemeSection() {
     )
   }
 
+  const [isDefaultActive, setDefaultActive] = useState(false)
+  const [isCalmActive, setCalmActive] = useState(false)
+  const [isFocusActive, setFocusActive] = useState(false)
+
+  const handleDefaultPress = () => {
+    setDefaultActive(true)
+    setCalmActive(false)
+    setFocusActive(false)
+  }
+
+  const handleCalmPress = () => {
+    setDefaultActive(false)
+    setCalmActive(true)
+    setFocusActive(false)
+  }
+
+  const handleFocusPress = () => {
+    setDefaultActive(false)
+    setCalmActive(false)
+    setFocusActive(true)
+  }
+
   return (
     <View>
       <Text
@@ -42,9 +64,17 @@ export default function ThemeSection() {
       </Text>
       <CustomContainer>
         <CustomBgContainer
-          onPress={() => toggleCustomBgFilter(customBg.DEFAULT)}
+          onPress={() => {
+            toggleCustomBgFilter(customBg.DEFAULT)
+            handleDefaultPress()
+          }}
           isSelected={customBgSelected(customBg.DEFAULT)}
-          style={{ backgroundColor: theme.colors.white }}
+          style={{
+            backgroundColor: theme.colors.white,
+            borderColor: isDefaultActive
+              ? theme.colors.black
+              : theme.colors.grey1,
+          }}
         >
           <Text
             color={theme.colors.black}
@@ -55,9 +85,15 @@ export default function ThemeSection() {
           </Text>
         </CustomBgContainer>
         <CustomBgContainer
-          onPress={() => toggleCustomBgFilter(customBg.CALM)}
+          onPress={() => {
+            toggleCustomBgFilter(customBg.CALM)
+            handleCalmPress()
+          }}
           isSelected={customBgSelected(customBg.CALM)}
-          style={{ backgroundColor: theme.colors.calmBg }}
+          style={{
+            backgroundColor: theme.colors.calmBg,
+            borderColor: isCalmActive ? theme.colors.black : theme.colors.grey1,
+          }}
         >
           <Text
             color={theme.colors.calmTxt}
@@ -68,9 +104,17 @@ export default function ThemeSection() {
           </Text>
         </CustomBgContainer>
         <CustomBgContainer
-          onPress={() => toggleCustomBgFilter(customBg.FOCUS)}
+          onPress={() => {
+            toggleCustomBgFilter(customBg.FOCUS)
+            handleFocusPress()
+          }}
           isSelected={customBgSelected(customBg.FOCUS)}
-          style={{ backgroundColor: theme.colors.focusBg }}
+          style={{
+            backgroundColor: theme.colors.focusBg,
+            borderColor: isFocusActive
+              ? theme.colors.black
+              : theme.colors.grey1,
+          }}
         >
           <Text
             color={theme.colors.focusTxt}
