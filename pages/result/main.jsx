@@ -3,12 +3,13 @@ import { Text } from 'react-native'
 import Markdown from 'react-native-markdown-package'
 import styled from 'styled-components/native'
 import { useTextStyleStore } from '../../store/text-styling-store'
+import {TextContent} from '../../store/text-content-store'
 
-export default function Main({ content }) {
+export default function Main() {
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
-
+  const markdown = TextContent((state)=>state.markdown)
   const markdownStyle = {
     text: {
       textAlign: 'right',
@@ -22,12 +23,13 @@ export default function Main({ content }) {
   // updateCount state is used to force re-rendering of Markdown component
   // when configStore is updated
   const [updateCount, setUpdateCount] = useState(0)
-
+  const [content, setContent] = useState('')
   useEffect(() => {
     setUpdateCount(updateCount + 1)
-  }, [textSize, textLineHeight, textLetterSpacing])
+    setContent(markdown)
+    console.log(content)
+  }, [textSize, textLineHeight, textLetterSpacing,markdown])
 
-  console.log(textSize)
 
   return (
     <ScrollViewContainer

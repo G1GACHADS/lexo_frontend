@@ -10,10 +10,14 @@ import HelpIcon from '../../components/icons/help-icon'
 import DotsGridMini from '../../assets/accessability/dots_grid_mini.svg'
 import DotsGridNormal from '../../assets/accessability/dots_grid_normal.svg'
 
-export default function BionicSection(contentChange,text) {
-  const theme = useTheme()
-  const [fixation, setFixation] = useState()
+import {TextContent} from '../../store/text-content-store'
 
+export default function BionicSection() {
+  const theme = useTheme()
+  const markdown = TextContent(state => state.markdown)
+  const setContent = TextContent(state => state.setContent)
+  const [saccade, setSaccade] = useState(10)
+  const [fixation, setFixation] = useState(1)
   const createFormData = ({ text, fixation, saccade }) => {
     const data = new FormData()
     data.append('text', text)
@@ -25,18 +29,29 @@ export default function BionicSection(contentChange,text) {
     return text.replace(/\*/g, '')
   }
   const fetchBionicWithConfig = useCallback(async () => {
-    text = cleanText(text)
-    const data = createFormData({ text, fixation, saccade })
-    const response = await Api.post('bionicconfig', data, {
+    let text = cleanText(markdown)
+    //demo update content
+    // setTimeout(() => {
+    //   const newText = '**hi** **th**is **is** a reply from bionic'
+    //   setContent(newText)
+    // }, 3000)
+    console.log("normal text:"+text)
+    let data = createFormData({ text, fixation, saccade })
+    console.log(data)
+    await Api.post('bionicconfig', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    }).catch((err) => {
+    })
+    .then((response)=>{
+      const { result, result_raw, bounding_box } = response.data
+      setContent(result)
+      console.log("result text:"+result)
+    })
+    .catch((err) => {
       console.log(err)
     })
-    const { result, result_raw, bounding_box } = response.data
-    contentChange(result)
-    console.log(result)
+
   }, [])
 
   return (
@@ -62,9 +77,10 @@ export default function BionicSection(contentChange,text) {
           minimumTrackTintColor="#000000"
           maximumTrackTintColor="#000000"
           thumbTintColor="#000000"
+          value={fixation}
           onValueChange={(value) => setFixation(value)}
           onSlidingComplete={() =>
-            console.log('sliding complete') & fetchBionicWithConfig()
+            fetchBionicWithConfig()
           }
         />
         <DotsGridNormal />
@@ -90,9 +106,10 @@ export default function BionicSection(contentChange,text) {
           minimumTrackTintColor="#000000"
           maximumTrackTintColor="#000000"
           thumbTintColor="#000000"
+          value={saccade}
           onValueChange={(value) => setSaccade(value)}
           onSlidingComplete={() =>
-            console.log('sliding complete') & fetchBionicWithConfig()
+            fetchBionicWithConfig()
           }
         />
         <DotsGridNormal />

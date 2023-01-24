@@ -24,7 +24,7 @@ const custom = {
   THEME: 'theme',
 }
 
-export default function Button_Sheet({contentChange,text}) {
+export default function Button_Sheet() {
   const theme = useTheme()
 
   const [selectedCustom, setSelectedCustom] = useState([])
@@ -72,7 +72,7 @@ export default function Button_Sheet({contentChange,text}) {
   const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
-    console.log('handleSheetChange', index)
+    // console.log('handleSheetChange', index)
   }, [])
   const handleSnapPress = useCallback((index) => {
     sheetRef.current?.snapToIndex(index)
@@ -86,6 +86,8 @@ export default function Button_Sheet({contentChange,text}) {
         snapPoints={snapPoints}
         initialSnapIndex={0}
         style={{ backgroundColor: 'transparent' }}
+        activeOffsetY={[-1, 1]}
+        failOffsetX={[-5, 5]}
       >
         <BottomSheetScrollView
                   onChange={handleSheetChange}
@@ -175,7 +177,7 @@ export default function Button_Sheet({contentChange,text}) {
                 </Text>
               </ButtonContainer>
             </CustomContainer>
-            {isBionicActive && <BionicSection contentChange={contentChange} text={text}/>}
+            {isBionicActive && <BionicSection/>}
             {isTextActive && <TextSection />}
             {isThemeActive && <ThemeSection />}
           </Container>
