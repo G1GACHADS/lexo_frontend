@@ -10,12 +10,9 @@ import HelpIcon from '../../components/icons/help-icon'
 import DotsGridMini from '../../assets/accessability/dots_grid_mini.svg'
 import DotsGridNormal from '../../assets/accessability/dots_grid_normal.svg'
 
-export default function BionicSection() {
+export default function BionicSection(contentChange,text) {
   const theme = useTheme()
   const [fixation, setFixation] = useState()
-  const [saccade, setSaccade] = useState()
-  const text =
-    'hello world lorem ipsum dolor sit amet, consectetur adipiscing elit'
 
   const createFormData = ({ text, fixation, saccade }) => {
     const data = new FormData()
@@ -24,10 +21,12 @@ export default function BionicSection() {
     data.append('saccade', saccade)
     return data
   }
-
+  const cleanText = (text) => {
+    return text.replace(/\*/g, '')
+  }
   const fetchBionicWithConfig = useCallback(async () => {
+    text = cleanText(text)
     const data = createFormData({ text, fixation, saccade })
-
     const response = await Api.post('bionicconfig', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -35,8 +34,8 @@ export default function BionicSection() {
     }).catch((err) => {
       console.log(err)
     })
-
     const { result, result_raw, bounding_box } = response.data
+    contentChange(result)
     console.log(result)
   }, [])
 

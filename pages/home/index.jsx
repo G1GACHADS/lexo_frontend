@@ -213,8 +213,8 @@ export default function Homepage({ route, navigation }) {
               width: 5,
               height: 5,
             }}
-            mode="full"
-            allowedTransformOperations={['rotate', 'crop']}
+            mode="crop-only"
+            // allowedTransformOperations={['rotate', 'crop']}
           />
         </ViewFullScreen>
       )}

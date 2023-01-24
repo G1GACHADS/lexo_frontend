@@ -1,10 +1,9 @@
-import BottomSheet, { BottomSheetView,BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 import Text from '../../components/text'
 
-import ThreeButtonToggle from './try'
 
 import BionicSection from './bionic'
 import TextSection from './text'
@@ -18,7 +17,6 @@ import BionicIconActive from '../../components/icons/bionic-icon-active'
 import TextIconActive from '../../components/icons/text-icon-active'
 import ThemeIconActive from '../../components/icons/theme-icon-active'
 
-// import Slider from "./slider";
 
 const custom = {
   BIONIC: 'bionic',
@@ -26,7 +24,7 @@ const custom = {
   THEME: 'theme',
 }
 
-export default function Button_Sheet() {
+export default function Button_Sheet({contentChange,text}) {
   const theme = useTheme()
 
   const [selectedCustom, setSelectedCustom] = useState([])
@@ -70,7 +68,7 @@ export default function Button_Sheet() {
     )
   }
 
-  const snapPoints = useMemo(() => ['15%','30%', '50%'], [])
+  const snapPoints = useMemo(() => ['20%','35%', '50%','65%','75%','100%'], [])
   const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
@@ -82,11 +80,6 @@ export default function Button_Sheet() {
   const handleClosePress = useCallback(() => {
     sheetRef.current?.close()
   }, [])
-
-  {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-  <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-  <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-  <Button title="Close" onPress={() => handleClosePress()} /> */}
   return (
       <BottomSheet
         ref={sheetRef}
@@ -98,7 +91,6 @@ export default function Button_Sheet() {
                   onChange={handleSheetChange}
         >
           <Container>
-            {/* <ThreeButtonToggle /> */}
             <CustomContainer>
               <ButtonContainer
                 onPress={() => {
@@ -183,7 +175,7 @@ export default function Button_Sheet() {
                 </Text>
               </ButtonContainer>
             </CustomContainer>
-            {isBionicActive && <BionicSection />}
+            {isBionicActive && <BionicSection contentChange={contentChange} text={text}/>}
             {isTextActive && <TextSection />}
             {isThemeActive && <ThemeSection />}
           </Container>

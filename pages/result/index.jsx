@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import Access from '../accessability/index'
 import Header from './header'
 import Main from './main'
-import { useState, useCallback } from 'react'
+import { useState, useCallback,useEffect } from 'react'
 export default function ResultPage({ route, navigation }) {
+  const [settingsOn, setSettingsOn] = useState(false)
+  const [text,setText] = useState(``);
   const onBackPress = () => {
     const { previousScreen } = route.params
     console.log(previousScreen)
@@ -12,9 +14,9 @@ export default function ResultPage({ route, navigation }) {
       previousScreen: route.name,
     })
   }
+  // const { result } = route.params;
 
-  // const { result } = route.params
-  const result = `lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
+  let result = `lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
   lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
   lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
   lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
@@ -26,7 +28,13 @@ export default function ResultPage({ route, navigation }) {
   lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
   lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
   `
-  const [settingsOn, setSettingsOn] = useState(true)
+  useEffect(()=>{
+    setText(result);
+  },[])
+
+  const contentChange = useCallback((text)=>{
+    setText(text);
+  },[])
   const toggleSettings = () => {
     try {
       setSettingsOn(!settingsOn)
@@ -42,9 +50,9 @@ export default function ResultPage({ route, navigation }) {
           onBackPress={() => onBackPress()}
           toggleSettings={() => toggleSettings()}
         />
-        <Main content={result} />
+        <Main content={content} />
       </Container>
-      {settingsOn && <Access />}
+      {settingsOn && <Access contentChange={()=>contentChange()} text={text}/>}
     </SafeAreaView>
   )
 }
