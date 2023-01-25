@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import Markdown from 'react-native-markdown-package'
 import styled from 'styled-components/native'
 import { useReadingThemeStore } from '../../store/reading-theme-store'
@@ -14,22 +14,30 @@ export default function Main() {
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
+  const textAlignment = useTextStyleStore((state) => state.alignment)
   const readingTheme = useReadingThemeStore((state) => state.readingTheme)
+
   const markdown = useTextContentStore((state) => state.markdown)
 
-  const markdownStyle = {
-    text: {
-      textAlign: 'right',
-      color: readingTheme.fg,
-      fontFamily: textFontFamily,
+  const markdownStyle = StyleSheet.create({
+    paragraph: {
+      textAlign: textAlignment,
       fontSize: textSize,
       lineHeight: textLineHeight,
       letterSpacing: textLetterSpacing,
     },
-    strong: {
-      fontFamily: textFontFamilyStrong, // TODO: fix this
+    text: {
+      fontSize: textSize,
+      fontFamily: textFontFamily,
+      color: readingTheme.fg,
     },
-  }
+    strong: {
+      fontSize: textSize,
+      fontFamily: textFontFamilyStrong,
+      fontWeight: 'normal',
+      color: readingTheme.fg,
+    },
+  })
 
   // forceUpdate state is used to force re-rendering of Markdown component
   // when configStore is updated
@@ -42,8 +50,15 @@ export default function Main() {
     textSize,
     textLineHeight,
     textLetterSpacing,
+    textAlignment,
     readingTheme,
   ])
+
+  console.log({
+    markdownStyle,
+    markdown,
+    state: useTextStyleStore((state) => state),
+  })
 
   return (
     <ScrollViewContainer
@@ -68,5 +83,5 @@ const ScrollViewContainer = styled.ScrollView`
   margin: 10px auto;
   width: 100%;
   height: 100%;
-  padding: 0 10px;
+  padding: 20px;
 `
