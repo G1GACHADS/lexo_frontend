@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import styled, { useTheme } from 'styled-components/native'
+import styled, { css, useTheme } from 'styled-components/native'
 
 import HeightIcon from '../../components/icons/height-icon'
-import ParagraphIcon from '../../components/icons/paragraph-icon'
 import SizeIcon from '../../components/icons/size-icon'
 import SpaceIcon from '../../components/icons/space-icon'
 
 import Slider from '@react-native-community/slider'
 import BaseText from '../../components/base-text'
 import HeightIconActive from '../../components/icons/height-icon-active'
-import ParagraphIconActive from '../../components/icons/paragraph-icon-active'
 import SizeIconActive from '../../components/icons/size-icon-active'
 import SpaceIconActive from '../../components/icons/space-icon-active'
 
 import HeightMini from '../../components/icons/height-mini'
-import ParagraphMini from '../../components/icons/paragraph-mini'
+import IconAlignment from '../../components/icons/icon-alignment'
+import IconAlignmentActive from '../../components/icons/icon-alignment-active'
+import IconAlignmentCenter from '../../components/icons/icon-alignment-center'
+import IconAlignmentCenterActive from '../../components/icons/icon-alignment-center-active'
+import IconAlignmentJustify from '../../components/icons/icon-alignment-justify'
+import IconAlignmentJustifyActive from '../../components/icons/icon-alignment-justify-active'
+import IconAlignmentLeft from '../../components/icons/icon-alignment-left'
+import IconAlignmentLeftActive from '../../components/icons/icon-alignment-left-active'
+import IconAlignmentRight from '../../components/icons/icon-alignment-right'
+import IconAlignmentRightActive from '../../components/icons/icon-alignment-right-active'
 import SizeMini from '../../components/icons/size-mini'
 import SpaceMini from '../../components/icons/space-mini'
 import { useTextStyleStore } from '../../store/text-styling-store'
@@ -180,6 +187,90 @@ const FontFamilySection = ({ typography }) => {
   )
 }
 
+const TextAlignmentGroup = ({ theme }) => {
+  const alignment = useTextStyleStore((state) => state.alignment)
+  const changeTextAlignment = useTextStyleStore(
+    (state) => state.changeTextAlignment
+  )
+
+  const isAlignmentActive = (alignmentType) => alignment === alignmentType
+
+  return (
+    <TextAlignmentButtonContainer>
+      <TextAlignmentButtonGroup>
+        <TextAlignmentButton
+          lhs
+          active={isAlignmentActive('left')}
+          onPress={() => changeTextAlignment('left')}
+        >
+          {isAlignmentActive('left') && <IconAlignmentLeftActive />}
+          {!isAlignmentActive('left') && <IconAlignmentLeft />}
+        </TextAlignmentButton>
+        <TextAlignmentButton
+          active={isAlignmentActive('center')}
+          onPress={() => changeTextAlignment('center')}
+        >
+          {isAlignmentActive('center') && <IconAlignmentCenterActive />}
+          {!isAlignmentActive('center') && <IconAlignmentCenter />}
+        </TextAlignmentButton>
+        <TextAlignmentButton
+          active={isAlignmentActive('right')}
+          onPress={() => changeTextAlignment('right')}
+        >
+          {isAlignmentActive('right') && <IconAlignmentRightActive />}
+          {!isAlignmentActive('right') && <IconAlignmentRight />}
+        </TextAlignmentButton>
+        <TextAlignmentButton
+          rhs
+          active={isAlignmentActive('justify')}
+          onPress={() => changeTextAlignment('justify')}
+        >
+          {isAlignmentActive('justify') && <IconAlignmentJustifyActive />}
+          {!isAlignmentActive('justify') && <IconAlignmentJustify />}
+        </TextAlignmentButton>
+      </TextAlignmentButtonGroup>
+    </TextAlignmentButtonContainer>
+  )
+}
+
+const TextAlignmentButtonContainer = styled.View`
+  flex: 1;
+`
+
+const TextAlignmentButtonGroup = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
+`
+
+const TextAlignmentButton = styled.Pressable`
+  flex: 0.25;
+  align-items: center;
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.black : theme.colors.white};
+  border: 2px solid
+    ${({ active, theme }) => (active ? theme.colors.black : theme.colors.grey1)};
+  padding: 10px 28px;
+
+  ${({ lhs }) => {
+    if (lhs) {
+      return css`
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      `
+    }
+  }}
+
+  ${({ rhs }) => {
+    if (rhs) {
+      return css`
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      `
+    }
+  }}
+`
+
 export default function SettingsText() {
   const theme = useTheme()
 
@@ -217,8 +308,8 @@ export default function SettingsText() {
     },
     {
       name: textStyleOption.ALIGNMENT,
-      active: <ParagraphIconActive />,
-      idle: <ParagraphIcon />,
+      active: <IconAlignmentActive />,
+      idle: <IconAlignment />,
     },
   ]
 
@@ -300,22 +391,7 @@ export default function SettingsText() {
             <SpaceIcon />
           </>
         )}
-        {isConfigSelected(textStyleOption.ALIGNMENT) && (
-          <>
-            <ParagraphMini />
-            <Slider
-              style={{ width: '80%', height: 50 }}
-              minimumValue={1}
-              maximumValue={5}
-              step={1}
-              minimumTrackTintColor={theme.colors.black}
-              maximumTrackTintColor={theme.colors.black}
-              thumbTintColor={theme.colors.black}
-              onSlidingComplete={(value) => console.log(value)}
-            />
-            <ParagraphIcon />
-          </>
-        )}
+        {isConfigSelected(textStyleOption.ALIGNMENT) && <TextAlignmentGroup />}
       </TextOptionContentContainer>
       <FontFamilySection typography={theme.typography} />
     </View>

@@ -7,6 +7,7 @@ export const useTextStyleStore = create((set) => ({
   size: 14,
   lineHeight: 25,
   letterSpacing: 0.05,
+  alignment: 'left',
   changeFontFamily: ({ family, strong }) =>
     set((state) => ({
       fontFamily: family,
@@ -23,5 +24,9 @@ export const useTextStyleStore = create((set) => ({
   changeTextLetterSpacing: (letterSpacing) =>
     set((state) => ({
       letterSpacing: letterSpacing,
+    })),
+  changeTextAlignment: (alignment) =>
+    set((state) => ({
+      alignment: alignment,
     })),
 }))
