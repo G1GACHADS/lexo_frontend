@@ -35,6 +35,7 @@ export default function App() {
     'Comic-r': require('./assets/fonts/ComicNeue-Regular.ttf'),
     'Comic-b': require('./assets/fonts/ComicNeue-Bold.ttf'),
   })
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync()
@@ -44,8 +45,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null
   }
-  console.log('font loaded')
-  console.log(theme)
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer onLayout={onLayoutRootView}>
@@ -59,7 +59,9 @@ export default function App() {
             <Stack.Screen
               name="Result"
               component={Result}
-              options={{ headerShown: false }}
+              options={{
+                headerShown: false,
+              }}
             />
             <Stack.Screen
               name="Access"
