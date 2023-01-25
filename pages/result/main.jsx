@@ -2,14 +2,20 @@ import { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import Markdown from 'react-native-markdown-package'
 import styled from 'styled-components/native'
+import { useTextContentStore } from '../../store/text-content-store'
 import { useTextStyleStore } from '../../store/text-styling-store'
 
-export default function Main({ content }) {
+export default function Main() {
   const textFontFamily = useTextStyleStore((state) => state.fontFamily)
+  const textFontFamilyStrong = useTextStyleStore(
+    (state) => state.fontFamilyStrong
+  )
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
-  const markdown = textContent((state) => state.markdown)
+
+  const markdown = useTextContentStore((state) => state.markdown)
+
   const markdownStyle = {
     text: {
       textAlign: 'right',
@@ -18,6 +24,9 @@ export default function Main({ content }) {
       fontSize: textSize,
       lineHeight: textLineHeight,
       letterSpacing: textLetterSpacing,
+    },
+    strong: {
+      fontFamily: textFontFamilyStrong, // TODO: fix this
     },
   }
 
@@ -34,9 +43,9 @@ export default function Main({ content }) {
       contentInsetAdjustmentBehavior="automatic"
       style={{ flex: 1 }}
     >
-      {content ? (
+      {markdown ? (
         <Markdown styles={markdownStyle} key={forceUpdate}>
-          {content}
+          {markdown}
         </Markdown>
       ) : (
         <Text style={{ textAlign: 'center', padding: 50 }}>

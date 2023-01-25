@@ -106,6 +106,10 @@ export const BaseText = (props) => {
       _family = theme.typography.family.interSemiBold
     } else if (props.interBold) {
       _family = theme.typography.family.interBold
+    } else if (props.openDyslexicRegular) {
+      _family = theme.typography.family.openDyslexicRegular
+    } else if (props.openDyslexicBold) {
+      _family = theme.typography.family.openDyslexicBold
     }
 
     return _family

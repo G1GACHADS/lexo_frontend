@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
-import Api from '../../api'
 import Text from '../../components/text'
 
 import Slider from '@react-native-community/slider'
@@ -10,12 +9,12 @@ import HelpIcon from '../../components/icons/help-icon'
 import DotsGridMini from '../../assets/accessability/dots_grid_mini.svg'
 import DotsGridNormal from '../../assets/accessability/dots_grid_normal.svg'
 
-import { textContent } from '../../store/text-content-store'
+import { useTextContentStore } from '../../store/text-content-store'
 
 export default function BionicSection() {
   const theme = useTheme()
-  const markdown = textContent((state) => state.markdown)
-  const setContent = textContent((state) => state.setContent)
+  const markdown = useTextContentStore((state) => state.markdown)
+  const setContent = useTextContentStore((state) => state.setContent)
   const [saccade, setSaccade] = useState(10)
   const [fixation, setFixation] = useState(1)
   const createFormData = ({ text, fixation, saccade }) => {
@@ -39,12 +38,14 @@ export default function BionicSection() {
       '**hi** **this** **is** **a** **test5**',
     ]
     setTimeout(() => {
-      const random = Math.round(Math.random()*markdownBoldAndRegularTextParagraph.length)
+      const random = Math.round(
+        Math.random() * markdownBoldAndRegularTextParagraph.length
+      )
       console.log(random)
       const newText = markdownBoldAndRegularTextParagraph[random]
       setContent(newText)
     }, 100)
-    console.log("normal text:"+text)
+    console.log('normal text:' + text)
     let data = createFormData({ text, fixation, saccade })
     console.log(data)
     // await Api.post('bionicconfig', data, {

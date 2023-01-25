@@ -3,12 +3,14 @@ import theme from '../theme'
 
 export const useTextStyleStore = create((set) => ({
   fontFamily: theme.typography.family.medium,
+  fontFamilyStrong: theme.typography.family.bold,
   size: 14,
   lineHeight: 25,
   letterSpacing: 0.05,
-  changeFontFamily: (family) =>
+  changeFontFamily: ({ family, strong }) =>
     set((state) => ({
       fontFamily: family,
+      fontFamilyStrong: strong,
     })),
   changeTextSize: (size) =>
     set((state) => ({

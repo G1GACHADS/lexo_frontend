@@ -38,28 +38,44 @@ const FontFamilySection = ({ typography }) => {
   const fontFamilyOptions = [
     {
       name: typography.family.medium,
+      strongName: typography.family.bold,
       key: 'medium',
+      strongKey: 'bold',
       label: 'Plus Jakarta Sans',
     },
     {
       name: typography.family.robotoSerifMedium,
+      strongName: typography.family.robotoSerifBold,
       key: 'robotoSerifMedium',
+      strongKey: 'robotoSerifBold',
       label: 'Roboto Serif',
     },
     {
       name: typography.family.ptSerifRegular,
+      strongName: typography.family.ptSerifBold,
       key: 'ptSerifRegular',
+      strongKey: 'ptSerifBold',
       label: 'PT Serif',
     },
-    { name: typography.family.interMedium, key: 'interMedium', label: 'Inter' },
     {
-      name: typography.family.openDyslexicMedium,
-      key: 'openDyslexicMedium',
+      name: typography.family.interMedium,
+      strongName: typography.family.interBold,
+      key: 'interMedium',
+      strongKey: 'interBold',
+      label: 'Inter',
+    },
+    {
+      name: typography.family.openDyslexicRegular,
+      strongName: typography.family.openDyslexicBold,
+      key: 'openDyslexicRegular',
+      strongKey: 'openDyslexicBold',
       label: 'Open Dyslexic',
     },
     {
       name: typography.family.dyslexieMedium,
+      strongName: typography.family.dyslexieBold,
       key: 'dyslexieMedium',
+      strongKey: 'dyslexieBold',
       label: 'Dyslexie',
     },
   ]
@@ -79,7 +95,12 @@ const FontFamilySection = ({ typography }) => {
             return (
               <FontFamilyOptionButton
                 key={idx}
-                onPress={() => changeFontFamily(fontFamily.name)}
+                onPress={() =>
+                  changeFontFamily({
+                    family: fontFamily.name,
+                    strong: fontFamily.strongName,
+                  })
+                }
               >
                 <BaseText
                   semiBold={fontFamily.name === typography.family.semiBold}
@@ -88,9 +109,6 @@ const FontFamilySection = ({ typography }) => {
                   }
                   ptSerifRegular={
                     fontFamily.name === typography.family.ptSerifRegular
-                  }
-                  interMedium={
-                    fontFamily.name === typography.family.interMedium
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   heading
@@ -105,9 +123,6 @@ const FontFamilySection = ({ typography }) => {
                   }
                   ptSerifRegular={
                     fontFamily.name === typography.family.ptSerifRegular
-                  }
-                  interMedium={
-                    fontFamily.name === typography.family.interMedium
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   subheading
@@ -126,18 +141,19 @@ const FontFamilySection = ({ typography }) => {
             return (
               <FontFamilyOptionButton
                 key={idx}
-                onPress={() => changeFontFamily(fontFamily.name)}
+                onPress={() =>
+                  changeFontFamily({
+                    family: fontFamily.name,
+                    strong: fontFamily.strongName,
+                  })
+                }
               >
                 <BaseText
-                  semiBold={fontFamily.name === typography.family.semiBold}
-                  robotoSerifMedium={
-                    fontFamily.name === typography.family.robotoSerifMedium
-                  }
-                  ptSerifRegular={
-                    fontFamily.name === typography.family.ptSerifRegular
-                  }
                   interMedium={
                     fontFamily.name === typography.family.interMedium
+                  }
+                  openDyslexicBold={
+                    fontFamily.name === typography.family.openDyslexicRegular
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   bold
@@ -147,15 +163,11 @@ const FontFamilySection = ({ typography }) => {
                   Aa
                 </BaseText>
                 <BaseText
-                  semiBold={fontFamily.name === typography.family.semiBold}
-                  robotoSerifMedium={
-                    fontFamily.name === typography.family.robotoSerifMedium
-                  }
-                  ptSerifRegular={
-                    fontFamily.name === typography.family.ptSerifRegular
-                  }
                   interMedium={
                     fontFamily.name === typography.family.interMedium
+                  }
+                  openDyslexicBold={
+                    fontFamily.name === typography.family.openDyslexicRegular
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   subheading

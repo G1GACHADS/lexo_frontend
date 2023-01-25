@@ -30,6 +30,8 @@ export default function App() {
     'Inter-m': require('./assets/fonts/Inter-Medium.ttf'),
     'Inter-sb': require('./assets/fonts/Inter-SemiBold.ttf'),
     'Inter-b': require('./assets/fonts/Inter-Bold.ttf'),
+    'OpenDyslexic3-r': require('./assets/fonts/OpenDyslexic3-Regular.ttf'),
+    'OpenDyslexic3-b': require('./assets/fonts/OpenDyslexic3-Bold.ttf'),
   })
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {

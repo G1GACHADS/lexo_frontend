@@ -34,9 +34,8 @@ export const typography = {
     interSemiBold: 'Inter-sb',
     interBold: 'Inter-b',
 
-    openDyslexicMedium: 'OpenDyslexic-m',
-    openDyslexicSemiBold: 'OpenDyslexic-sb',
-    openDyslexicBold: 'OpenDyslexic-b',
+    openDyslexicRegular: 'OpenDyslexic3-r',
+    openDyslexicBold: 'OpenDyslexic3-b',
 
     dyslexieMedium: 'Dyslexie-m',
     dyslexieSemiBold: 'Dyslexie-sb',
