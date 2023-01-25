@@ -110,6 +110,10 @@ export const BaseText = (props) => {
       _family = theme.typography.family.openDyslexicRegular
     } else if (props.openDyslexicBold) {
       _family = theme.typography.family.openDyslexicBold
+    } else if (props.comicRegular) {
+      _family = theme.typography.family.comicRegular
+    } else if (props.comicBold) {
+      _family = theme.typography.family.comicBold
     }
 
     return _family

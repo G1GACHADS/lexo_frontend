@@ -72,10 +72,10 @@ const FontFamilySection = ({ typography }) => {
       label: 'E',
     },
     {
-      name: typography.family.dyslexieMedium,
-      strongName: typography.family.dyslexieBold,
-      key: 'dyslexieMedium',
-      strongKey: 'dyslexieBold',
+      name: typography.family.comicRegular,
+      strongName: typography.family.comicBold,
+      key: 'comicRegular',
+      strongKey: 'comicBold',
       label: 'F',
     },
   ]
@@ -103,11 +103,11 @@ const FontFamilySection = ({ typography }) => {
                 }
               >
                 <BaseText
-                  semiBold={fontFamily.name === typography.family.semiBold}
+                  bold={fontFamily.name === typography.family.medium}
                   robotoSerifMedium={
                     fontFamily.name === typography.family.robotoSerifMedium
                   }
-                  ptSerifRegular={
+                  ptSerifBold={
                     fontFamily.name === typography.family.ptSerifRegular
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
@@ -117,11 +117,11 @@ const FontFamilySection = ({ typography }) => {
                   Aa
                 </BaseText>
                 <BaseText
-                  semiBold={fontFamily.name === typography.family.semiBold}
+                  bold={fontFamily.name === typography.family.medium}
                   robotoSerifMedium={
                     fontFamily.name === typography.family.robotoSerifMedium
                   }
-                  ptSerifRegular={
+                  ptSerifBold={
                     fontFamily.name === typography.family.ptSerifRegular
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
@@ -149,12 +149,11 @@ const FontFamilySection = ({ typography }) => {
                 }
               >
                 <BaseText
-                  interMedium={
-                    fontFamily.name === typography.family.interMedium
-                  }
+                  interBold={fontFamily.name === typography.family.interMedium}
                   openDyslexicBold={
                     fontFamily.name === typography.family.openDyslexicRegular
                   }
+                  comicBold={fontFamily.name === typography.family.comicRegular}
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   heading
                   mb={15}
@@ -162,12 +161,11 @@ const FontFamilySection = ({ typography }) => {
                   Aa
                 </BaseText>
                 <BaseText
-                  interMedium={
-                    fontFamily.name === typography.family.interMedium
-                  }
+                  interBold={fontFamily.name === typography.family.interMedium}
                   openDyslexicBold={
                     fontFamily.name === typography.family.openDyslexicRegular
                   }
+                  comicBold={fontFamily.name === typography.family.comicRegular}
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   subheading
                   mb={15}

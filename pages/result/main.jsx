@@ -43,7 +43,7 @@ export default function Main() {
       contentInsetAdjustmentBehavior="automatic"
       style={{ flex: 1 }}
     >
-      {!markdown ? (
+      {markdown ? (
         <Markdown styles={markdownStyle} key={forceUpdate}>
           {markdown}
         </Markdown>
