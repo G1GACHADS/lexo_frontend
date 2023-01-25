@@ -11,7 +11,6 @@
   "dependencies": {
     "-": "^0.0.1",
     "@gorhom/bottom-sheet": "^4.4.5",
-    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-community/slider": "4.2.1",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/native-stack": "^6.7.0",
@@ -39,7 +38,6 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-native-view-shot": "3.1.2",
     "react-native-web": "0.17.7",
-    "react-native-webview": "^11.18.1",
     "recoil": "^0.7.6",
     "save": "^2.9.0",
     "styled-components": "^5.3.6",
