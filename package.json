@@ -43,7 +43,8 @@
     "recoil": "^0.7.6",
     "save": "^2.9.0",
     "styled-components": "^5.3.6",
-    "zustand": "^4.3.2"
+    "zustand": "^4.3.2",
+    "expo-speech": "~10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

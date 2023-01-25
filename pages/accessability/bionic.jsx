@@ -10,12 +10,12 @@ import HelpIcon from '../../components/icons/help-icon'
 import DotsGridMini from '../../assets/accessability/dots_grid_mini.svg'
 import DotsGridNormal from '../../assets/accessability/dots_grid_normal.svg'
 
-import {TextContent} from '../../store/text-content-store'
+import { textContent } from '../../store/text-content-store'
 
 export default function BionicSection() {
   const theme = useTheme()
-  const markdown = TextContent(state => state.markdown)
-  const setContent = TextContent(state => state.setContent)
+  const markdown = textContent((state) => state.markdown)
+  const setContent = textContent((state) => state.setContent)
   const [saccade, setSaccade] = useState(10)
   const [fixation, setFixation] = useState(1)
   const createFormData = ({ text, fixation, saccade }) => {
@@ -31,27 +31,37 @@ export default function BionicSection() {
   const fetchBionicWithConfig = useCallback(async () => {
     let text = cleanText(markdown)
     //demo update content
-    // setTimeout(() => {
-    //   const newText = '**hi** **th**is **is** a reply from bionic'
-    //   setContent(newText)
-    // }, 3000)
+    const markdownBoldAndRegularTextParagraph = [
+      '**hi** **this** **is** **a** **test**',
+      '**hi** **this** **is** **a** **test2**',
+      '**hi** **this** **is** **a** **test3**',
+      '**hi** **this** **is** **a** **test4**',
+      '**hi** **this** **is** **a** **test5**',
+    ]
+    setTimeout(() => {
+      const random = Math.round(Math.random()*markdownBoldAndRegularTextParagraph.length)
+      console.log(random)
+      const newText = markdownBoldAndRegularTextParagraph[random]
+      setContent(newText)
+    }, 100)
     console.log("normal text:"+text)
     let data = createFormData({ text, fixation, saccade })
     console.log(data)
-    await Api.post('bionicconfig', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response)=>{
-      const { result, result_raw, bounding_box } = response.data
-      setContent(result)
-      console.log("result text:"+result)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
+    // await Api.post('bionicconfig', data, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // })
+    //   .then((response) => {
+    //     const { result, result_raw, bounding_box } = response.data
+    //     setContent(result)
+    //     console.log('result text:' + result)
+    //     console.log('result_raw text:' + result_raw)
+    //     console.log('bounding_box text:' + bounding_box)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   }, [])
 
   return (
@@ -79,9 +89,7 @@ export default function BionicSection() {
           thumbTintColor="#000000"
           value={fixation}
           onValueChange={(value) => setFixation(value)}
-          onSlidingComplete={() =>
-            fetchBionicWithConfig()
-          }
+          onSlidingComplete={() => fetchBionicWithConfig()}
         />
         <DotsGridNormal />
       </Container>
@@ -108,9 +116,7 @@ export default function BionicSection() {
           thumbTintColor="#000000"
           value={saccade}
           onValueChange={(value) => setSaccade(value)}
-          onSlidingComplete={() =>
-            fetchBionicWithConfig()
-          }
+          onSlidingComplete={() => fetchBionicWithConfig()}
         />
         <DotsGridNormal />
       </Container>

@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import Access from '../accessability/index'
 import Header from './header'
 import Main from './main'
-import { useState, useCallback,useEffect } from 'react'
+import { toggleSettings } from '../../store/toggle-settings-store'
+import SomethingWentWrong from '../../components/something-went-wrong'
 export default function ResultPage({ route, navigation }) {
-  const [settingsOn, setSettingsOn] = useState(false)
-
+  const toggleOn = toggleSettings(state=>state.toggleOn)
   const onBackPress = () => {
     const { previousScreen } = route.params
     navigation.navigate(previousScreen || 'Home', {
@@ -14,23 +14,16 @@ export default function ResultPage({ route, navigation }) {
     })
   }
 
-  const toggleSettings = () => {
-    try {
-      setSettingsOn(!settingsOn)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <Header
           onBackPress={() => onBackPress()}
-          toggleSettings={() => toggleSettings()}
         />
         <Main/>
       </Container>
-      {settingsOn && <Access/>}
+      {toggleOn && <Access/>}
     </SafeAreaView>
   )
 }

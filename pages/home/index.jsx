@@ -25,8 +25,7 @@ import Api from '../../api'
 
 import { ImageEditor } from 'expo-image-editor'
 import { createFormData } from './methods'
-
-import {TextContent} from '../../store/text-content-store'
+import { textContent } from '../../store/text-content-store'
 
 function LoadingView() {
   return (
@@ -49,8 +48,8 @@ export default function Homepage({ route, navigation }) {
   const [loading, setLoading] = useState(false)
   const { height: screenHeight, width: screenWidth } = useWindowDimensions()
   const isFocused = useIsFocused()
-  const setContent = TextContent(state => state.setContent)
-
+  const setContent = textContent((state) => state.setContent)
+  const markdown = textContent((state) => state.markdown)
   //navigation
   const toggleFlash = () =>
     setFlashMode((current) => (current === 'torch' ? 'off' : 'torch'))
@@ -118,7 +117,7 @@ export default function Homepage({ route, navigation }) {
     async (imgURI) => {
       const data = createFormData(imgURI, 1, 10)
       //dummy content
-      setContent('**hi** **th**is **is** a dummy text')
+      setContent('**this** is **da**ta **from** the *server*')
       onNavigatePress()
 
       // await Api.post('bionic', data, {

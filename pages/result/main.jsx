@@ -3,13 +3,12 @@ import { Text } from 'react-native'
 import Markdown from 'react-native-markdown-package'
 import styled from 'styled-components/native'
 import { useTextStyleStore } from '../../store/text-styling-store'
-import {TextContent} from '../../store/text-content-store'
-
+import { textContent } from '../../store/text-content-store'
 export default function Main() {
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
-  const markdown = TextContent((state)=>state.markdown)
+  const markdown = textContent((state) => state.markdown)
   const markdownStyle = {
     text: {
       textAlign: 'right',
@@ -28,8 +27,7 @@ export default function Main() {
     setUpdateCount(updateCount + 1)
     setContent(markdown)
     console.log(content)
-  }, [textSize, textLineHeight, textLetterSpacing,markdown])
-
+  }, [textSize, textLineHeight, textLetterSpacing, markdown])
 
   return (
     <ScrollViewContainer

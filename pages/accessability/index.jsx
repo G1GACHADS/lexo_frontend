@@ -68,7 +68,7 @@ export default function Button_Sheet() {
     )
   }
 
-  const snapPoints = useMemo(() => ['20%','35%', '50%','65%','75%','100%'], [])
+  const snapPoints = useMemo(() => ['15%','35%', '50%','65%','75%','100%'], [])
   const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
@@ -86,7 +86,7 @@ export default function Button_Sheet() {
         snapPoints={snapPoints}
         initialSnapIndex={0}
         style={{ backgroundColor: 'transparent' }}
-        activeOffsetY={[-1, 1]}
+        activeOffsetY={[-5, 5]}
         failOffsetX={[-5, 5]}
       >
         <BottomSheetScrollView
