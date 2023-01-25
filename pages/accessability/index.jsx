@@ -86,7 +86,7 @@ export default function Button_Sheet() {
   <Button title="Close" onPress={() => handleClosePress()} /> */
   }
   return (
-    <BottomSheet ref={sheetRef} snapPoints={snapPoints} initialSnapIndex={0}>
+    <BottomSheet ref={sheetRef} snapPoints={snapPoints} initialSnapIndex={0} activeOffsetY={[-2, 2]} failOffsetX={[-2, 2]}>
       <BottomSheetScrollView onChange={handleSheetChange}>
         <Container>
           {/* <ThreeButtonToggle /> */}

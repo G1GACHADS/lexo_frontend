@@ -3,7 +3,7 @@ import Icon_Back from '../../components/icons/icon-back'
 import Icon_Settings from '../../components/icons/icon-settings'
 import Icon_Sound from '../../components/icons/icon-sound'
 
-export default function Header({ onBackPress}) {
+export default function Header({ onBackPress }) {
   return (
     <HeaderView>
       <HorizontalAlign>
