@@ -37,9 +37,8 @@ export const typography = {
     openDyslexicRegular: 'OpenDyslexic3-r',
     openDyslexicBold: 'OpenDyslexic3-b',
 
-    dyslexieMedium: 'Dyslexie-m',
-    dyslexieSemiBold: 'Dyslexie-sb',
-    dyslexieBold: 'Dyslexie-b',
+    comicRegular: 'Comic-r',
+    comicBold: 'Comic-b',
   },
   heading: {
     sz: '18px',

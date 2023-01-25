@@ -41,42 +41,42 @@ const FontFamilySection = ({ typography }) => {
       strongName: typography.family.bold,
       key: 'medium',
       strongKey: 'bold',
-      label: 'Plus Jakarta Sans',
+      label: 'A',
     },
     {
       name: typography.family.robotoSerifMedium,
       strongName: typography.family.robotoSerifBold,
       key: 'robotoSerifMedium',
       strongKey: 'robotoSerifBold',
-      label: 'Roboto Serif',
+      label: 'B',
     },
     {
       name: typography.family.ptSerifRegular,
       strongName: typography.family.ptSerifBold,
       key: 'ptSerifRegular',
       strongKey: 'ptSerifBold',
-      label: 'PT Serif',
+      label: 'C',
     },
     {
       name: typography.family.interMedium,
       strongName: typography.family.interBold,
       key: 'interMedium',
       strongKey: 'interBold',
-      label: 'Inter',
+      label: 'D',
     },
     {
       name: typography.family.openDyslexicRegular,
       strongName: typography.family.openDyslexicBold,
       key: 'openDyslexicRegular',
       strongKey: 'openDyslexicBold',
-      label: 'Open Dyslexic',
+      label: 'E',
     },
     {
-      name: typography.family.dyslexieMedium,
-      strongName: typography.family.dyslexieBold,
-      key: 'dyslexieMedium',
-      strongKey: 'dyslexieBold',
-      label: 'Dyslexie',
+      name: typography.family.comicRegular,
+      strongName: typography.family.comicBold,
+      key: 'comicRegular',
+      strongKey: 'comicBold',
+      label: 'F',
     },
   ]
 
@@ -86,7 +86,7 @@ const FontFamilySection = ({ typography }) => {
   return (
     <>
       <BaseText bold label mb={15}>
-        Font Family
+        Jenis Font
       </BaseText>
       <FontFamilyRow>
         {fontFamilyOptions
@@ -103,11 +103,11 @@ const FontFamilySection = ({ typography }) => {
                 }
               >
                 <BaseText
-                  semiBold={fontFamily.name === typography.family.semiBold}
+                  bold={fontFamily.name === typography.family.medium}
                   robotoSerifMedium={
                     fontFamily.name === typography.family.robotoSerifMedium
                   }
-                  ptSerifRegular={
+                  ptSerifBold={
                     fontFamily.name === typography.family.ptSerifRegular
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
@@ -117,11 +117,11 @@ const FontFamilySection = ({ typography }) => {
                   Aa
                 </BaseText>
                 <BaseText
-                  semiBold={fontFamily.name === typography.family.semiBold}
+                  bold={fontFamily.name === typography.family.medium}
                   robotoSerifMedium={
                     fontFamily.name === typography.family.robotoSerifMedium
                   }
-                  ptSerifRegular={
+                  ptSerifBold={
                     fontFamily.name === typography.family.ptSerifRegular
                   }
                   color={getFontFamilyLabelColor(fontFamily.name)}
@@ -149,26 +149,23 @@ const FontFamilySection = ({ typography }) => {
                 }
               >
                 <BaseText
-                  interMedium={
-                    fontFamily.name === typography.family.interMedium
-                  }
+                  interBold={fontFamily.name === typography.family.interMedium}
                   openDyslexicBold={
                     fontFamily.name === typography.family.openDyslexicRegular
                   }
+                  comicBold={fontFamily.name === typography.family.comicRegular}
                   color={getFontFamilyLabelColor(fontFamily.name)}
-                  bold
                   heading
                   mb={15}
                 >
                   Aa
                 </BaseText>
                 <BaseText
-                  interMedium={
-                    fontFamily.name === typography.family.interMedium
-                  }
+                  interBold={fontFamily.name === typography.family.interMedium}
                   openDyslexicBold={
                     fontFamily.name === typography.family.openDyslexicRegular
                   }
+                  comicBold={fontFamily.name === typography.family.comicRegular}
                   color={getFontFamilyLabelColor(fontFamily.name)}
                   subheading
                   mb={15}
@@ -228,7 +225,7 @@ export default function SettingsText() {
   return (
     <View>
       <BaseText bold label mb={15}>
-        Text Style
+        Pengaturan Teks
       </BaseText>
       <TextOptionsContainer>
         {textOptions.map((opt) => (

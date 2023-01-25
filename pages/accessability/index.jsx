@@ -15,7 +15,6 @@ import BionicIconActive from '../../components/icons/bionic-icon-active'
 import TextIconActive from '../../components/icons/text-icon-active'
 import ThemeIconActive from '../../components/icons/theme-icon-active'
 
-
 const custom = {
   BIONIC: 'bionic',
   TEXT: 'text',
@@ -86,7 +85,13 @@ export default function Button_Sheet() {
   <Button title="Close" onPress={() => handleClosePress()} /> */
   }
   return (
-    <BottomSheet ref={sheetRef} snapPoints={snapPoints} initialSnapIndex={0} activeOffsetY={[-2, 2]} failOffsetX={[-2, 2]}>
+    <BottomSheet
+      ref={sheetRef}
+      snapPoints={snapPoints}
+      initialSnapIndex={0}
+      activeOffsetY={[-2, 2]}
+      failOffsetX={[-2, 2]}
+    >
       <BottomSheetScrollView onChange={handleSheetChange}>
         <Container>
           {/* <ThreeButtonToggle /> */}
@@ -114,7 +119,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 pl={5}
               >
-                Bionic
+                Bionik
               </Text>
             </ButtonContainer>
             <ButtonContainer
@@ -140,7 +145,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 pl={5}
               >
-                Text
+                Teks
               </Text>
             </ButtonContainer>
             <ButtonContainer
@@ -166,7 +171,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 pl={5}
               >
-                Theme
+                Tema
               </Text>
             </ButtonContainer>
           </CustomContainer>
