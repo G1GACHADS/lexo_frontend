@@ -21,10 +21,11 @@ import Icon_Snapshot from '../../components/icons/icon-snap'
 
 import { ImagePickerOption, snapshotOption } from './constants'
 import { getOptimalRatio } from './methods'
-
-// import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+import Api from '../../api'
 
 import { ImageEditor } from 'expo-image-editor'
+import { createFormData } from './methods'
+import { textContent } from '../../store/text-content-store'
 
 function LoadingView() {
   return (
@@ -47,7 +48,8 @@ export default function Homepage({ route, navigation }) {
   const [loading, setLoading] = useState(false)
   const { height: screenHeight, width: screenWidth } = useWindowDimensions()
   const isFocused = useIsFocused()
-
+  const setContent = textContent((state) => state.setContent)
+  const markdown = textContent((state) => state.markdown)
   //navigation
   const toggleFlash = () =>
     setFlashMode((current) => (current === 'torch' ? 'off' : 'torch'))
@@ -78,11 +80,9 @@ export default function Homepage({ route, navigation }) {
     cameraRatio()
   }
 
-  const onNavigatePress = async (result) => {
-    console.log(result)
+  const onNavigatePress = async () => {
     setLoading(false)
     await navigation.navigate('Result', {
-      result: result,
       previousScreen: route.name,
     })
   }
@@ -115,32 +115,30 @@ export default function Homepage({ route, navigation }) {
 
   const sendFetch = useCallback(
     async (imgURI) => {
-      onNavigatePress(`
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adip occurence velit. Lorem ipsum dolor sit amet vel met else temp u
-    `)
-      // const data = build_form_data(imgURI,1,10)
-      // await Api.post("bionic", data, {
+      const data = createFormData(imgURI, 1, 10)
+      //dummy content
+      setContent('**this** is **da**ta **from** the *server*')
+      onNavigatePress()
+
+      // await Api.post('bionic', data, {
       //   headers: {
-      //     "Content-Type": "multipart/form-data",
+      //     'Content-Type': 'multipart/form-data',
       //   },
       // })
       //   .then((response) => {
-      //     console.log(response.data["html"]);
-      //     onNavigatePress(response.data["html"]);
+      //     const { result, result_raw, bounding_box } = response.data
+      //     if (result === '') {
+      //       alert('No text detected')
+      //     }
+      //     if (result !== undefined) {
+      //       setContent(result)
+      //       onNavigatePress()
+      //     }
+      //     setLoading(false)
       //   })
-      //   .catch(err=>{
-      //     console.log(err);
-      //   });
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     },
     [image]
   )
@@ -213,8 +211,8 @@ export default function Homepage({ route, navigation }) {
               width: 5,
               height: 5,
             }}
-            mode="full"
-            allowedTransformOperations={['rotate', 'crop']}
+            mode="crop-only"
+            // allowedTransformOperations={['rotate', 'crop']}
           />
         </ViewFullScreen>
       )}

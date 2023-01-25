@@ -60,6 +60,7 @@ const ViewFullScreen = styled.View`
   height: 100%;
   align-items: center;
   justify-content: center;
+  z-index:100;
 `
 
 const AlignHorizontally = styled.View`

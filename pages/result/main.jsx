@@ -9,7 +9,7 @@ export default function Main({ content }) {
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
-
+  const markdown = textContent((state) => state.markdown)
   const markdownStyle = {
     text: {
       textAlign: 'right',

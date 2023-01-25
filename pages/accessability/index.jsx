@@ -15,7 +15,6 @@ import BionicIconActive from '../../components/icons/bionic-icon-active'
 import TextIconActive from '../../components/icons/text-icon-active'
 import ThemeIconActive from '../../components/icons/theme-icon-active'
 
-// import Slider from "./slider";
 
 const custom = {
   BIONIC: 'bionic',
@@ -71,7 +70,7 @@ export default function Button_Sheet() {
   const sheetRef = useRef(null)
 
   const handleSheetChange = useCallback((index) => {
-    console.log('handleSheetChange', index)
+    // console.log('handleSheetChange', index)
   }, [])
   const handleSnapPress = useCallback((index) => {
     sheetRef.current?.snapToIndex(index)
