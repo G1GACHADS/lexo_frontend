@@ -90,10 +90,41 @@ export const BaseText = (props) => {
       _family = theme.typography.family.bold
     } else if (props.semiBold) {
       _family = theme.typography.family.semiBold
+    } else if (props.robotoSerifMedium) {
+      _family = theme.typography.family.robotoSerifMedium
+    } else if (props.robotoSerifSemiBold) {
+      _family = theme.typography.family.robotoSerifSemiBold
+    } else if (props.robotoSerifBold) {
+      _family = theme.typography.family.robotoSerifBold
+    } else if (props.ptSerifRegular) {
+      _family = theme.typography.family.ptSerifRegular
+    } else if (props.ptSerifBold) {
+      _family = theme.typography.family.ptSerifBold
+    } else if (props.interMedium) {
+      _family = theme.typography.family.interMedium
+    } else if (props.interSemiBold) {
+      _family = theme.typography.family.interSemiBold
+    } else if (props.interBold) {
+      _family = theme.typography.family.interBold
+    } else if (props.openDyslexicRegular) {
+      _family = theme.typography.family.openDyslexicRegular
+    } else if (props.openDyslexicBold) {
+      _family = theme.typography.family.openDyslexicBold
     }
 
     return _family
-  }, [props.bold, props.semiBold, props.medium])
+  }, [
+    props.bold,
+    props.semiBold,
+    props.robotoSerifMedium,
+    props.robotoSerifSemiBold,
+    props.robotoSerifBold,
+    props.ptSerifRegular,
+    props.ptSerifBold,
+    props.interMedium,
+    props.interSemiBold,
+    props.interBold,
+  ])
 
   const size = useMemo(() => {
     let _size = theme.typography

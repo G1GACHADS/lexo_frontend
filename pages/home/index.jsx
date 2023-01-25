@@ -21,11 +21,10 @@ import Icon_Snapshot from '../../components/icons/icon-snap'
 
 import { ImagePickerOption, snapshotOption } from './constants'
 import { getOptimalRatio } from './methods'
-import Api from '../../api'
 
 import { ImageEditor } from 'expo-image-editor'
+import { useTextContentStore } from '../../store/text-content-store'
 import { createFormData } from './methods'
-import { textContent } from '../../store/text-content-store'
 
 function LoadingView() {
   return (
@@ -48,8 +47,10 @@ export default function Homepage({ route, navigation }) {
   const [loading, setLoading] = useState(false)
   const { height: screenHeight, width: screenWidth } = useWindowDimensions()
   const isFocused = useIsFocused()
-  const setContent = textContent((state) => state.setContent)
-  const markdown = textContent((state) => state.markdown)
+
+  const markdown = useTextContentStore((state) => state.markdown)
+  const setContent = useTextContentStore((state) => state.setContent)
+
   //navigation
   const toggleFlash = () =>
     setFlashMode((current) => (current === 'torch' ? 'off' : 'torch'))

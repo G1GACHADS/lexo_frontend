@@ -1,10 +1,9 @@
-import {
-  create
-} from 'zustand'
+import { create } from 'zustand'
 
-export const textContent = create((set) => ({
+export const useTextContentStore = create((set) => ({
   markdown: '',
-  setContent: (markdown) => set((state) => ({
-    markdown: markdown
-  })),
+  setContent: (markdown) =>
+    set((state) => ({
+      markdown: markdown,
+    })),
 }))

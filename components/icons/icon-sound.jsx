@@ -1,12 +1,12 @@
-import { Text, TouchableOpacity } from 'react-native'
-import Speaker from '../../assets/global/speaker.svg'
-import { textContent } from '../../store/text-content-store'
 import * as Speech from 'expo-speech'
 import { useState } from 'react'
+import { Text, TouchableOpacity } from 'react-native'
+import Speaker from '../../assets/global/speaker.svg'
+import { useTextContentStore } from '../../store/text-content-store'
 export default function Icon_Retake(props) {
   const { text, ml } = props
   const [isSpeaking, setIsSpeaking] = useState(false)
-  const markdown = textContent((state) => state.markdown)
+  const markdown = useTextContentStore((state) => state.markdown)
 
   const cleanText = (text) => {
     return text.replace(/\*/g, '')

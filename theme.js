@@ -22,6 +22,24 @@ export const typography = {
     medium: 'Jakarta-m',
     semiBold: 'Jakarta-sb',
     bold: 'Jakarta-b',
+
+    robotoSerifMedium: 'RobotoSerif-m',
+    robotoSerifSemiBold: 'RobotoSerif-sb',
+    robotoSerifBold: 'RobotoSerif-b',
+
+    ptSerifRegular: 'PTSerif-r',
+    ptSerifBold: 'PTSerif-b',
+
+    interMedium: 'Inter-m',
+    interSemiBold: 'Inter-sb',
+    interBold: 'Inter-b',
+
+    openDyslexicRegular: 'OpenDyslexic3-r',
+    openDyslexicBold: 'OpenDyslexic3-b',
+
+    dyslexieMedium: 'Dyslexie-m',
+    dyslexieSemiBold: 'Dyslexie-sb',
+    dyslexieBold: 'Dyslexie-b',
   },
   heading: {
     sz: '18px',
@@ -54,16 +72,16 @@ export const typography = {
   //   xl_i: 34,
   // },
   // grande: {
-    // xs: '18px',
-    // sm: '20px',
-    // md: '22px',
-    // lg: '24px',
-    // xl: '26px',
-    // xs_i: 18,
-    // sm_i: 20,
-    // md_i: 22,
-    // lg_i: 24,
-    // xl_i: 26,
+  // xs: '18px',
+  // sm: '20px',
+  // md: '22px',
+  // lg: '24px',
+  // xl: '26px',
+  // xs_i: 18,
+  // sm_i: 20,
+  // md_i: 22,
+  // lg_i: 24,
+  // xl_i: 26,
   // },
   // tall: {
   //   xs: '8px',
