@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 import BaseText from '../../components/base-text'
-
-const themeOption = {
-  DEFAULT: 'DEFAULT',
-  CALM: 'CALM',
-  FOCUS: 'FOCUS',
-}
+import {
+  readingThemeOption,
+  useReadingThemeStore,
+} from '../../store/reading-theme-store'
 
 export default function SettingsTheme() {
   const theme = useTheme()
 
-  const [selectedTheme, setSelectedTheme] = useState(themeOption.DEFAULT)
-  const isThemeSelected = (theme) => theme === selectedTheme
+  const selectedReadingTheme = useReadingThemeStore(
+    (state) => state.readingTheme
+  )
+  const setReadingTheme = useReadingThemeStore((state) => state.setReadingTheme)
+  const isThemeSelected = (theme) => theme === selectedReadingTheme
 
   return (
     <View>
@@ -22,11 +23,11 @@ export default function SettingsTheme() {
       </BaseText>
       <ThemeContainer>
         <ThemeOptionButton
-          onPress={() => setSelectedTheme(themeOption.DEFAULT)}
-          isSelected={isThemeSelected(themeOption.DEFAULT)}
+          onPress={() => setReadingTheme(readingThemeOption.DEFAULT)}
+          isSelected={isThemeSelected(readingThemeOption.DEFAULT)}
           style={{
             backgroundColor: theme.colors.white,
-            borderColor: isThemeSelected(themeOption.DEFAULT)
+            borderColor: isThemeSelected(readingThemeOption.DEFAULT)
               ? theme.colors.black
               : theme.colors.grey1,
           }}
@@ -36,11 +37,11 @@ export default function SettingsTheme() {
           </BaseText>
         </ThemeOptionButton>
         <ThemeOptionButton
-          onPress={() => setSelectedTheme(themeOption.CALM)}
-          isSelected={isThemeSelected(themeOption.CALM)}
+          onPress={() => setReadingTheme(readingThemeOption.CALM)}
+          isSelected={isThemeSelected(readingThemeOption.CALM)}
           style={{
             backgroundColor: theme.colors.calmBg,
-            borderColor: isThemeSelected(themeOption.CALM)
+            borderColor: isThemeSelected(readingThemeOption.CALM)
               ? theme.colors.black
               : theme.colors.grey1,
           }}
@@ -50,11 +51,11 @@ export default function SettingsTheme() {
           </BaseText>
         </ThemeOptionButton>
         <ThemeOptionButton
-          onPress={() => setSelectedTheme(themeOption.FOCUS)}
-          isSelected={isThemeSelected(themeOption.FOCUS)}
+          onPress={() => setReadingTheme(readingThemeOption.FOCUS)}
+          isSelected={isThemeSelected(readingThemeOption.FOCUS)}
           style={{
             backgroundColor: theme.colors.focusBg,
-            borderColor: isThemeSelected(themeOption.FOCUS)
+            borderColor: isThemeSelected(readingThemeOption.FOCUS)
               ? theme.colors.black
               : theme.colors.grey1,
           }}
@@ -89,5 +90,5 @@ const ThemeOptionButton = styled.Pressable`
   border: 2px solid #e0e0e0;
   border-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.black : theme.colors.grey1};
-  border-radius: 5px;
+  border-radius: 10px;
 `

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import Markdown from 'react-native-markdown-package'
 import styled from 'styled-components/native'
+import { useReadingThemeStore } from '../../store/reading-theme-store'
 import { useTextContentStore } from '../../store/text-content-store'
 import { useTextStyleStore } from '../../store/text-styling-store'
 
@@ -13,13 +14,13 @@ export default function Main() {
   const textSize = useTextStyleStore((state) => state.size)
   const textLineHeight = useTextStyleStore((state) => state.lineHeight)
   const textLetterSpacing = useTextStyleStore((state) => state.letterSpacing)
-
+  const readingTheme = useReadingThemeStore((state) => state.readingTheme)
   const markdown = useTextContentStore((state) => state.markdown)
 
   const markdownStyle = {
     text: {
       textAlign: 'right',
-      color: 'black',
+      color: readingTheme.fg,
       fontFamily: textFontFamily,
       fontSize: textSize,
       lineHeight: textLineHeight,
@@ -36,7 +37,13 @@ export default function Main() {
 
   useEffect(() => {
     setForceUpdate(!forceUpdate)
-  }, [textFontFamily, textSize, textLineHeight, textLetterSpacing])
+  }, [
+    textFontFamily,
+    textSize,
+    textLineHeight,
+    textLetterSpacing,
+    readingTheme,
+  ])
 
   return (
     <ScrollViewContainer
