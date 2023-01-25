@@ -43,13 +43,13 @@ export default function Main() {
       contentInsetAdjustmentBehavior="automatic"
       style={{ flex: 1 }}
     >
-      {markdown ? (
+      {!markdown ? (
         <Markdown styles={markdownStyle} key={forceUpdate}>
           {markdown}
         </Markdown>
       ) : (
         <Text style={{ textAlign: 'center', padding: 50 }}>
-          There is no result
+          Tidak ada hasil, silakan coba lagi
         </Text>
       )}
     </ScrollViewContainer>

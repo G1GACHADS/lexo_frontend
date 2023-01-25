@@ -7,12 +7,12 @@ export default function Header({ onBackPress }) {
   return (
     <HeaderView>
       <HorizontalAlign>
-        <Icon_Back text="Back" ml={7} onPress={onBackPress} />
+        <Icon_Back text="Kembali" ml={7} onPress={onBackPress} />
       </HorizontalAlign>
       <HorizontalAlign style={{ flexDirection: 'row' }}>
-        <Icon_Sound text="Sound" ml={7} />
+        <Icon_Sound text="Suara" ml={7} />
         <Margin px={10} />
-        <Icon_Settings text="Settings" ml={7}/>
+        <Icon_Settings text="Pengaturan" ml={7} />
       </HorizontalAlign>
     </HeaderView>
   )

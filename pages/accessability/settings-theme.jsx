@@ -18,7 +18,7 @@ export default function SettingsTheme() {
   return (
     <View>
       <BaseText bold label mb={15}>
-        Color Theme
+        Warna Tema
       </BaseText>
       <ThemeContainer>
         <ThemeOptionButton
@@ -46,7 +46,7 @@ export default function SettingsTheme() {
           }}
         >
           <BaseText color="calmTxt" bold label>
-            Calm
+            Tenang
           </BaseText>
         </ThemeOptionButton>
         <ThemeOptionButton
@@ -60,7 +60,7 @@ export default function SettingsTheme() {
           }}
         >
           <BaseText color="focusTxt" bold label>
-            Focus
+            Fokus
           </BaseText>
         </ThemeOptionButton>
       </ThemeContainer>
