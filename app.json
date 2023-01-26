@@ -41,14 +41,6 @@
     },
     "plugins": [
 
-       [
-        "expo-media-library",
-        {
-          "photosPermission": "Allow Lexo to access your photos.",
-          "savePhotosPermission": "Allow Lexo to save photos.",
-          "isAccessMediaLocationEnabled": true
-        }
-      ]
     ],
     "extra": {
       "eas": {

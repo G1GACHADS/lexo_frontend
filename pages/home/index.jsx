@@ -22,11 +22,13 @@ import Icon_Snapshot from '../../components/icons/icon-snap'
 import { ImagePickerOption, snapshotOption } from './constants'
 import { getOptimalRatio } from './methods'
 
-import { ImageEditor } from 'expo-image-editor'
+// import { ImageEditor } from 'expo-image-editor'
 import { useTextContentStore } from '../../store/text-content-store'
 import { createFormData } from './methods'
 
 import Api from '../../api'
+
+// import {openCropper} from 'react-native-image-crop-picker';
 function LoadingView() {
   return (
     <View>
@@ -94,7 +96,24 @@ export default function Homepage({ route, navigation }) {
     try {
       const result = await captureRef(cameraRef.current, snapshotOption)
       setImage(result)
-      setEditorVisible(true)
+      sendFetch(result)
+      // openCropper({
+      //   path: result,
+      //   width: 300,
+      //   height: 400
+      // }).then(image => {
+      //   console.log(image);
+      // });
+      // await ImagePicker.launchCameraAsync(
+      //   ImagePickerOption
+      // ).then((image) => {
+      //   if (image.cancelled) {
+      //     return
+      //   }
+      //   setImage(image.uri)
+      //   // setEditorVisible(true)
+      // })
+      // setEditorVisible(true)
     } catch (e) {
       console.log(e)
     }
@@ -103,16 +122,22 @@ export default function Homepage({ route, navigation }) {
   const openMedia = async () => {
     const image = await ImagePicker.launchImageLibraryAsync(
       ImagePickerOption
-    ).catch((e) => {
+    ).then(async image=>{
+        await setImage(image.uri)
+        await sendFetch(image.uri);
+    })
+    .catch((e) => {
       console.log(e)
     })
-
-    if (image.cancelled) {
-      return
+    
+    try{
+      if (image.cancelled) {
+        return
+      }
     }
-
-    setImage(image.uri)
-    setEditorVisible(true)
+    catch(e){
+      console.log(e)
+    }
   }
 
   const sendFetch = useCallback(
@@ -196,7 +221,7 @@ export default function Homepage({ route, navigation }) {
               />
             </AlignHorizontally>
           </Camera>
-          <ImageEditor
+          {/* <ImageEditor
             visible={editorVisible}
             imageUri={image}
             style={{ width: screenWidth, height: screenHeight, opacity: 0 }}
@@ -215,7 +240,7 @@ export default function Homepage({ route, navigation }) {
             }}
             mode="crop-only"
             // allowedTransformOperations={['rotate', 'crop']}
-          />
+          /> */}
         </ViewFullScreen>
       )}
     </SafeAreaView>

@@ -1,7 +1,7 @@
 export const getOptimalRatio = (ratios) => {
-  const ratio =
-    ratios.find((ratio) => ratio === '20:9') || ratios[ratios.length - 1]
-  return ratio
+  // const ratio =
+  //   ratios.find((ratio) => ratio === '20:9') ||
+  return ratios[ratios.length - 1]
 }
 
 export const createFormData = (image, fixation, saccade) => {

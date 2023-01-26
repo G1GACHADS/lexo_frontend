@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker'
 
 export const ImagePickerOption = {
   mediaTypes: ImagePicker.MediaTypeOptions.All,
-  allowsEditing: false,
+  allowsEditing: true,
   aspect: [4, 3],
   quality: 0.5,
 }
