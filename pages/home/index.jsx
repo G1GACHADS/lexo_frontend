@@ -22,7 +22,6 @@ import Icon_Snapshot from '../../components/icons/icon-snap'
 import { ImagePickerOption, snapshotOption } from './constants'
 import { getOptimalRatio } from './methods'
 
-import { ImageEditor } from 'expo-image-editor'
 import { useTextContentStore } from '../../store/text-content-store'
 import { createFormData } from './methods'
 
@@ -196,26 +195,6 @@ export default function Homepage({ route, navigation }) {
               />
             </AlignHorizontally>
           </Camera>
-          <ImageEditor
-            visible={editorVisible}
-            imageUri={image}
-            style={{ width: screenWidth, height: screenHeight, opacity: 0 }}
-            onEditingComplete={async (result) => {
-              setLoading(true)
-              sendFetch(result.uri)
-              setEditorVisible(false)
-            }}
-            onCloseEditor={() => {
-              setImage(null)
-              setEditorVisible(false)
-            }}
-            minimumCropDimensions={{
-              width: 5,
-              height: 5,
-            }}
-            mode="crop-only"
-            // allowedTransformOperations={['rotate', 'crop']}
-          />
         </ViewFullScreen>
       )}
     </SafeAreaView>
