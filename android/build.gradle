@@ -65,7 +65,7 @@ allprojects {
         maven { url 'https://www.jitpack.io'}
 	   maven{
 			url "$rootDir/../node_modules/expo-camera/android/maven"
-}
+        }
     }
 }
 
@@ -73,3 +73,16 @@ allprojects {
 def expoCameraMavenPath = new File(["node", "--print", "require.resolve('expo-camera/package.json')"].execute(null, rootDir).text.trim(), "../android/maven")
 allprojects { repositories { maven { url(expoCameraMavenPath) } } }
 // @generated end expo-camera-import
+buildscript {
+    repositories {
+        maven { url "https://jitpack.io" }
+        ...
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+        ...
+    }
+}

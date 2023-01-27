@@ -61,9 +61,7 @@ public class ReactNativeFlipper {
                     });
               }
             });
-      } else {
-        client.addPlugin(new FrescoFlipperPlugin());
-      }
+      } 
     }
   }
 }

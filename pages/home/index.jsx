@@ -26,6 +26,8 @@ import { useTextContentStore } from '../../store/text-content-store'
 import { createFormData } from './methods'
 
 import Api from '../../api'
+import * as MediaLibrary from 'expo-media-library'
+
 function LoadingView() {
   return (
     <View>
@@ -92,8 +94,16 @@ export default function Homepage({ route, navigation }) {
   const takePicture = async () => {
     try {
       const result = await captureRef(cameraRef.current, snapshotOption)
-      setImage(result)
-      setEditorVisible(true)
+      console.log(result)
+      const asset = await MediaLibrary.createAssetAsync(result)
+      await MediaLibrary.createAlbumAsync('Expo', asset)
+        .then(() => {
+          console.log('Album created!')
+          openMedia()
+        })
+        .catch((error) => {
+          console.log('err', error)
+        })
     } catch (e) {
       console.log(e)
     }
@@ -109,9 +119,9 @@ export default function Homepage({ route, navigation }) {
     if (image.cancelled) {
       return
     }
-
     setImage(image.uri)
-    setEditorVisible(true)
+    await sendFetch(image.uri)
+    // setEditorVisible(true)
   }
 
   const sendFetch = useCallback(
