@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native'
 import { useCallback } from 'react'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components'
 import { useReadingThemeStore } from '../../store/reading-theme-store'
 import { toggleSettings } from '../../store/toggle-settings-store'
