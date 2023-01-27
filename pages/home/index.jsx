@@ -25,8 +25,8 @@ import { getOptimalRatio } from './methods'
 import { useTextContentStore } from '../../store/text-content-store'
 import { createFormData } from './methods'
 
-import Api from '../../api'
 import * as MediaLibrary from 'expo-media-library'
+import Api from '../../api'
 
 function LoadingView() {
   return (
@@ -95,15 +95,17 @@ export default function Homepage({ route, navigation }) {
     try {
       const result = await captureRef(cameraRef.current, snapshotOption)
       console.log(result)
-      const asset = await MediaLibrary.createAssetAsync(result)
-      await MediaLibrary.createAlbumAsync('Expo', asset)
-        .then(() => {
-          console.log('Album created!')
-          openMedia()
-        })
-        .catch((error) => {
-          console.log('err', error)
-        })
+      // const asset = await MediaLibrary.createAssetAsync(result)
+      // await MediaLibrary.createAlbumAsync('Expo', asset, false).catch(
+      //   (error) => {
+      //     console.log('err', error)
+      //   }
+      // )
+
+      await MediaLibrary.saveToLibraryAsync(result)
+
+      console.log('Album created!')
+      openMedia()
     } catch (e) {
       console.log(e)
     }
@@ -194,10 +196,7 @@ export default function Homepage({ route, navigation }) {
                 style={{ color: 'white' }}
                 onPress={() => openMedia()}
               />
-              <Icon_Snapshot
-                style={{ color: 'white' }}
-                onPress={() => takePicture()}
-              />
+              <Icon_Snapshot style={{ color: 'white' }} onPress={takePicture} />
               <Icon_Flash
                 style={{ color: 'white' }}
                 onPress={() => toggleFlash()}
