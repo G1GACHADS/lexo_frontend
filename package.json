@@ -9,7 +9,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@gorhom/bottom-sheet": "^4.4.5",
     "@react-native-community/slider": "4.2.1",
     "@react-navigation/native": "^6.0.11",
