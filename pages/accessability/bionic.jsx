@@ -75,7 +75,7 @@ export default function BionicSection() {
           size={theme.typography.label.sz}
           mb={15}
         >
-          Fiksasi
+          Fixation
         </Text>
         <HelpIcon />
       </Container>
@@ -101,7 +101,7 @@ export default function BionicSection() {
           size={theme.typography.label.sz}
           mb={15}
         >
-          Sakade
+          Saccade
         </Text>
         <HelpIcon />
       </Container>

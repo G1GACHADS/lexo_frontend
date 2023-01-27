@@ -71,7 +71,7 @@ export default function Main() {
         </Markdown>
       ) : (
         <Text style={{ textAlign: 'center', padding: 50 }}>
-          Tidak ada hasil, silakan coba lagi
+          No result, please try again
         </Text>
       )}
     </ScrollViewContainer>

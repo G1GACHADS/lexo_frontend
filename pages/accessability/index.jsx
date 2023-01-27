@@ -119,7 +119,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 pl={5}
               >
-                Bionik
+                Bionic
               </Text>
             </ButtonContainer>
             <ButtonContainer
@@ -145,7 +145,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 pl={5}
               >
-                Teks
+                Text
               </Text>
             </ButtonContainer>
             <ButtonContainer
@@ -171,7 +171,7 @@ export default function Button_Sheet() {
                 size={theme.typography.label.sz}
                 pl={5}
               >
-                Tema
+                Theme
               </Text>
             </ButtonContainer>
           </CustomContainer>

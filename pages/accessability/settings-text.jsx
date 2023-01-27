@@ -93,7 +93,7 @@ const FontFamilySection = ({ typography }) => {
   return (
     <>
       <BaseText bold label mb={15}>
-        Jenis Font
+        Font Family
       </BaseText>
       <FontFamilyRow>
         {fontFamilyOptions
@@ -316,7 +316,7 @@ export default function SettingsText() {
   return (
     <View>
       <BaseText bold label mb={15}>
-        Pengaturan Teks
+        Text Style
       </BaseText>
       <TextOptionsContainer>
         {textOptions.map((opt) => (
