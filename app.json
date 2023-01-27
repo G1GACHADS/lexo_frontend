@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "lexo",
-    "slug": "lexo",
+    "name": "Lexo",
+    "slug": "Lexo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/splashscreen/icon.png",
@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -40,8 +38,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-
-       [
+      [
         "expo-media-library",
         {
           "photosPermission": "Allow Lexo to access your photos.",
