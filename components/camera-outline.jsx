@@ -20,5 +20,5 @@ const ViewFullScreen = styled.View`
   // background:white;
   align-items: center;
   justify-content: space-between;
-  padding: 10% 0 0 0;
+  padding: 20% 0 0 0;
 `
