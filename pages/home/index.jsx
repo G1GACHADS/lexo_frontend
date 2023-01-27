@@ -119,28 +119,28 @@ export default function Homepage({ route, navigation }) {
     async (imgURI) => {
       const data = createFormData(imgURI, 1, 10)
       //dummy content
-      setContent('**this** is **da**ta **from** the *server*')
-      onNavigatePress()
+      // setContent('**this** is **da**ta **from** the *server*')
+      // onNavigatePress()
 
-      // await Api.post('bionic', data, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // })
-      //   .then((response) => {
-      //     const { result, result_raw, bounding_box } = response.data
-      //     if (result === '') {
-      //       alert('No text detected')
-      //     }
-      //     if (result !== undefined) {
-      //       setContent(result)
-      //       onNavigatePress()
-      //     }
-      //     setLoading(false)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
+      await Api.post('bionic', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((response) => {
+          const { result, result_raw, bounding_box } = response.data
+          if (result === '') {
+            alert('No text detected')
+          }
+          if (result !== undefined) {
+            setContent(result)
+            onNavigatePress()
+          }
+          setLoading(false)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     [image]
   )
