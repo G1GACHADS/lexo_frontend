@@ -94,7 +94,6 @@ export default function Homepage({ route, navigation }) {
   const takePicture = async () => {
     try {
       const result = await captureRef(cameraRef.current, snapshotOption)
-      console.log(result)
       // const asset = await MediaLibrary.createAssetAsync(result)
       // await MediaLibrary.createAlbumAsync('Expo', asset, false).catch(
       //   (error) => {
@@ -104,7 +103,6 @@ export default function Homepage({ route, navigation }) {
 
       await MediaLibrary.saveToLibraryAsync(result)
 
-      console.log('Album created!')
       openMedia()
     } catch (e) {
       console.log(e)

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import styled, { useTheme } from 'styled-components/native'
 import Text from '../../components/text'
 
@@ -16,6 +16,7 @@ export default function BionicSection() {
   const theme = useTheme()
   const markdown = useTextContentStore((state) => state.markdown)
   const setContent = useTextContentStore((state) => state.setContent)
+  const [isLoading, setIsLoading] = useState(false)
   const [saccade, setSaccade] = useState(10)
   const [fixation, setFixation] = useState(1)
   const createFormData = ({ text, fixation, saccade }) => {
@@ -29,6 +30,7 @@ export default function BionicSection() {
     return text.replace(/\*/g, '')
   }
   const fetchBionicWithConfig = useCallback(async () => {
+    setIsLoading(true)
     let text = cleanText(markdown)
     //demo update content
     // const markdownBoldAndRegularTextParagraph = [
@@ -49,21 +51,21 @@ export default function BionicSection() {
     // console.log('normal text:' + text)
     let data = createFormData({ text, fixation, saccade })
     // console.log(data)
-    await Api.post('bionicconfig', data, {
+    const response = await Api.post('bionicconfig', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+    }).catch((err) => {
+      console.log(err)
     })
-      .then((response) => {
-        const { result, result_raw, bounding_box } = response.data
-        setContent(result)
-        // console.log('result text:' + result)
-        // console.log('result_raw text:' + result_raw)
-        // console.log('bounding_box text:' + bounding_box)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+
+    setIsLoading(false)
+
+    const { result, result_raw, bounding_box } = response.data
+    setContent(result)
+    // console.log('result text:' + result)
+    // console.log('result_raw text:' + result_raw)
+    // console.log('bounding_box text:' + bounding_box)
   }, [markdown])
 
   return (
@@ -120,6 +122,9 @@ export default function BionicSection() {
         />
         <DotsGridNormal />
       </Container>
+      {isLoading && (
+        <ActivityIndicator size="large" color={theme.colors.black} />
+      )}
     </View>
   )
 }

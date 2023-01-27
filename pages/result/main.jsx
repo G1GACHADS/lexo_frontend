@@ -52,13 +52,8 @@ export default function Main() {
     textLetterSpacing,
     textAlignment,
     readingTheme,
-  ])
-
-  console.log({
-    markdownStyle,
     markdown,
-    state: useTextStyleStore((state) => state),
-  })
+  ])
 
   return (
     <ScrollViewContainer
